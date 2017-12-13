@@ -2,8 +2,8 @@ export function boolify(value: boolean | string): boolean {
   return typeof value === 'string' ? value === '' || value !== 'false' : value
 }
 
-export function exist(value: string | null | undefined): boolean {
-  return typeof value === 'string' ? value !== 'default' : !!value
+export function exists(value: string | null | undefined): boolean {
+  return typeof value === 'string' ? value !== 'default' && value !== '' : !!value
 }
 
 export interface TypedChange<T> {
@@ -15,4 +15,8 @@ export interface TypedChange<T> {
 
 export type TypedChanges<C> = {
   [P in keyof C]?: TypedChange<C[P]>
+}
+
+export interface Classes {
+  [name: string]: boolean
 }

@@ -1,19 +1,48 @@
-import { OnChanges, OnInit, SimpleChanges } from '@angular/core'
-import { TypedChanges } from './lang'
+import { Injectable, Injector, SimpleChanges, StaticProvider } from '@angular/core'
+import { NgClass } from '@angular/common'
+import { Classes, TypedChanges } from './lang'
 
-export abstract class ReactiveControl implements OnChanges, OnInit {
+export type UpdateCallback<T> = (changes: TypedChanges<T>, firstChange: boolean) => void
+
+export interface OnUpdate {
+  ngOnUpdate: UpdateCallback<this>
+}
+
+export abstract class ReactiveControl implements OnUpdate {
   protected firstChange = true
+  protected updateCallbacks: UpdateCallback<this>[] = [
+    (changes, firstChange) => this.ngOnUpdate(changes, firstChange)
+  ]
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.ngOnUpdate(changes as any as TypedChanges<this>, this.firstChange)
+  private ngOnChanges(changes: SimpleChanges): void {
+    for (const callback of this.updateCallbacks) {
+      callback.call(this, changes, this.firstChange)
+    }
+
     if (this.firstChange) { this.firstChange = false }
   }
 
-  ngOnInit(): void {
+  private ngOnInit(): void {
     if (this.firstChange) {
       this.ngOnChanges({})
     }
   }
 
-  abstract ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void
+  ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void { }
+}
+
+@Injectable()
+export abstract class StyledControl extends ReactiveControl {
+  protected hostClasses: Classes = {}
+
+  constructor(protected ngClass: NgClass) {
+    super()
+
+    this.updateCallbacks.push(() => this.updateHostClasses())
+  }
+
+  protected updateHostClasses(): void {
+    this.ngClass.ngClass = this.hostClasses
+    this.ngClass.ngDoCheck()
+  }
 }
