@@ -44,6 +44,7 @@ export class Button extends StyledControl {
       [`${prefix}-${this.color}`]: exists(this.color),
       [`${prefix}-${this._sizeClassMap[this.size] || 'nosize'}`]: exists(this.size),
       [`${prefix}-circle`]: shaped,
+      //TODO: support smart detection for icon-only
       [`${prefix}-icon-only`]: shaped,
       [`${prefix}-loading`]: this._loading,
       [`${prefix}-background-ghost`]: this._ghost,

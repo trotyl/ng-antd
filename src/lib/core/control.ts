@@ -1,6 +1,6 @@
-import { Injectable, Injector, SimpleChanges, StaticProvider } from '@angular/core'
-import { NgClass } from '@angular/common'
-import { Classes, TypedChanges } from './lang'
+import { Injectable, Injector, Optional, SimpleChanges, StaticProvider } from '@angular/core'
+import { NgClass, NgStyle } from '@angular/common'
+import { Classes, Styles, TypedChanges } from './lang'
 
 export type UpdateCallback<T> = (changes: TypedChanges<T>, firstChange: boolean) => void
 
@@ -34,15 +34,26 @@ export abstract class ReactiveControl implements OnUpdate {
 @Injectable()
 export abstract class StyledControl extends ReactiveControl {
   protected hostClasses: Classes = {}
+  protected hostStyles: Styles = {}
 
-  constructor(protected ngClass: NgClass) {
+  constructor(@Optional() protected ngClass?: NgClass, @Optional() protected ngStyle?: NgStyle) {
     super()
 
-    this.updateCallbacks.push(() => this.updateHostClasses())
+    if (ngClass) {
+      this.updateCallbacks.push(() => this.updateHostClasses())
+    }
+    if (ngStyle) {
+      this.updateCallbacks.push(() => this.updateHostStyles())
+    }
   }
 
   protected updateHostClasses(): void {
-    this.ngClass.ngClass = this.hostClasses
-    this.ngClass.ngDoCheck()
+    this.ngClass!.ngClass = this.hostClasses
+    this.ngClass!.ngDoCheck()
+  }
+
+  protected updateHostStyles(): void {
+    this.ngStyle!.ngStyle = this.hostStyles
+    this.ngStyle!.ngDoCheck()
   }
 }

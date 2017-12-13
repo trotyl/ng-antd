@@ -20,3 +20,7 @@ export type TypedChanges<C> = {
 export interface Classes {
   [name: string]: boolean
 }
+
+export interface Styles {
+  [name: string]: string
+}
