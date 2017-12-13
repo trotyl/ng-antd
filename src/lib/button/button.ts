@@ -12,7 +12,7 @@ const prefix = 'ant-btn'
   providers: [ NgClass ],
 })
 export class Button extends StyledControl {
-  @Input() type: 'primary' | 'dashed' | 'danger' | 'default' = 'default'
+  @Input() color: 'primary' | 'dashed' | 'danger' | 'default' = 'default'
   @Input() size: 'large' | 'small' | 'default' = 'default'
   @Input() icon: string | null = null
   @Input() shape: 'circle' | 'default' = 'default'
@@ -27,7 +27,7 @@ export class Button extends StyledControl {
 
   @Input()
   set antBtn(value: 'primary' | 'dashed' | 'danger' | 'default' | '' | undefined) {
-    if (value) { this.type = value }
+    if (value) { this.color = value }
   }
 
   private _loading = false
@@ -41,7 +41,7 @@ export class Button extends StyledControl {
     const shaped = exists(this.shape)
     this.hostClasses = {
       [`${prefix}`]: true,
-      [`${prefix}-${this.type}`]: exists(this.type),
+      [`${prefix}-${this.color}`]: exists(this.color),
       [`${prefix}-${this._sizeClassMap[this.size] || 'nosize'}`]: exists(this.size),
       [`${prefix}-circle`]: shaped,
       [`${prefix}-icon-only`]: shaped,

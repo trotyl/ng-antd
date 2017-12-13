@@ -90,10 +90,10 @@ describe('Button', () => {
 @Component({
   template: `
     <button antBtn>Default</button>
-    <button antBtn type="default">Default</button>
-    <button antBtn type="primary">Primary</button>
-    <button antBtn type="dashed">Dashed</button>
-    <button antBtn type="danger">Danger</button>
+    <button antBtn color="default">Default</button>
+    <button antBtn color="primary">Primary</button>
+    <button antBtn color="dashed">Dashed</button>
+    <button antBtn color="danger">Danger</button>
     <button antBtn="primary">Primary</button>
   `
 })
