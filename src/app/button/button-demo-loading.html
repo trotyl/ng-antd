@@ -1,0 +1,18 @@
+<span>
+  <button antBtn type="primary" loading>
+    Loading
+  </button>
+  <button antBtn type="primary" size="small" loading>
+    Loading
+  </button>
+  <br>
+  <button antBtn type="primary" [loading]="loading" (click)="enterLoading()">
+    Click me!
+  </button>
+  <button antBtn type="primary" icon="poweroff" [loading]="iconLoading" (click)="enterIconLoading()">
+    Click me!
+  </button>
+  <br>
+  <button antBtn shape="circle" loading></button>
+  <button antBtn type="primary" shape="circle" loading></button>
+</span>

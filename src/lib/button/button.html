@@ -1,0 +1,5 @@
+<i *ngIf="icon || loading"
+   class="anticon anticon-{{ loading ? 'loading' : icon }}"
+   [class.anticon-spin]="loading">
+</i>
+<ng-content *ngIf="shape === 'default'"></ng-content>

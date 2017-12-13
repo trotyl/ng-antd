@@ -1,0 +1,10 @@
+{
+  "name": "ng-antd",
+  "version": "0.0.0-Placeholder",
+  "license": "MIT",
+  "private": false,
+  "peerDependencies": {
+    "@angular/core": "^5.0.0",
+    "antd": "^3.0.0"
+  }
+}

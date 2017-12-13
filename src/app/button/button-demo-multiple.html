@@ -1,0 +1,13 @@
+<div>
+  <button antBtn type="primary">primary</button>
+  <button antBtn>secondary</button>
+  <button antBtn antDropdown [overlay]="menu">
+    Actions
+    <i antIcon type="down"></i>
+  </button>
+</div>
+<ul antMenu #menu="antMenu">
+  <li antMenuItem>1st item</li>
+  <li antMenuItem>2nd item</li>
+  <li antMenuItem>3rd item</li>
+</ul>

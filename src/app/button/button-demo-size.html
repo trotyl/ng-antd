@@ -1,0 +1,24 @@
+<ant-radio-group [value]="size" (change)="handleSizeChange($event)">
+  <ant-radio-btn value="large">Large</ant-radio-btn>
+  <ant-radio-btn value="default">Default</ant-radio-btn>
+  <ant-radio-btn value="small">Small</ant-radio-btn>
+</ant-radio-group>
+<br><br>
+<button antBtn type="primary" [size]="size">Primary</button>
+<button antBtn [size]="size">Normal</button>
+<button antBtn type="dashed" [size]="size">Dashed</button>
+<button antBtn type="danger" [size]="size">Danger</button>
+<br>
+<button antBtn type="primary" shape="circle" icon="download" [size]="size" ></button>
+<button antBtn type="primary" icon="download" [size]="size">Download</button>
+<br />
+<ant-btn-group [size]="size">
+  <button antBtn type="primary">
+    <i antIcon type="left"></i>
+    Backward
+  </button>
+  <button antBtn type="primary">
+    Forward
+    <i antIcon type="right"></i>
+  </button>
+</ant-btn-group>
