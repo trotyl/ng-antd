@@ -2,18 +2,18 @@ import { OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { TypedChanges } from './lang'
 
 export abstract class ReactiveControl implements OnChanges, OnInit {
-  protected beforeChange = true
+  protected firstChange = true
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.beforeChange) { this.beforeChange = false }
-    this.ngOnUpdate(changes as any as TypedChanges<this>)
+    this.ngOnUpdate(changes as any as TypedChanges<this>, this.firstChange)
+    if (this.firstChange) { this.firstChange = false }
   }
 
   ngOnInit(): void {
-    if (this.beforeChange) {
+    if (this.firstChange) {
       this.ngOnChanges({})
     }
   }
 
-  abstract ngOnUpdate(changes: TypedChanges<this>): void
+  abstract ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void
 }
