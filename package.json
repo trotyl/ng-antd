@@ -2,6 +2,10 @@
   "name": "ng-antd",
   "version": "0.0.0-Placeholder",
   "license": "MIT",
+  "description": "Project used to explore Angular component design best practice",
+  "main": "index.js",
+  "repository": "https://github.com/trotyl/ng-antd.git",
+  "author": "Trotyl <trotyl@qq.com>",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,7 +15,8 @@
     "e2e": "ng e2e",
     "pregenerate": "rimraf publish",
     "generate": "ng-packagr -p src/lib/package.json",
-    "postgenerate": "mv src/lib/dist publish"
+    "postgenerate": "mv src/lib/dist publish",
+    "release": "cd publish && npm publish"
   },
   "private": true,
   "dependencies": {
