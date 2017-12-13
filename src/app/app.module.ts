@@ -2,10 +2,12 @@ import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 
 import { ButtonDemoModule } from './button/button-demo.module'
+import { GridDemoModule } from './grid/grid-demo.module'
 import { AppComponent } from './app.component'
 
 const DEMO_MODULES = [
   ButtonDemoModule,
+  GridDemoModule,
 ]
 
 @NgModule({

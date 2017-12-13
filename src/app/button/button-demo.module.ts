@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
+import { NgModule, Type } from '@angular/core'
 import { ButtonModule, DropdownModule, IconModule, MenuModule, RadioModule } from '../lib-proxy'
 import { ButtonDemoBasic } from './button-demo-basic'
 import { ButtonDemoSize } from './button-demo-size'
@@ -9,7 +9,7 @@ import { ButtonDemoDisabled } from './button-demo-disabled'
 import { ButtonDemoMultiple } from './button-demo-multiple'
 import { ButtonDemoGhost } from './button-demo-ghost'
 
-const TYPES = [
+const TYPES: Type<any>[] = [
   ButtonDemoBasic,
   ButtonDemoSize,
   ButtonDemoLoading,
@@ -20,7 +20,7 @@ const TYPES = [
   ButtonDemoGhost,
 ]
 
-const NG_MODULES = [
+const NG_MODULES: Type<any>[] = [
   ButtonModule,
   DropdownModule,
   IconModule,

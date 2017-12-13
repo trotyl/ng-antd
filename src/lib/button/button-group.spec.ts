@@ -5,7 +5,7 @@ import { getClassName } from '../testing/helper'
 import { ButtonModule } from './button.module'
 
 describe('ButtonGroup', () => {
-  const btnGroupPrefix = `ant-btn-group`
+  const btnGroupPrefix = 'ant-btn-group'
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
