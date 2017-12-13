@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import { TestBed, async, ComponentFixture } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { getClassName } from '../testing/helper'
-import { Button } from './button'
+import { ButtonModule } from './button.module'
 
 describe('Button', () => {
   const btnPrefix = 'ant-btn'
@@ -10,8 +10,8 @@ describe('Button', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ ButtonModule ],
       declarations: [
-        Button,
         ButtonTypeTest,
         ButtonSizeTest,
         ButtonLoadingTest,
