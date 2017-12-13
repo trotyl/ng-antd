@@ -1,8 +1,13 @@
 {
   "name": "ng-antd",
-  "version": "0.0.0-Placeholder",
+  "version": "0.0.1-alpha.0",
   "license": "MIT",
   "private": false,
+  "ngPackage": {
+    "lib": {
+      "entryFile": "public_api.ts"
+    }
+  },
   "peerDependencies": {
     "@angular/core": "^5.0.0",
     "antd": "^3.0.0"
