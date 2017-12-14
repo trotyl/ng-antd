@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core'
 import { NgClass } from '@angular/common'
 import { boolify, exists, Classes, TypedChanges } from '../core/lang'
 import { StyledControl } from '../core/control'
+import { hasContent } from '../core/render'
 
 const prefix = 'ant-btn'
 
@@ -30,6 +31,16 @@ export class Button extends StyledControl {
     if (value) { this.color = value }
   }
 
+  @ViewChild('content')
+  set content(value: ElementRef | undefined) {
+    if (value) {
+      const contentWrapper = value.nativeElement
+      this._hasContent = hasContent(contentWrapper)
+      this.forceUpdate()
+    }
+  }
+
+  private _hasContent = true
   private _loading = false
   private _ghost = false
   private _sizeClassMap: { [name: string]: string } = {
@@ -44,8 +55,7 @@ export class Button extends StyledControl {
       [`${prefix}-${this.color}`]: exists(this.color),
       [`${prefix}-${this._sizeClassMap[this.size] || 'nosize'}`]: exists(this.size),
       [`${prefix}-circle`]: shaped,
-      //TODO: support smart detection for icon-only
-      [`${prefix}-icon-only`]: shaped,
+      [`${prefix}-icon-only`]: shaped || (exists(this.icon) && !this._hasContent),
       [`${prefix}-loading`]: this._loading,
       [`${prefix}-background-ghost`]: this._ghost,
     }

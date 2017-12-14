@@ -1,4 +1,4 @@
-import { Injectable, Injector, Optional, SimpleChanges, StaticProvider } from '@angular/core'
+import { ChangeDetectorRef, Injectable, Optional, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
 import { Classes, Styles, TypedChanges } from './lang'
 
@@ -8,24 +8,33 @@ export interface OnUpdate {
   ngOnUpdate: UpdateCallback<this>
 }
 
+@Injectable()
 export abstract class ReactiveControl implements OnUpdate {
   protected firstChange = true
   protected updateCallbacks: UpdateCallback<this>[] = [
     (changes, firstChange) => this.ngOnUpdate(changes, firstChange)
   ]
 
-  private ngOnChanges(changes: SimpleChanges): void {
+  constructor(protected cdRef: ChangeDetectorRef) { }
+
+  protected applyUpdate(changes: object): void {
     for (const callback of this.updateCallbacks) {
       callback.call(this, changes, this.firstChange)
     }
+  }
 
+  protected forceUpdate(changes: object = {}): void {
+    this.applyUpdate(changes)
+    this.cdRef.detectChanges()
+  }
+
+  private ngOnChanges(changes: SimpleChanges): void {
+    this.applyUpdate(changes)
     if (this.firstChange) { this.firstChange = false }
   }
 
   private ngOnInit(): void {
-    if (this.firstChange) {
-      this.ngOnChanges({})
-    }
+    if (this.firstChange) { this.ngOnChanges({}) }
   }
 
   ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void { }
@@ -36,8 +45,12 @@ export abstract class StyledControl extends ReactiveControl {
   protected hostClasses: Classes = {}
   protected hostStyles: Styles = {}
 
-  constructor(@Optional() protected ngClass?: NgClass, @Optional() protected ngStyle?: NgStyle) {
-    super()
+  constructor(
+    cdRef: ChangeDetectorRef,
+    @Optional() protected ngClass?: NgClass,
+    @Optional() protected ngStyle?: NgStyle
+  ) {
+    super(cdRef)
 
     if (ngClass) {
       this.updateCallbacks.push(() => this.updateHostClasses())

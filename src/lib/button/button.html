@@ -1,2 +1,4 @@
 <i [antIcon]="loading ? 'loading' : icon" *ngIf="icon || loading"></i>
-<ng-content *ngIf="shape === 'default'"></ng-content>
+<span #content *ngIf="shape === 'default'">
+  <ng-content></ng-content>
+</span>

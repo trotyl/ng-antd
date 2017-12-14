@@ -70,6 +70,10 @@ describe('Button', () => {
     expect(getClassName(icons[1])).toBe(`${iconPrefix} ${iconPrefix}-search`)
     expect(getClassName(buttons[2])).toBe(`${btnPrefix} ${btnPrefix}-circle ${btnPrefix}-icon-only`)
     expect(getClassName(icons[2])).toBe(`${iconPrefix} ${iconPrefix}-search`)
+    expect(getClassName(buttons[3])).toBe(`${btnPrefix} ${btnPrefix}-icon-only`)
+    expect(getClassName(icons[3])).toBe(`${iconPrefix} ${iconPrefix}-search`)
+    expect(getClassName(buttons[4])).toBe(`${btnPrefix} ${btnPrefix}-icon-only`)
+    expect(getClassName(icons[4])).toBe(`${iconPrefix} ${iconPrefix}-search`)
   }))
 
   it('should set ghost classes properly', async(() => {
@@ -126,6 +130,9 @@ class ButtonLoadingTest { }
     <button antBtn>Default</button>
     <button antBtn icon="search">Search</button>
     <button antBtn icon="search" shape="circle">Search</button>
+    <button antBtn icon="search"></button>
+    <button antBtn icon="search">
+    </button>
   `
 })
 class ButtonIconTest { }
