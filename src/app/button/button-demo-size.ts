@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 
 @Component({
   selector: 'button-demo-size',
-  templateUrl: './button-demo-size.html'
+  templateUrl: './button-demo-size.html',
 })
 export class ButtonDemoSize {
   size = 'large'

@@ -24,3 +24,7 @@ export interface Classes {
 export interface Styles {
   [name: string]: string
 }
+
+export interface ObjMap<T> {
+  [key: string]: T
+}

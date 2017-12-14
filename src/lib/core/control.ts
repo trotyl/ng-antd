@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Injectable, Optional, SimpleChanges } from '@angular/core'
+import { ChangeDetectorRef, Injectable, Optional, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
 import { Classes, Styles, TypedChanges } from './lang'
 
@@ -17,7 +17,7 @@ export abstract class ReactiveControl implements OnUpdate {
 
   constructor(protected cdRef: ChangeDetectorRef) { }
 
-  protected applyUpdate(changes: object): void {
+  protected applyUpdate(changes: object = {}): void {
     for (const callback of this.updateCallbacks) {
       callback.call(this, changes, this.firstChange)
     }
@@ -47,8 +47,8 @@ export abstract class StyledControl extends ReactiveControl {
 
   constructor(
     cdRef: ChangeDetectorRef,
-    @Optional() protected ngClass?: NgClass,
-    @Optional() protected ngStyle?: NgStyle
+    @Self() @Optional() protected ngClass?: NgClass,
+    @Self() @Optional() protected ngStyle?: NgStyle
   ) {
     super(cdRef)
 

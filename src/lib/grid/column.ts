@@ -1,7 +1,8 @@
-import { Directive, Input } from '@angular/core'
-import { NgClass } from '@angular/common'
+import { ChangeDetectorRef, Directive, Input, Self } from '@angular/core'
+import { NgClass, NgStyle } from '@angular/common'
 import { boolify, exists, TypedChanges } from '../core/lang'
 import { StyledControl } from '../core/control'
+import { Row } from './row'
 
 const prefix = 'ant-col'
 
@@ -15,7 +16,7 @@ export interface ColumnOptions {
 
 @Directive({
   selector: 'ant-col',
-  providers: [ NgClass ],
+  providers: [ NgClass, NgStyle ],
 })
 export class Column extends StyledControl {
   @Input() span: number = 0
@@ -30,10 +31,25 @@ export class Column extends StyledControl {
   @Input() xl: number | ColumnOptions | undefined = undefined
   @Input() xxl: number | ColumnOptions | undefined = undefined
 
+  constructor(
+    private row: Row,
+    cdRef: ChangeDetectorRef,
+    @Self() ngClass: NgClass,
+    @Self() ngStyle: NgStyle,
+  ) { super(cdRef, ngClass, ngStyle) }
+
   ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void {
     this.hostClasses = {
       [`${prefix}`]: true,
       [`${prefix}-${this.span}`]: true,
+    }
+
+    const padding = this.row.normalizedGutter / 2
+    if (padding !== 0) {
+      this.hostStyles = {
+        'padding-left': `${padding}px`,
+        'padding-right': `${padding}px`,
+      }
     }
   }
 }

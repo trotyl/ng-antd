@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
+import { CoreModule } from '../core/core.module'
 import { Row } from './row'
 import { Column } from './column'
 
@@ -10,7 +11,7 @@ const TYPES = [
 
 @NgModule({
   declarations: [ TYPES ],
-  imports: [ CommonModule ],
-  exports: [ TYPES ],
+  imports: [ CommonModule, CoreModule ],
+  exports: [ TYPES, CoreModule ],
 })
 export class GridModule { }
