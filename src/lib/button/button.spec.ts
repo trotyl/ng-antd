@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { TestBed, async, ComponentFixture } from '@angular/core/testing'
+import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { getClassName } from '../testing/helper'
 import { ButtonModule } from './button.module'

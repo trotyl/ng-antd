@@ -15,3 +15,5 @@ export function getStyle(element: DebugElement | null | undefined): { [style: st
   }
   return res
 }
+
+export function noop() { }

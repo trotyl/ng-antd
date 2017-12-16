@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Directive, Input, Self } from '@angular/core'
+import { ChangeDetectorRef, Directive, Input, OnDestroy, Self } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
@@ -21,7 +21,7 @@ export interface GutterOptions {
   selector: 'ant-row',
   providers: [ NgClass, NgStyle ],
 })
-export class Row extends StyledControl {
+export class Row extends StyledControl implements OnDestroy {
   @Input() align: 'top' | 'middle' | 'bottom' = 'top'
   @Input() gutter: number | GutterOptions = 0
   @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' = 'start'
@@ -32,7 +32,7 @@ export class Row extends StyledControl {
   }
 
   private _gutter: number = 0
-  private _gutter$$: Subscription
+  private _gutter$$: Subscription | null = null
 
 
   constructor(
@@ -60,6 +60,12 @@ export class Row extends StyledControl {
         'margin-left': `${margin}px`,
         'margin-right': `${margin}px`,
       }
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this._gutter$$) {
+      this._gutter$$.unsubscribe()
     }
   }
 }
