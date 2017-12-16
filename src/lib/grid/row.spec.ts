@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { TestBed, async, ComponentFixture } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName } from '../testing/helper'
+import { getClassName, getStyle } from '../testing/helper'
 import { GridModule } from './grid.module'
 
 describe('Row', () => {
@@ -12,6 +12,7 @@ describe('Row', () => {
       imports: [ GridModule ],
       declarations: [
         RowBasicTest,
+        RowGutterStaticTest,
       ]
     }).compileComponents()
   }))
@@ -24,6 +25,14 @@ describe('Row', () => {
     expect(getClassName(rows[0])).toBe(`${rowPrefix}`)
   }))
 
+  it('should set gutter (static) classes properly', async(() => {
+    const fixture = TestBed.createComponent(RowGutterStaticTest)
+    fixture.detectChanges()
+
+    const rows = fixture.debugElement.queryAll(By.css('ant-row'))
+    expect(getStyle(rows[0])).toEqual({ 'marginLeft': '-8px', 'marginRight': '-8px' })
+  }))
+
 })
 
 @Component({
@@ -32,3 +41,10 @@ describe('Row', () => {
   `
 })
 class RowBasicTest { }
+
+@Component({
+  template: `
+    <ant-row [gutter]="16"></ant-row>
+  `
+})
+class RowGutterStaticTest { }

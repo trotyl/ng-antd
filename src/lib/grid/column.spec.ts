@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { TestBed, async, ComponentFixture } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName } from '../testing/helper'
+import { getClassName, getStyle } from '../testing/helper'
 import { GridModule } from './grid.module'
 
 describe('Column', () => {
@@ -12,6 +12,7 @@ describe('Column', () => {
       imports: [ GridModule ],
       declarations: [
         ColSpanTest,
+        ColGutterStaticTest,
       ]
     }).compileComponents()
   }))
@@ -27,14 +28,41 @@ describe('Column', () => {
     expect(getClassName(cols[3])).toBe(`${colPrefix} ${colPrefix}-6`)
   }))
 
+
+  it('should set gutter (static) classes properly', async(() => {
+    const fixture = TestBed.createComponent(ColGutterStaticTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.css('ant-col'))
+    expect(getStyle(cols[0])).toEqual({ 'paddingLeft': '8px', 'paddingRight': '8px' })
+    expect(getStyle(cols[1])).toEqual({ 'paddingLeft': '8px', 'paddingRight': '8px' })
+    expect(getStyle(cols[2])).toEqual({ 'paddingLeft': '8px', 'paddingRight': '8px' })
+    expect(getStyle(cols[3])).toEqual({ 'paddingLeft': '8px', 'paddingRight': '8px' })
+  }))
+
 })
 
 @Component({
   template: `
-    <ant-col [span]="0"></ant-col>
-    <ant-col [span]="1"></ant-col>
-    <ant-col [span]="4"></ant-col>
-    <ant-col [span]="6"></ant-col>
+    <ant-row>
+      <ant-col [span]="0"></ant-col>
+      <ant-col [span]="1"></ant-col>
+      <ant-col [span]="4"></ant-col>
+      <ant-col [span]="6"></ant-col>
+    </ant-row>
   `
 })
 class ColSpanTest { }
+
+
+@Component({
+  template: `
+    <ant-row [gutter]="16">
+      <ant-col [span]="6"></ant-col>
+      <ant-col [span]="6"></ant-col>
+      <ant-col [span]="6"></ant-col>
+      <ant-col [span]="6"></ant-col>
+    </ant-row>
+  `
+})
+class ColGutterStaticTest { }
