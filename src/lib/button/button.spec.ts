@@ -2,7 +2,9 @@ import { Component } from '@angular/core'
 import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { getClassName } from '../testing/helper'
+import { Icon } from '../icon/icon'
 import { ButtonModule } from './button.module'
+import { Button } from './button'
 
 describe('Button', () => {
   const btnPrefix = 'ant-btn'
@@ -25,7 +27,7 @@ describe('Button', () => {
     const fixture = TestBed.createComponent(ButtonTypeTest)
     fixture.detectChanges()
 
-    const buttons = fixture.debugElement.queryAll(By.css('button'))
+    const buttons = fixture.debugElement.queryAll(By.directive(Button))
     expect(getClassName(buttons[0])).toBe(`${btnPrefix}`)
     expect(getClassName(buttons[1])).toBe(`${btnPrefix}`)
     expect(getClassName(buttons[2])).toBe(`${btnPrefix} ${btnPrefix}-primary`)
@@ -38,7 +40,7 @@ describe('Button', () => {
     const fixture = TestBed.createComponent(ButtonSizeTest)
     fixture.detectChanges()
 
-    const buttons = fixture.debugElement.queryAll(By.css('button'))
+    const buttons = fixture.debugElement.queryAll(By.directive(Button))
     expect(getClassName(buttons[0])).toBe(`${btnPrefix}`)
     expect(getClassName(buttons[1])).toBe(`${btnPrefix}`)
     expect(getClassName(buttons[2])).toBe(`${btnPrefix} ${btnPrefix}-lg`)
@@ -49,7 +51,7 @@ describe('Button', () => {
     const fixture = TestBed.createComponent(ButtonLoadingTest)
     fixture.detectChanges()
 
-    const buttons = fixture.debugElement.queryAll(By.css('button'))
+    const buttons = fixture.debugElement.queryAll(By.directive(Button))
     expect(getClassName(buttons[0])).toBe(`${btnPrefix}`)
     expect(getClassName(buttons[1])).toBe(`${btnPrefix} ${btnPrefix}-loading`)
     expect(getClassName(buttons[2])).toBe(`${btnPrefix} ${btnPrefix}-loading`)
@@ -62,8 +64,8 @@ describe('Button', () => {
     const fixture = TestBed.createComponent(ButtonIconTest)
     fixture.detectChanges()
 
-    const buttons = fixture.debugElement.queryAll(By.css('button'))
-    const icons = buttons.map(button => button.query(By.css('i')))
+    const buttons = fixture.debugElement.queryAll(By.directive(Button))
+    const icons = buttons.map(button => button.query(By.directive(Icon)))
     expect(getClassName(buttons[0])).toBe(`${btnPrefix}`)
     expect(icons[0]).toBeNull()
     expect(getClassName(buttons[1])).toBe(`${btnPrefix}`)
@@ -80,7 +82,7 @@ describe('Button', () => {
     const fixture = TestBed.createComponent(ButtonGhostTest)
     fixture.detectChanges()
 
-    const buttons = fixture.debugElement.queryAll(By.css('button'))
+    const buttons = fixture.debugElement.queryAll(By.directive(Button))
     expect(getClassName(buttons[0])).toBe(`${btnPrefix}`)
     expect(getClassName(buttons[1])).toBe(`${btnPrefix} ${btnPrefix}-background-ghost`)
     expect(getClassName(buttons[2])).toBe(`${btnPrefix} ${btnPrefix}-background-ghost`)

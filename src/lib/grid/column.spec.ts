@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser'
 import { getClassName, getStyle } from '../testing/helper'
 import { GridModule } from './grid.module'
 import { Row } from './row'
+import { Column } from './column'
 
 describe('Column', () => {
   const colPrefix = 'ant-col'
@@ -25,7 +26,7 @@ describe('Column', () => {
     const fixture = TestBed.createComponent(ColSpanTest)
     fixture.detectChanges()
 
-    const cols = fixture.debugElement.queryAll(By.css('ant-col'))
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-0`)
     expect(getClassName(cols[1])).toBe(`${colPrefix} ${colPrefix}-1`)
     expect(getClassName(cols[2])).toBe(`${colPrefix} ${colPrefix}-4`)
@@ -36,7 +37,7 @@ describe('Column', () => {
     const fixture = TestBed.createComponent(ColGutterTest)
     fixture.detectChanges()
 
-    const cols = fixture.debugElement.queryAll(By.css('ant-col'))
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getStyle(cols[0])).toEqual({ 'paddingLeft': '8px', 'paddingRight': '8px' })
   }))
 
@@ -44,7 +45,7 @@ describe('Column', () => {
     const fixture = TestBed.createComponent(ColOffsetTest)
     fixture.detectChanges()
 
-    const cols = fixture.debugElement.queryAll(By.css('ant-col'))
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-offset-4`)
   }))
 
@@ -52,7 +53,7 @@ describe('Column', () => {
     const fixture = TestBed.createComponent(ColPullTest)
     fixture.detectChanges()
 
-    const cols = fixture.debugElement.queryAll(By.css('ant-col'))
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-pull-4`)
   }))
 
@@ -60,7 +61,7 @@ describe('Column', () => {
     const fixture = TestBed.createComponent(ColPushTest)
     fixture.detectChanges()
 
-    const cols = fixture.debugElement.queryAll(By.css('ant-col'))
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-push-4`)
   }))
 

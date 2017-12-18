@@ -3,6 +3,7 @@ import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { getClassName } from '../testing/helper'
 import { ButtonModule } from './button.module'
+import { ButtonGroup } from './button-group'
 
 describe('ButtonGroup', () => {
   const btnGroupPrefix = 'ant-btn-group'
@@ -20,7 +21,7 @@ describe('ButtonGroup', () => {
     const fixture = TestBed.createComponent(ButtonGroupSizeTest)
     fixture.detectChanges()
 
-    const buttons = fixture.debugElement.queryAll(By.css('ant-btn-group'))
+    const buttons = fixture.debugElement.queryAll(By.directive(ButtonGroup))
     expect(getClassName(buttons[0])).toBe(`${btnGroupPrefix}`)
     expect(getClassName(buttons[1])).toBe(`${btnGroupPrefix}`)
     expect(getClassName(buttons[2])).toBe(`${btnGroupPrefix} ${btnGroupPrefix}-lg`)

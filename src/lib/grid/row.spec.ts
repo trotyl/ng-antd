@@ -27,7 +27,7 @@ describe('Row', () => {
     const fixture = TestBed.createComponent(RowBasicTest)
     fixture.detectChanges()
 
-    const rows = fixture.debugElement.queryAll(By.css('ant-row'))
+    const rows = fixture.debugElement.queryAll(By.directive(Row))
     expect(getClassName(rows[0])).toBe(`${rowPrefix}`)
   }))
 
@@ -35,7 +35,7 @@ describe('Row', () => {
     const fixture = TestBed.createComponent(RowGutterStaticTest)
     fixture.detectChanges()
 
-    const rows = fixture.debugElement.queryAll(By.css('ant-row'))
+    const rows = fixture.debugElement.queryAll(By.directive(Row))
     expect(getStyle(rows[0])).toEqual({ 'marginLeft': '-8px', 'marginRight': '-8px' })
   }))
 
@@ -64,7 +64,7 @@ describe('Row', () => {
       const fixture = TestBed.createComponent(RowGutterDynamicTest)
       fixture.detectChanges()
 
-      const rows = fixture.debugElement.queryAll(By.css('ant-row'))
+      const rows = fixture.debugElement.queryAll(By.directive(Row))
       const rowDir = rows[0].injector.get(Row)
       expect(getStyle(rows[0])).toEqual({ 'marginLeft': '-8px', 'marginRight': '-8px' })
       expect(rowDir.normalizedGutter).toBe(16)
@@ -85,7 +85,7 @@ describe('Row', () => {
       const fixture = TestBed.createComponent(RowGutterDynamicTest)
       fixture.detectChanges()
 
-      const rows = fixture.debugElement.queryAll(By.css('ant-row'))
+      const rows = fixture.debugElement.queryAll(By.directive(Row))
       const rowDir = rows[0].injector.get(Row)
       expect(getStyle(rows[0])).toEqual({})
       expect(rowDir.normalizedGutter).toBe(0)

@@ -3,6 +3,7 @@ import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { getClassName } from '../testing/helper'
 import { IconModule } from './icon.module'
+import { Icon } from './icon'
 
 describe('Icon', () => {
   const iconPrefix = 'anticon'
@@ -21,7 +22,7 @@ describe('Icon', () => {
     const fixture = TestBed.createComponent(IconTypeTest)
     fixture.detectChanges()
 
-    const icons = fixture.debugElement.queryAll(By.css('i'))
+    const icons = fixture.debugElement.queryAll(By.directive(Icon))
     expect(getClassName(icons[0])).toBe(`${iconPrefix} ${iconPrefix}-search`)
     expect(getClassName(icons[1])).toBe(`${iconPrefix} ${iconPrefix}-search`)
   }))
@@ -30,7 +31,7 @@ describe('Icon', () => {
     const fixture = TestBed.createComponent(IconSpinTest)
     fixture.detectChanges()
 
-    const icons = fixture.debugElement.queryAll(By.css('i'))
+    const icons = fixture.debugElement.queryAll(By.directive(Icon))
     expect(getClassName(icons[0])).toBe(`${iconPrefix} ${iconPrefix}-search`)
     expect(getClassName(icons[1])).toBe(`${iconPrefix} ${iconPrefix}-search ${iconPrefix}-spin`)
     expect(getClassName(icons[2])).toBe(`${iconPrefix} ${iconPrefix}-search ${iconPrefix}-spin`)
