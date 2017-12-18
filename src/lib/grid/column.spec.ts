@@ -14,6 +14,7 @@ describe('Column', () => {
       declarations: [
         ColSpanTest,
         ColGutterTest,
+        ColOffsetTest,
       ]
     }).compileComponents()
   }))
@@ -35,6 +36,14 @@ describe('Column', () => {
 
     const cols = fixture.debugElement.queryAll(By.css('ant-col'))
     expect(getStyle(cols[0])).toEqual({ 'paddingLeft': '8px', 'paddingRight': '8px' })
+  }))
+
+  it('should set offset classes properly', async(() => {
+    const fixture = TestBed.createComponent(ColOffsetTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.css('ant-col'))
+    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-offset-4`)
   }))
 
 })
@@ -60,3 +69,12 @@ class ColSpanTest { }
   ]
 })
 class ColGutterTest { }
+
+@Component({
+  template: `
+    <ant-row>
+      <ant-col [span]="6" [offset]="4"></ant-col>
+    </ant-row>
+  `
+})
+class ColOffsetTest { }

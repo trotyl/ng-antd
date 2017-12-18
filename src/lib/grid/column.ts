@@ -42,6 +42,7 @@ export class Column extends StyledControl {
     this.hostClasses = {
       [`${prefix}`]: true,
       [`${prefix}-${this.span}`]: true,
+      [`${prefix}-offset-${this.offset}`]: this.offset > 0,
     }
 
     const padding = this.row.normalizedGutter / 2
