@@ -32,7 +32,6 @@ export class Row extends StyledControl implements OnDestroy {
   private _gutter: number = 0
   private _gutter$$: Subscription | null = null
 
-
   constructor(
     private screenManager: ScreenManager,
     cdRef: ChangeDetectorRef,
@@ -47,7 +46,6 @@ export class Row extends StyledControl implements OnDestroy {
     }
 
     const isFlex = this.type === 'flex'
-
     this.hostClasses = {
       [`${prefix}`]: !isFlex,
       [`${prefix}-flex`]: isFlex,
@@ -61,6 +59,8 @@ export class Row extends StyledControl implements OnDestroy {
         'margin-left': `${margin}px`,
         'margin-right': `${margin}px`,
       }
+    } else {
+      this.hostStyles = { }
     }
   }
 
