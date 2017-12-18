@@ -50,11 +50,29 @@ describe('ScreenManager', () => {
   }))
 
   it('should resolve value corresponding to matched breakpoints', inject([ScreenManager], (manager: ScreenManager) => {
-    let res: number = 0
+    let res: number | null = 0
 
     manager.resolve({ lg: 10, md: 16, sm: 20 }).subscribe(x => res = x)
     resMap['(min-width: 768px)'].next({ matches: true })
 
     expect(res).toBe(16)
+  }))
+
+  it('should resolve to highest value when no match found', inject([ScreenManager], (manager: ScreenManager) => {
+    let res: number | null = 0
+
+    manager.resolve({ xl: 10, lg: 20 }).subscribe(x => res = x)
+    resMap['(min-width: 768px)'].next({ matches: true })
+
+    expect(res).toBe(10)
+  }))
+
+  it('should resolve to 0 when no value defined', inject([ScreenManager], (manager: ScreenManager) => {
+    let res: number | null = null
+
+    manager.resolve({} as { [key: string]: number }).subscribe(x => res = x)
+    resMap['(min-width: 768px)'].next({ matches: true })
+
+    expect(res).toBe(null)
   }))
 })

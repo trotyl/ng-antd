@@ -76,17 +76,18 @@ export class ScreenManager {
       .subscribe(res => this.match.next(res))
   }
 
-  resolve<T>(obj: { [key: string]: T }): Observable<T > {
+  resolve<T>(obj: { [key: string]: T }): Observable<T | null> {
     return this.match.pipe(
       map((match) => {
-        let firstDefined: Breakpoint
+        let firstDefined: Breakpoint | null = null
         for (const bp of breakpoints) {
           if (bp in obj) {
-            firstDefined = bp
+            if (!firstDefined) { firstDefined = bp }
             if (tokenMap.get(bp)! & match) { return obj[bp] }
           }
         }
-        return obj[firstDefined!]
+        if (!firstDefined) { return null }
+        return obj[firstDefined]
       })
     )
   }

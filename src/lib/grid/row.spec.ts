@@ -1,7 +1,9 @@
 import { Component } from '@angular/core'
 import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import { Observable } from 'rxjs/Observable'
 import { Observer } from 'rxjs/Observer'
+import { Subscription } from 'rxjs/Subscription'
 import { ScreenManager } from '../core/screen-manager'
 import { getClassName, getStyle, noop } from '../testing/helper'
 import { GridModule } from './grid.module'
@@ -37,31 +39,64 @@ describe('Row', () => {
     expect(getStyle(rows[0])).toEqual({ 'marginLeft': '-8px', 'marginRight': '-8px' })
   }))
 
-  it('should set gutter (dynamic) styles properly', async(() => {
-    const mockManager = { resolve: noop }
-    const mockResolve$ = { subscribe: noop }
-    const mockResolve$$ = { unsubscribe: noop }
-    const resolveSpy = spyOn(mockManager, 'resolve').and.returnValue(mockResolve$)
-    const unsubscribeSpy = spyOn(mockResolve$$, 'unsubscribe')
-    spyOn(mockResolve$, 'subscribe').and.callFake((next: Function) => {
-      next(16)
-      return mockResolve$$
+  describe('should set gutter (dynamic) styles properly', () => {
+    let mockManager: ScreenManager
+    let mockResolve$: Observable<any>
+    let mockResolve$$: Subscription
+    let resolveSpy: jasmine.Spy
+    let unsubscribeSpy: jasmine.Spy
+
+    beforeEach(() => {
+      mockManager = { resolve: noop } as any
+      mockResolve$ = { subscribe: noop } as any
+      mockResolve$$ = { unsubscribe: noop } as any
+      resolveSpy = spyOn(mockManager, 'resolve').and.returnValue(mockResolve$)
+      unsubscribeSpy = spyOn(mockResolve$$, 'unsubscribe')
     })
-    TestBed.overrideProvider(ScreenManager, { useValue: mockManager })
 
-    const fixture = TestBed.createComponent(RowGutterDynamicTest)
-    fixture.detectChanges()
+    it('when matched', async(() => {
+      spyOn(mockResolve$, 'subscribe').and.callFake((next: Function) => {
+        next(16)
+        return mockResolve$$
+      })
+      TestBed.overrideProvider(ScreenManager, { useValue: mockManager })
 
-    const rows = fixture.debugElement.queryAll(By.css('ant-row'))
-    const rowDir = rows[0].injector.get(Row)
-    expect(getStyle(rows[0])).toEqual({ 'marginLeft': '-8px', 'marginRight': '-8px' })
-    expect(rowDir.normalizedGutter).toBe(16)
-    expect(resolveSpy).toHaveBeenCalledWith({ md: 16 })
+      const fixture = TestBed.createComponent(RowGutterDynamicTest)
+      fixture.detectChanges()
 
-    fixture.destroy()
+      const rows = fixture.debugElement.queryAll(By.css('ant-row'))
+      const rowDir = rows[0].injector.get(Row)
+      expect(getStyle(rows[0])).toEqual({ 'marginLeft': '-8px', 'marginRight': '-8px' })
+      expect(rowDir.normalizedGutter).toBe(16)
+      expect(resolveSpy).toHaveBeenCalledWith({ md: 16 })
 
-    expect(unsubscribeSpy).toHaveBeenCalled()
-  }))
+      fixture.destroy()
+
+      expect(unsubscribeSpy).toHaveBeenCalled()
+    }))
+
+    it('when not matched', async(() => {
+      spyOn(mockResolve$, 'subscribe').and.callFake((next: Function) => {
+        next(null)
+        return mockResolve$$
+      })
+      TestBed.overrideProvider(ScreenManager, { useValue: mockManager })
+
+      const fixture = TestBed.createComponent(RowGutterDynamicTest)
+      fixture.detectChanges()
+
+      const rows = fixture.debugElement.queryAll(By.css('ant-row'))
+      const rowDir = rows[0].injector.get(Row)
+      expect(getStyle(rows[0])).toEqual({})
+      expect(rowDir.normalizedGutter).toBe(0)
+      expect(resolveSpy).toHaveBeenCalledWith({ md: 16 })
+
+      fixture.destroy()
+
+      expect(unsubscribeSpy).toHaveBeenCalled()
+    }))
+  })
+
 
 })
 
