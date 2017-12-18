@@ -7,6 +7,9 @@ import { GridDemoOffset } from './grid-demo-offset'
 import { GridDemoSort } from './grid-demo-sort'
 import { GridDemoFlex } from './grid-demo-flex'
 import { GridDemoFlexAlign } from './grid-demo-flex-align'
+import { GridDemoResponsive } from './grid-demo-responsive'
+import { GridDemoResponsiveMore } from './grid-demo-responsive-more'
+import { GridDemoPlayground } from './grid-demo-playground'
 
 const TYPES: Type<any>[] = [
   GridDemoBasic,
@@ -15,6 +18,9 @@ const TYPES: Type<any>[] = [
   GridDemoSort,
   GridDemoFlex,
   GridDemoFlexAlign,
+  GridDemoResponsive,
+  GridDemoResponsiveMore,
+  GridDemoPlayground,
 ]
 
 const NG_MODULES: Type<any>[] = [
