@@ -15,19 +15,22 @@ describe('Row', () => {
     TestBed.configureTestingModule({
       imports: [ GridModule ],
       declarations: [
-        RowBasicTest,
+        RowTypeTest,
         RowGutterStaticTest,
         RowGutterDynamicTest,
+        RowJustifyTest,
       ]
     }).compileComponents()
   }))
 
-  it('should set basic classes properly', async(() => {
-    const fixture = TestBed.createComponent(RowBasicTest)
+  it('should set type classes properly', async(() => {
+    const fixture = TestBed.createComponent(RowTypeTest)
     fixture.detectChanges()
 
     const rows = fixture.debugElement.queryAll(By.directive(Row))
     expect(getClassName(rows[0])).toBe(`${rowPrefix}`)
+    expect(getClassName(rows[1])).toBe(`${rowPrefix}`)
+    expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-start`)
   }))
 
   it('should set gutter (static) styles properly', async(() => {
@@ -97,14 +100,29 @@ describe('Row', () => {
 
   })
 
+  it('should set justify classes properly', async(() => {
+    const fixture = TestBed.createComponent(RowJustifyTest)
+    fixture.detectChanges()
+
+    const rows = fixture.debugElement.queryAll(By.directive(Row))
+    expect(getClassName(rows[0])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-start`)
+    expect(getClassName(rows[1])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-start`)
+    expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-center`)
+    expect(getClassName(rows[3])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-end`)
+    expect(getClassName(rows[4])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-space-between`)
+    expect(getClassName(rows[5])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-space-around`)
+  }))
+
 })
 
 @Component({
   template: `
     <ant-row></ant-row>
+    <ant-row type="default"></ant-row>
+    <ant-row type="flex"></ant-row>
   `
 })
-class RowBasicTest { }
+class RowTypeTest { }
 
 @Component({
   template: `
@@ -119,3 +137,15 @@ class RowGutterStaticTest { }
   `
 })
 class RowGutterDynamicTest { }
+
+@Component({
+  template: `
+    <ant-row type="flex"></ant-row>
+    <ant-row type="flex" justify="start"></ant-row>
+    <ant-row type="flex" justify="center"></ant-row>
+    <ant-row type="flex" justify="end"></ant-row>
+    <ant-row type="flex" justify="space-between"></ant-row>
+    <ant-row type="flex" justify="space-around"></ant-row>
+  `
+})
+class RowJustifyTest { }

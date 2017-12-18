@@ -46,10 +46,12 @@ export class Row extends StyledControl implements OnDestroy {
         .subscribe(val => this._gutter = val || 0)
     }
 
-    if (firstChange) {
-      this.hostClasses = {
-        [`${prefix}`]: true,
-      }
+    const isFlex = this.type === 'flex'
+
+    this.hostClasses = {
+      [`${prefix}`]: !isFlex,
+      [`${prefix}-flex`]: isFlex,
+      [`${prefix}-flex-${this.justify}`]: isFlex,
     }
 
     const margin = this.normalizedGutter / -2
