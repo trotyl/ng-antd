@@ -19,6 +19,7 @@ describe('Row', () => {
         RowGutterStaticTest,
         RowGutterDynamicTest,
         RowJustifyTest,
+        RowAlignTest,
       ]
     }).compileComponents()
   }))
@@ -30,7 +31,7 @@ describe('Row', () => {
     const rows = fixture.debugElement.queryAll(By.directive(Row))
     expect(getClassName(rows[0])).toBe(`${rowPrefix}`)
     expect(getClassName(rows[1])).toBe(`${rowPrefix}`)
-    expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-start`)
+    expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex`)
   }))
 
   it('should set gutter (static) styles properly', async(() => {
@@ -105,12 +106,23 @@ describe('Row', () => {
     fixture.detectChanges()
 
     const rows = fixture.debugElement.queryAll(By.directive(Row))
-    expect(getClassName(rows[0])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-start`)
+    expect(getClassName(rows[0])).toBe(`${rowPrefix}-flex`)
     expect(getClassName(rows[1])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-start`)
     expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-center`)
     expect(getClassName(rows[3])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-end`)
     expect(getClassName(rows[4])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-space-between`)
     expect(getClassName(rows[5])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-space-around`)
+  }))
+
+  it('should set align classes properly', async(() => {
+    const fixture = TestBed.createComponent(RowAlignTest)
+    fixture.detectChanges()
+
+    const rows = fixture.debugElement.queryAll(By.directive(Row))
+    expect(getClassName(rows[0])).toBe(`${rowPrefix}-flex`)
+    expect(getClassName(rows[1])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-top`)
+    expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-middle`)
+    expect(getClassName(rows[3])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-bottom`)
   }))
 
 })
@@ -149,3 +161,13 @@ class RowGutterDynamicTest { }
   `
 })
 class RowJustifyTest { }
+
+@Component({
+  template: `
+    <ant-row type="flex"></ant-row>
+    <ant-row type="flex" align="top"></ant-row>
+    <ant-row type="flex" align="middle"></ant-row>
+    <ant-row type="flex" align="bottom"></ant-row>
+  `
+})
+class RowAlignTest { }

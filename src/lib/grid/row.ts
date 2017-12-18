@@ -20,9 +20,9 @@ export interface GutterOptions {
   providers: [ NgClass, NgStyle ],
 })
 export class Row extends StyledControl implements OnDestroy {
-  @Input() align: 'top' | 'middle' | 'bottom' = 'top'
+  @Input() align: 'top' | 'middle' | 'bottom' | 'default' = 'default'
   @Input() gutter: number | GutterOptions = 0
-  @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' = 'start'
+  @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' | 'default' = 'default'
   @Input() type: 'flex' | 'default' = 'default'
 
   get normalizedGutter(): number {
@@ -51,7 +51,8 @@ export class Row extends StyledControl implements OnDestroy {
     this.hostClasses = {
       [`${prefix}`]: !isFlex,
       [`${prefix}-flex`]: isFlex,
-      [`${prefix}-flex-${this.justify}`]: isFlex,
+      [`${prefix}-flex-${this.justify}`]: exists(this.justify),
+      [`${prefix}-flex-${this.align}`]: exists(this.align),
     }
 
     const margin = this.normalizedGutter / -2
