@@ -1,10 +1,8 @@
 import { Component } from '@angular/core'
 import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName, getStyle } from '../testing/helper'
-import { GridModule } from './grid.module'
-import { Row } from './row'
-import { Column } from './column'
+import { getClassName, getStyle } from '../testing/testing.module'
+import { GridModule, Column, Row } from './grid.module'
 
 describe('Column', () => {
   const colPrefix = 'ant-col'

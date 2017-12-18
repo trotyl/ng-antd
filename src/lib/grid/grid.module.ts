@@ -9,6 +9,11 @@ const TYPES = [
   Column,
 ]
 
+export {
+  Row,
+  Column,
+}
+
 @NgModule({
   declarations: [ TYPES ],
   imports: [ CommonModule, CoreModule ],

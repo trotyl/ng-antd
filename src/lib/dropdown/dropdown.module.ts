@@ -6,6 +6,10 @@ const TYPES = [
   Dropdown,
 ]
 
+export {
+  Dropdown,
+}
+
 @NgModule({
   declarations: [ TYPES ],
   imports: [ CommonModule ],

@@ -2,9 +2,7 @@ import { ChangeDetectorRef, Directive, Input, OnDestroy, Self } from '@angular/c
 import { NgClass, NgStyle } from '@angular/common'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
-import { boolify, exists, ObjMap, TypedChanges } from '../core/lang'
-import { StyledControl } from '../core/control'
-import { ScreenManager, Breakpoint } from '../core/screen-manager'
+import { boolify, exists, Breakpoint, ObjMap, ScreenManager, StyledControl, TypedChanges } from '../core/core.module'
 
 const prefix = 'ant-row'
 

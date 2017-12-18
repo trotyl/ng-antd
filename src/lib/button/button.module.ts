@@ -9,6 +9,11 @@ const TYPES = [
   ButtonGroup,
 ]
 
+export {
+  Button,
+  ButtonGroup,
+}
+
 @NgModule({
   declarations: [ TYPES ],
   imports: [ CommonModule, IconModule ],

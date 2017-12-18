@@ -8,6 +8,11 @@ const TYPES = [
   RadioGroup,
 ]
 
+export {
+  RadioButton,
+  RadioGroup,
+}
+
 @NgModule({
   declarations: [ TYPES ],
   imports: [ CommonModule ],

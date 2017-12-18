@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Directive, Input, Self } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
-import { boolify, exists, TypedChanges } from '../core/lang'
-import { StyledControl } from '../core/control'
+import { boolify, exists, StyledControl, TypedChanges } from '../core/core.module'
 import { Row } from './row'
 
 const prefix = 'ant-col'

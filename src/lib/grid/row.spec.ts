@@ -4,10 +4,9 @@ import { By } from '@angular/platform-browser'
 import { Observable } from 'rxjs/Observable'
 import { Observer } from 'rxjs/Observer'
 import { Subscription } from 'rxjs/Subscription'
-import { ScreenManager } from '../core/screen-manager'
-import { getClassName, getStyle, noop } from '../testing/helper'
-import { GridModule } from './grid.module'
-import { Row } from './row'
+import { ScreenManager } from '../core/core.module'
+import { getClassName, getStyle, noop } from '../testing/testing.module'
+import { GridModule, Row } from './grid.module'
 
 describe('Row', () => {
   const rowPrefix = 'ant-row'
@@ -95,8 +94,8 @@ describe('Row', () => {
 
       expect(unsubscribeSpy).toHaveBeenCalled()
     }))
-  })
 
+  })
 
 })
 

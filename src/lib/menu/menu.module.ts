@@ -6,6 +6,10 @@ const TYPES = [
   Menu,
 ]
 
+export {
+  Menu,
+}
+
 @NgModule({
   declarations: [ TYPES ],
   imports: [ CommonModule ],
