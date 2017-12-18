@@ -43,6 +43,8 @@ export class Column extends StyledControl {
       [`${prefix}`]: true,
       [`${prefix}-${this.span}`]: true,
       [`${prefix}-offset-${this.offset}`]: this.offset > 0,
+      [`${prefix}-pull-${this.pull}`]: this.pull > 0,
+      [`${prefix}-push-${this.push}`]: this.push > 0,
     }
 
     const padding = this.row.normalizedGutter / 2

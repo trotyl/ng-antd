@@ -15,6 +15,8 @@ describe('Column', () => {
         ColSpanTest,
         ColGutterTest,
         ColOffsetTest,
+        ColPullTest,
+        ColPushTest,
       ]
     }).compileComponents()
   }))
@@ -44,6 +46,22 @@ describe('Column', () => {
 
     const cols = fixture.debugElement.queryAll(By.css('ant-col'))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-offset-4`)
+  }))
+
+  it('should set pull classes properly', async(() => {
+    const fixture = TestBed.createComponent(ColPullTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.css('ant-col'))
+    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-pull-4`)
+  }))
+
+  it('should set push classes properly', async(() => {
+    const fixture = TestBed.createComponent(ColPushTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.css('ant-col'))
+    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-push-4`)
   }))
 
 })
@@ -78,3 +96,21 @@ class ColGutterTest { }
   `
 })
 class ColOffsetTest { }
+
+@Component({
+  template: `
+    <ant-row>
+      <ant-col [span]="6" [pull]="4"></ant-col>
+    </ant-row>
+  `
+})
+class ColPullTest { }
+
+@Component({
+  template: `
+    <ant-row>
+      <ant-col [span]="6" [push]="4"></ant-col>
+    </ant-row>
+  `
+})
+class ColPushTest { }
