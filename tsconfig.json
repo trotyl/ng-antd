@@ -19,7 +19,8 @@
     ],
     "baseUrl": "./src",
     "paths": {
-      "@app/*": ["app/*"]
+      "@app/*": ["app/*"],
+      "ng-antd/*": ["lib/*"]
     }
   }
 }

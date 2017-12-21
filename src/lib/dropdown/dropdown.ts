@@ -1,5 +1,5 @@
 import { Directive, Input } from '@angular/core'
-import { Menu } from '../menu'
+import { Menu } from 'ng-antd/menu'
 
 @Directive({
   selector: '[antDropdown]'
