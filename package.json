@@ -9,8 +9,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
+    "build": "ng build --prod",
+    "test": "ng test --single-run",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "pregenerate": "rimraf publish",
