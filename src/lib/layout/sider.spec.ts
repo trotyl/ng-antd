@@ -1,8 +1,9 @@
 import { Component } from '@angular/core'
 import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getStyle } from '../testing/testing.module'
-import { LayoutModule, Sider } from './layout.module'
+import { getStyle } from '../testing'
+import { LayoutModule } from './layout.module'
+import { Sider } from './sider'
 
 describe('Column', () => {
   const colPrefix = 'ant-col'

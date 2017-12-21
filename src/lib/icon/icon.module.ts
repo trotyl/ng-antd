@@ -6,10 +6,6 @@ const TYPES = [
   Icon,
 ]
 
-export {
-  Icon,
-}
-
 @NgModule({
   declarations: [ TYPES ],
   imports: [ CommonModule ],

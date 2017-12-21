@@ -1,8 +1,9 @@
 import { Component } from '@angular/core'
 import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName } from '../testing/testing.module'
-import { ButtonModule, ButtonGroup } from './button.module'
+import { getClassName } from '../testing'
+import { ButtonModule } from './button.module'
+import { ButtonGroup } from './button-group'
 
 describe('ButtonGroup', () => {
   const btnGroupPrefix = 'ant-btn-group'

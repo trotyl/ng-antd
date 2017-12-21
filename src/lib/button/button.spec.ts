@@ -1,9 +1,10 @@
 import { Component } from '@angular/core'
 import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName } from '../testing/testing.module'
-import { Icon } from '../icon/icon.module'
-import { ButtonModule, Button } from './button.module'
+import { getClassName } from '../testing'
+import { Icon } from '../icon'
+import { ButtonModule } from './button.module'
+import { Button } from './button'
 
 describe('Button', () => {
   const btnPrefix = 'ant-btn'

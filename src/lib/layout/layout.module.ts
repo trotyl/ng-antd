@@ -13,14 +13,6 @@ const TYPES = [
   Sider,
 ]
 
-export {
-  Layout,
-  Header,
-  Content,
-  Footer,
-  Sider,
-}
-
 @NgModule({
   declarations: [ TYPES ],
   exports: [ TYPES ],

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core'
 import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName } from '../testing/helper'
-import { LayoutModule, Layout } from './layout.module'
+import { getClassName } from '../testing'
+import { LayoutModule } from './layout.module'
+import { Layout } from './layout'
 
 describe('Layout', () => {
   const layoutPrefix = 'ant-layout'

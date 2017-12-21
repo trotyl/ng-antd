@@ -4,9 +4,10 @@ import { By } from '@angular/platform-browser'
 import { Observable } from 'rxjs/Observable'
 import { Observer } from 'rxjs/Observer'
 import { Subscription } from 'rxjs/Subscription'
-import { ScreenManager } from '../core/core.module'
-import { getClassName, getStyle, noop } from '../testing/testing.module'
-import { GridModule, Row } from './grid.module'
+import { ScreenManager } from '../core'
+import { getClassName, getStyle, noop } from '../testing'
+import { GridModule } from './grid.module'
+import { Row } from './row'
 
 describe('Row', () => {
   const rowPrefix = 'ant-row'

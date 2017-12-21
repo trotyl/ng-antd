@@ -4,8 +4,9 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import { Subject } from 'rxjs/Subject'
 import { of } from 'rxjs/observable/of'
-import { noop } from '../testing/testing.module'
-import { CoreModule, Breakpoint, ScreenManager } from './core.module'
+import { noop } from '../testing'
+import { CoreModule } from './core.module'
+import { Breakpoint, ScreenManager } from './screen-manager'
 
 describe('ScreenManager', () => {
   let mockObserver: BreakpointObserver

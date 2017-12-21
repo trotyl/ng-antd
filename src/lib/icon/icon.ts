@@ -1,6 +1,6 @@
 import { Directive, Input } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { boolify, exists, StyledControl, TypedChanges } from '../core/core.module'
+import { boolify, exists, StyledControl, TypedChanges } from '../core'
 
 const prefix = 'anticon'
 
