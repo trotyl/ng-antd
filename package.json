@@ -16,7 +16,8 @@
     "pregenerate": "rimraf publish",
     "generate": "ng-packagr -p src/lib/package.json",
     "postgenerate": "mv src/lib/dist publish",
-    "release": "cd publish && npm publish"
+    "release": "cd publish && npm publish",
+    "integration-cli": "cd integration/angular-cli && npm run integration"
   },
   "private": true,
   "dependencies": {
