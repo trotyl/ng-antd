@@ -1,2 +1,1 @@
-export * from './menu'
-export * from './menu.module'
+export * from './public-api'

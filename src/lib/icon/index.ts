@@ -1,2 +1,1 @@
-export * from './icon'
-export * from './icon.module'
+export * from './public-api'

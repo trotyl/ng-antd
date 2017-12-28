@@ -1,2 +1,1 @@
-export * from './dropdown'
-export * from './dropdown.module'
+export * from './public-api'

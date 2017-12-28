@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "tmp",
+    "sourceMap": true,
+    "declaration": true,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2015",
+    "importHelpers": true,
+    "strict": true,
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "ng-antd/*": ["lib/*"]
+    }
+  }
+}

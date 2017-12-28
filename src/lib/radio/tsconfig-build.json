@@ -1,0 +1,14 @@
+{
+  "extends": "../../../tsconfig-build.json",
+  "files": [
+    "public-api.ts"
+  ],
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "flatModuleId": "ng-antd/radio",
+    "flatModuleOutFile": "index.js",
+    "fullTemplateTypeCheck": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true
+  }
+}
