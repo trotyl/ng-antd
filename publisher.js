@@ -2,7 +2,6 @@ const fs = require('fs-extra')
 const path = require('path')
 const { rollup } = require('rollup')
 const uglify = require('rollup-plugin-uglify')
-const shell = require('shelljs')
 const glob = require('glob').sync
 const { main: ngc } = require('./tools/ngc')
 const rollupConfig = require('./rollup.config')
