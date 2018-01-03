@@ -21,6 +21,7 @@ describe('Row', () => {
         RowGutterDynamicTest,
         RowJustifyTest,
         RowAlignTest,
+        RowAttributeSelectorTest,
       ]
     }).compileComponents()
   }))
@@ -126,6 +127,16 @@ describe('Row', () => {
     expect(getClassName(rows[3])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-bottom`)
   }))
 
+  it('should support attribute selector usage', async(() => {
+    const fixture = TestBed.createComponent(RowAttributeSelectorTest)
+    fixture.detectChanges()
+
+    const rows = fixture.debugElement.queryAll(By.directive(Row))
+    expect(getClassName(rows[0])).toBe(`${rowPrefix}`)
+    expect(getClassName(rows[1])).toBe(`${rowPrefix}-flex`)
+    expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex`)
+  }))
+
 })
 
 @Component({
@@ -172,3 +183,12 @@ class RowJustifyTest { }
   `
 })
 class RowAlignTest { }
+
+@Component({
+  template: `
+    <div antRow></div>
+    <div antRow type="flex"></div>
+    <div antRow="flex"></div>
+  `
+})
+class RowAttributeSelectorTest { }

@@ -7,7 +7,7 @@ import { boolify, exists, Breakpoint, ObjMap, ResponsiveConfig, ScreenManager, S
 const prefix = 'ant-row'
 
 @Directive({
-  selector: 'ant-row',
+  selector: 'ant-row, [antRow]',
   providers: [ NgClass, NgStyle ],
 })
 export class Row extends StyledControl implements OnDestroy {
@@ -15,6 +15,11 @@ export class Row extends StyledControl implements OnDestroy {
   @Input() gutter: number | ResponsiveConfig<number> = 0
   @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' | 'default' = 'default'
   @Input() type: 'flex' | 'default' = 'default'
+
+  @Input()
+  set antRow(value: 'flex' | 'default' | '' | undefined) {
+    if (value) { this.type = value }
+  }
 
   get normalizedGutter(): number {
     return typeof this.gutter === 'number' ? this.gutter : this._gutter
