@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core'
 
 @Directive({
-  selector: 'ant-footer',
+  selector: 'ant-footer, [antFooter]',
   host: {
     '[class.ant-layout-footer]': 'true'
   }

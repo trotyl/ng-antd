@@ -13,6 +13,7 @@ describe('Column', () => {
       imports: [ LayoutModule ],
       declarations: [
         SiderWidthTest,
+        SiderAttributeSelectorTest,
       ]
     }).compileComponents()
   }))
@@ -26,6 +27,16 @@ describe('Column', () => {
     expect(getStyle(cols[1])).toEqual({ 'width': '100px' })
   }))
 
+  it('should support attribute selector usage', async(() => {
+    const fixture = TestBed.createComponent(SiderAttributeSelectorTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.directive(Sider))
+    expect(getStyle(cols[0])).toEqual({ 'width': '200px' })
+    expect(getStyle(cols[1])).toEqual({ 'width': '100px' })
+    expect(getStyle(cols[2])).toEqual({ 'width': '100px' })
+  }))
+
 })
 
 @Component({
@@ -37,3 +48,14 @@ describe('Column', () => {
   `
 })
 class SiderWidthTest { }
+
+@Component({
+  template: `
+    <ant-layout>
+      <div antSider></div>
+      <div antSider [width]="100"></div>
+      <div antSider="100"></div>
+    </ant-layout>
+  `
+})
+class SiderAttributeSelectorTest { }

@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core'
 
 @Directive({
-  selector: 'ant-header',
+  selector: 'ant-header, [antHeader]',
   host: {
     '[class.ant-layout-header]': 'true'
   }

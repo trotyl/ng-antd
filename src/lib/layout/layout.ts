@@ -2,7 +2,7 @@ import { Component, ContentChildren, QueryList } from '@angular/core'
 import { Sider } from './sider'
 
 @Component({
-  selector: 'ant-layout',
+  selector: 'ant-layout, [antLayout]',
   templateUrl: './layout.html',
   host: {
     '[class.ant-layout]': 'true',
