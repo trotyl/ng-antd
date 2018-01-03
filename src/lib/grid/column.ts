@@ -14,7 +14,7 @@ export interface ColumnOptions {
 }
 
 @Directive({
-  selector: 'ant-col',
+  selector: 'ant-col, [antCol]',
   providers: [ NgClass, NgStyle ],
 })
 export class Column extends StyledControl {
@@ -29,6 +29,11 @@ export class Column extends StyledControl {
   @Input() lg: number | ColumnOptions | undefined = undefined
   @Input() xl: number | ColumnOptions | undefined = undefined
   @Input() xxl: number | ColumnOptions | undefined = undefined
+
+  @Input()
+  set antCol(value: number | '' | undefined) {
+    if (value) { this.span = value }
+  }
 
   constructor(
     private row: Row,

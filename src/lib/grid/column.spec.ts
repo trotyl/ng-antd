@@ -18,6 +18,7 @@ describe('Column', () => {
         ColOffsetTest,
         ColPullTest,
         ColPushTest,
+        ColAttributeSelectorTest,
       ]
     }).compileComponents()
   }))
@@ -63,6 +64,16 @@ describe('Column', () => {
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-push-4`)
+  }))
+
+  it('should support attribute selector usage', async(() => {
+    const fixture = TestBed.createComponent(ColAttributeSelectorTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
+    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-0`)
+    expect(getClassName(cols[1])).toBe(`${colPrefix} ${colPrefix}-1`)
+    expect(getClassName(cols[2])).toBe(`${colPrefix} ${colPrefix}-1`)
   }))
 
 })
@@ -115,3 +126,14 @@ class ColPullTest { }
   `
 })
 class ColPushTest { }
+
+@Component({
+  template: `
+    <ant-row>
+      <div antCol></div>
+      <div antCol [span]="1"></div>
+      <div antCol="1"></div>
+    </ant-row>
+  `
+})
+class ColAttributeSelectorTest { }
