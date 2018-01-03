@@ -13,6 +13,7 @@ describe('ButtonGroup', () => {
       imports: [ ButtonModule ],
       declarations: [
         ButtonGroupSizeTest,
+        ButtonGroupAttributeSelectorTest,
       ]
     }).compileComponents()
   }))
@@ -28,6 +29,16 @@ describe('ButtonGroup', () => {
     expect(getClassName(buttons[3])).toBe(`${btnGroupPrefix} ${btnGroupPrefix}-sm`)
   }))
 
+  it('should support attribute selector usage', async(() => {
+    const fixture = TestBed.createComponent(ButtonGroupAttributeSelectorTest)
+    fixture.detectChanges()
+
+    const buttons = fixture.debugElement.queryAll(By.directive(ButtonGroup))
+    expect(getClassName(buttons[0])).toBe(`${btnGroupPrefix}`)
+    expect(getClassName(buttons[1])).toBe(`${btnGroupPrefix} ${btnGroupPrefix}-lg`)
+    expect(getClassName(buttons[2])).toBe(`${btnGroupPrefix} ${btnGroupPrefix}-lg`)
+  }))
+
 })
 
 @Component({
@@ -39,3 +50,12 @@ describe('ButtonGroup', () => {
   `
 })
 class ButtonGroupSizeTest { }
+
+@Component({
+  template: `
+    <div antBtnGroup>Default</div>
+    <div antBtnGroup size="large">Large</div>
+    <div antBtnGroup="large">Small</div>
+  `
+})
+class ButtonGroupAttributeSelectorTest { }

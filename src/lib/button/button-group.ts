@@ -5,11 +5,16 @@ import { exists, getSizeToken, StyledControl, TypedChanges } from 'ng-antd/core'
 const prefix = 'ant-btn-group'
 
 @Directive({
-  selector: 'ant-btn-group',
+  selector: 'ant-btn-group, [antBtnGroup]',
   providers: [ NgClass ],
 })
 export class ButtonGroup extends StyledControl {
   @Input() size: 'large' | 'small' | 'default' = 'default'
+
+  @Input()
+  set antBtnGroup(value: 'large' | 'small' | 'default' | '' | undefined) {
+    if (value) { this.size = value }
+  }
 
   ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void {
     this.hostClasses = {
