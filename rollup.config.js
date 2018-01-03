@@ -8,6 +8,9 @@ const globals = {
   'rxjs/Subject': 'Rx',
   'rxjs/observable/combineLatest': 'Rx.Observable',
   'rxjs/operators': 'Rx.Observable.prototype',
+  'rxjs/operators/distinctUntilChanged': 'Rx.Observable.prototype',
+  'rxjs/operators/map': 'Rx.Observable.prototype',
+  'rxjs/operators/startWith': 'Rx.Observable.prototype',
   'ng-antd/core': 'ng.antd.core',
   'ng-antd/icon': 'ng.antd.icon',
 }
