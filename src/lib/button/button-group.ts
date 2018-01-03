@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Directive, Input } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { exists, StyledControl, TypedChanges } from 'ng-antd/core'
+import { exists, getSizeToken, StyledControl, TypedChanges } from 'ng-antd/core'
 
 const prefix = 'ant-btn-group'
 
@@ -11,15 +11,10 @@ const prefix = 'ant-btn-group'
 export class ButtonGroup extends StyledControl {
   @Input() size: 'large' | 'small' | 'default' = 'default'
 
-  private _sizeClassMap: { [name: string]: string } = {
-    large: 'lg',
-    small: 'sm',
-  }
-
   ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void {
     this.hostClasses = {
       [`${prefix}`]: true,
-      [`${prefix}-${this._sizeClassMap[this.size] || 'nosize'}`]: exists(this.size),
+      [`${prefix}-${getSizeToken(this.size)}`]: exists(this.size),
     }
   }
 }

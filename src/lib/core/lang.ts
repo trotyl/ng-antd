@@ -6,6 +6,12 @@ export function exists(value: string | null | undefined): boolean {
   return typeof value === 'string' ? value !== 'default' && value !== '' : !!value
 }
 
+export function getSizeToken(value: string): 'lg' | 'sm' | 'nosize' {
+  return value === 'large' ? 'lg' :
+    value === 'small' ? 'sm' :
+    'nosize'
+}
+
 export interface TypedChange<T> {
   previousValue: T
   currentValue: T

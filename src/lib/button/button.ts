@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { boolify, exists, hasContent, Classes, StyledControl, TypedChanges } from 'ng-antd/core'
+import { boolify, exists, hasContent, getSizeToken, Classes, StyledControl, TypedChanges } from 'ng-antd/core'
 
 const prefix = 'ant-btn'
 
@@ -41,17 +41,13 @@ export class Button extends StyledControl {
   private _hasContent = true
   private _loading = false
   private _ghost = false
-  private _sizeClassMap: { [name: string]: string } = {
-    large: 'lg',
-    small: 'sm'
-  }
 
   ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void {
     const shaped = exists(this.shape)
     this.hostClasses = {
       [`${prefix}`]: true,
       [`${prefix}-${this.color}`]: exists(this.color),
-      [`${prefix}-${this._sizeClassMap[this.size] || 'nosize'}`]: exists(this.size),
+      [`${prefix}-${getSizeToken(this.size)}`]: exists(this.size),
       [`${prefix}-circle`]: shaped,
       [`${prefix}-icon-only`]: shaped || (exists(this.icon) && !this._hasContent),
       [`${prefix}-loading`]: this._loading,
