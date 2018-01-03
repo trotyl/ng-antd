@@ -70,7 +70,7 @@ describe('ScreenManager', () => {
   it('should resolve to 0 when no value defined', inject([ScreenManager], (manager: ScreenManager) => {
     let res: number | null = null
 
-    manager.resolve({} as { [key: string]: number }).subscribe(x => res = x)
+    manager.resolve<number>({}).subscribe(x => res = x)
     resMap['(min-width: 768px)'].next({ matches: true })
 
     expect(res).toBe(null)

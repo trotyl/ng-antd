@@ -3,11 +3,17 @@ import { BreakpointObserver } from '@angular/cdk/layout'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 import { combineLatest } from 'rxjs/observable/combineLatest'
-import { distinctUntilChanged, map, startWith } from 'rxjs/operators'
+import { distinctUntilChanged } from 'rxjs/operators/distinctUntilChanged'
+import { map } from 'rxjs/operators/map'
+import { startWith } from 'rxjs/operators/startWith'
 
 export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
-const breakpoints: Breakpoint[] = [ 'xxl', 'xl', 'lg', 'md', 'sm', 'xs'  ]
+export type ResponsiveConfig<T> = {
+  [key in Breakpoint]?: T
+}
+
+const breakpoints: Breakpoint[] = [ 'xxl', 'xl', 'lg', 'md', 'sm', 'xs' ]
 
 const enum BreakpointToken {
   xs  = 0b00000001,
@@ -27,32 +33,32 @@ const enum BreakpointMatch {
   xxl = 0b00100000,
 }
 
-const queryMap = new Map<Breakpoint, string>([
-  ['xs', '(max-width: 575px)'],
-  ['sm', '(min-width: 576px)'],
-  ['md', '(min-width: 768px)'],
-  ['lg', '(min-width: 992px)'],
-  ['xl', '(min-width: 1200px)'],
-  ['xxl', '(min-width: 1600px)'],
-])
+const queryMap = {
+  xs: '(max-width: 575px)',
+  sm: '(min-width: 576px)',
+  md: '(min-width: 768px)',
+  lg: '(min-width: 992px)',
+  xl: '(min-width: 1200px)',
+  xxl: '(min-width: 1600px)',
+}
 
-const tokenMap = new Map<Breakpoint, BreakpointToken>([
-  ['xs', BreakpointToken.xs],
-  ['sm', BreakpointToken.sm],
-  ['md', BreakpointToken.md],
-  ['lg', BreakpointToken.lg],
-  ['xl', BreakpointToken.xl],
-  ['xxl', BreakpointToken.xxl],
-])
+const tokenMap = {
+  xs: BreakpointToken.xs,
+  sm: BreakpointToken.sm,
+  md: BreakpointToken.md,
+  lg: BreakpointToken.lg,
+  xl: BreakpointToken.xl,
+  xxl: BreakpointToken.xxl,
+}
 
-const matchMap = new Map<Breakpoint, BreakpointMatch>([
-  ['xs', BreakpointMatch.xs],
-  ['sm', BreakpointMatch.sm],
-  ['md', BreakpointMatch.md],
-  ['lg', BreakpointMatch.lg],
-  ['xl', BreakpointMatch.xl],
-  ['xxl', BreakpointMatch.xxl],
-])
+const matchMap = {
+  xs: BreakpointMatch.xs,
+  sm: BreakpointMatch.sm,
+  md: BreakpointMatch.md,
+  lg: BreakpointMatch.lg,
+  xl: BreakpointMatch.xl,
+  xxl: BreakpointMatch.xxl,
+}
 
 @Injectable()
 export class ScreenManager {
@@ -62,7 +68,7 @@ export class ScreenManager {
 
   constructor(private observer: BreakpointObserver) {
     const querieObservables = breakpoints
-      .map(breakpoint => this.makeQueryObservable(queryMap.get(breakpoint)!)
+      .map(breakpoint => this.makeQueryObservable(queryMap[breakpoint])
                              .pipe(
                                startWith(false),
                                map(matches => ({ breakpoint, matches })))
@@ -76,18 +82,18 @@ export class ScreenManager {
       .subscribe(res => this.match.next(res))
   }
 
-  resolve<T>(obj: { [key: string]: T }): Observable<T | null> {
+  resolve<T>(obj: ResponsiveConfig<T>): Observable<T | null> {
     return this.match.pipe(
       map((match) => {
         let firstDefined: Breakpoint | null = null
         for (const bp of breakpoints) {
           if (bp in obj) {
             if (!firstDefined) { firstDefined = bp }
-            if (tokenMap.get(bp)! & match) { return obj[bp] }
+            if (tokenMap[bp] & match) { return obj[bp]! }
           }
         }
         if (!firstDefined) { return null }
-        return obj[firstDefined]
+        return obj[firstDefined]!
       })
     )
   }
@@ -101,6 +107,6 @@ export class ScreenManager {
   private generateMatch(list: Array<{ breakpoint: Breakpoint, matches: boolean }>): BreakpointMatch {
     const availableBreakpoints = list.filter(x => x.matches).map(x => x.breakpoint)
     this.breakpoints.next(availableBreakpoints)
-    return matchMap.get(availableBreakpoints[0])!
+    return matchMap[availableBreakpoints[0]]
   }
 }

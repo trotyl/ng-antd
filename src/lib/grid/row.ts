@@ -2,18 +2,9 @@ import { ChangeDetectorRef, Directive, Input, OnDestroy, Self } from '@angular/c
 import { NgClass, NgStyle } from '@angular/common'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
-import { boolify, exists, Breakpoint, ObjMap, ScreenManager, StyledControl, TypedChanges } from 'ng-antd/core'
+import { boolify, exists, Breakpoint, ObjMap, ResponsiveConfig, ScreenManager, StyledControl, TypedChanges } from 'ng-antd/core'
 
 const prefix = 'ant-row'
-
-export interface GutterOptions {
-  xs?: number
-  sm?: number
-  md?: number
-  lg?: number
-  xl?: number
-  xxl?: number
-}
 
 @Directive({
   selector: 'ant-row',
@@ -21,7 +12,7 @@ export interface GutterOptions {
 })
 export class Row extends StyledControl implements OnDestroy {
   @Input() align: 'top' | 'middle' | 'bottom' | 'default' = 'default'
-  @Input() gutter: number | GutterOptions = 0
+  @Input() gutter: number | ResponsiveConfig<number> = 0
   @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' | 'default' = 'default'
   @Input() type: 'flex' | 'default' = 'default'
 
@@ -41,7 +32,7 @@ export class Row extends StyledControl implements OnDestroy {
 
   ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void {
     if (typeof this.gutter !== 'number' && !this._gutter$$) {
-      this._gutter$$ = this.screenManager.resolve(this.gutter as ObjMap<number>)
+      this._gutter$$ = this.screenManager.resolve(this.gutter)
         .subscribe(val => this._gutter = val || 0)
     }
 
