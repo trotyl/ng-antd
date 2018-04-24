@@ -58,6 +58,8 @@ jobs:
       
       - run: yarn test
 
+      - run: yarn codecov
+
   lint:
     docker:
       - image: circleci/node:8.9-browsers
