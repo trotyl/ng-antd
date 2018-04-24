@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { boolify, exists, hasContent, getSizeToken, Classes, StyledControl, TypedChanges } from 'ng-antd/core'
+import { boolify, exists, hasContent, getSizeToken, Classes, TypedChanges } from '../core/index'
+import { StyledControl } from '../core/control'
 
 const prefix = 'ant-btn'
 

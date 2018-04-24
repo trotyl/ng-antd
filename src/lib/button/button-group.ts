@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Directive, Input } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { exists, getSizeToken, StyledControl, TypedChanges } from 'ng-antd/core'
+import { exists, getSizeToken, TypedChanges } from '../core/index'
+import { StyledControl } from '../core/control'
 
 const prefix = 'ant-btn-group'
 

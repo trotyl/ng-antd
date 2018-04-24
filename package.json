@@ -1,5 +1,5 @@
 {
-  "name": "ng-antd",
+  "name": "ng-antd-workspace",
   "version": "0.0.0-Placeholder",
   "license": "MIT",
   "description": "Project used to explore Angular component design best practice",
@@ -13,8 +13,7 @@
     "test": "ng test --single-run --no-progress --no-colors",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "pregenerate": "rimraf publish",
-    "generate": "node publisher",
+    "generate": "ng-packagr -p src/lib/package.json",
     "release": "cd publish && npm publish",
     "integration-cli": "cd integration/angular-cli && npm run integration"
   },
@@ -43,10 +42,6 @@
     "@types/node": "~6.0.60",
     "antd": "^3.0.1",
     "codelyzer": "^4.0.1",
-    "commitizen": "^2.9.6",
-    "cz-conventional-changelog": "^2.1.0",
-    "fs-extra": "^5.0.0",
-    "glob": "^7.1.2",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
@@ -55,19 +50,9 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "ng-packagr": "^2.4.2",
     "protractor": "~5.1.2",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.52.3",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-uglify": "^2.0.1",
-    "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "~2.4.2"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
