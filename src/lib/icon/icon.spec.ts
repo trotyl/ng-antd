@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName } from 'ng-antd/testing'
+import { getClassName } from '../testing/index'
 import { IconModule } from './icon.module'
 import { Icon } from './icon'
 

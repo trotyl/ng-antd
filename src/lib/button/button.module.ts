@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { IconModule } from 'ng-antd/icon'
+import { IconModule } from '../icon/icon.module'
 import { Button } from './button'
 import { ButtonGroup } from './button-group'
 

@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /publish
+publish.tgz
 
 # dependencies
 /node_modules
