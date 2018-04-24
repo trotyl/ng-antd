@@ -6,24 +6,16 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/node:8.9-browsers
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
 
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
-          # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
       - run: yarn install
@@ -33,9 +25,91 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
         
-      # run tests!
-      - run: yarn lint
-      - run: yarn test
       - run: yarn build
+
+      - store_artifacts:
+          path: ./publish/core/bundles/angular-contrib-core.umd.min.js
+          destination: core.umd.min.js
+
+      - store_artifacts:
+          path: ./publish/common/bundles/angular-contrib-common.umd.min.js
+          destination: common.umd.min.js
+
+  test:
+    docker:
+      - image: circleci/node:8.9-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      
+      - run: yarn test
+
+  lint:
+    docker:
+      - image: circleci/node:8.9-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+        
+      - run: yarn lint
+
+  integration:
+    docker:
+      - image: circleci/node:8.9-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+        
       - run: yarn generate && yarn integration-cli
 
+
+workflows:
+  version: 2
+  pipeline:
+    jobs:
+      - build
+      - test
+      - lint
+      - integration
