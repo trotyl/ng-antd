@@ -1,0 +1,12 @@
+<details *ngIf="html$ | async as html">
+  <summary>HTML</summary>
+  <pre style="border: 1px solid; padding: 10px; margin-top: 5px;">{{ html }}</pre>
+</details>
+<details *ngIf="ts$ | async as ts">
+  <summary>TS</summary>
+  <pre style="border: 1px solid; padding: 10px; margin-top: 5px;">{{ ts }}</pre>
+</details>
+<details *ngIf="css$ | async as css">
+  <summary>CSS</summary>
+  <pre style="border: 1px solid; padding: 10px; margin-top: 5px;">{{ css }}</pre>
+</details>

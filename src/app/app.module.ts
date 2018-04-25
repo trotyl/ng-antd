@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
+import { HttpClientModule } from '@angular/common/http'
 import { RouterModule, Routes } from '@angular/router'
-import { GridModule } from 'ng-antd'
+import { LayoutModule } from 'ng-antd'
 
 import { ButtonDemos } from './button/button-demos'
 import { ButtonDemoModule } from './button/button-demo.module'
@@ -30,12 +31,13 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(routes),
-    GridModule,
+    LayoutModule,
     DEMO_MODULES,
   ],
   providers: [],

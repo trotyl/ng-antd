@@ -1,5 +1,6 @@
 import { NgModule, Type } from '@angular/core'
 import { LayoutModule } from 'ng-antd'
+import { SharedModule } from '../shared/shared.module'
 import { LayoutDemoBasic } from './layout-demo-basic'
 import { LayoutDemoTop } from './layout-demo-top'
 import { LayoutDemoTopSide } from './layout-demo-top-side'
@@ -29,7 +30,7 @@ const NG_MODULES: Type<any>[] = [
 
 @NgModule({
   declarations: [ TYPES, LayoutDemos ],
-  imports: [ NG_MODULES ],
-  exports: [ NG_MODULES, TYPES ],
+  imports: [ SharedModule, NG_MODULES ],
+  exports: [ TYPES ],
 })
 export class LayoutDemoModule { }
