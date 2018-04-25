@@ -5,14 +5,6 @@ import { Row } from './row'
 
 const prefix = 'ant-col'
 
-export interface ColumnOptions {
-  span?: number
-  offset?: number
-  order?: number
-  pull?: number
-  push?: number
-}
-
 @Directive({
   selector: 'ant-col, [antCol]',
   providers: [ NgClass, NgStyle, HostElement ],
