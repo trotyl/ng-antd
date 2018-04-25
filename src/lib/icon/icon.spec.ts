@@ -14,6 +14,7 @@ describe('Icon', () => {
       declarations: [
         IconTypeTest,
         IconSpinTest,
+        IconErrorTypeTest,
       ]
     }).compileComponents()
   }))
@@ -41,6 +42,10 @@ describe('Icon', () => {
     expect(getClassName(icons[6])).toBe(`${iconPrefix} ${iconPrefix}-loading ${iconPrefix}-spin`)
   }))
 
+  it('should report error when type not set', async(() => {
+    const fixture = TestBed.createComponent(IconErrorTypeTest)
+    expect(() => fixture.detectChanges()).toThrowError(/Antd: icon must have a type/)
+  }))
 
 })
 
@@ -64,3 +69,10 @@ class IconTypeTest { }
   `
 })
 class IconSpinTest { }
+
+@Component({
+  template: `
+    <i antIcon></i>
+  `
+})
+class IconErrorTypeTest { }

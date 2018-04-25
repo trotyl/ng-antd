@@ -130,7 +130,7 @@ class ColPushTest { }
 @Component({
   template: `
     <ant-row>
-      <div antCol [span]="0"></div>
+      <div antCol></div>
       <div antCol [span]="1"></div>
       <div [antCol]="1"></div>
     </ant-row>

@@ -1,4 +1,4 @@
-import { isDevMode, Directive, Input, OnChanges, Self, SimpleChanges } from '@angular/core'
+import { Directive, Input, OnChanges, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
 import { HostElement } from '../core/host-element'
 import { Row } from './row'
@@ -41,8 +41,6 @@ export class Column implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    /* istanbul ignore else */
-    if (isDevMode()) this.checkNoConflits()
     this.updateHostClasses()
 
     const padding = this.row.normalizedGutter / 2
@@ -66,12 +64,6 @@ export class Column implements OnChanges {
     this.host.styles = {
       'padding-left': `${padding}px`,
       'padding-right': `${padding}px`,
-    }
-  }
-
-  private checkNoConflits(): void {
-    if (typeof this.span !== 'number') {
-      throw new Error(`Column must have a given numeric span`)
     }
   }
 }

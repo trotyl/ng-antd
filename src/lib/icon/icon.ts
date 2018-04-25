@@ -36,7 +36,7 @@ export class Icon implements OnChanges {
 
   private checkNoConflits(): void {
     if (!this.type) {
-      throw new Error(`Icon must have a type`)
+      throw new Error(`Antd: icon must have a type`)
     }
   }
 }
