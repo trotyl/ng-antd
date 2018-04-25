@@ -1,5 +1,5 @@
 import { NgModule, Type } from '@angular/core'
-import { ButtonModule, DropdownModule, IconModule, MenuModule, RadioModule } from '../lib-proxy'
+import { ButtonModule, DropdownModule, IconModule, MenuModule, RadioModule } from 'ng-antd'
 import { ButtonDemoBasic } from './button-demo-basic'
 import { ButtonDemoSize } from './button-demo-size'
 import { ButtonDemoLoading } from './button-demo-loading'
