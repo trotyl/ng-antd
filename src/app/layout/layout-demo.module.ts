@@ -1,5 +1,5 @@
 import { NgModule, Type } from '@angular/core'
-import { LayoutModule } from '../lib-proxy'
+import { LayoutModule } from 'ng-antd'
 import { LayoutDemoBasic } from './layout-demo-basic'
 import { LayoutDemoTop } from './layout-demo-top'
 import { LayoutDemoTopSide } from './layout-demo-top-side'

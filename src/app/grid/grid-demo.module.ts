@@ -1,6 +1,6 @@
 import { NgModule, Type } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { GridModule } from '../lib-proxy'
+import { GridModule } from 'ng-antd'
 import { GridDemoBasic } from './grid-demo-basic'
 import { GridDemoGutter } from './grid-demo-gutter'
 import { GridDemoOffset } from './grid-demo-offset'

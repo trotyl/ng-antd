@@ -20,6 +20,7 @@
     "baseUrl": "./src",
     "paths": {
       "@app/*": ["app/*"],
+      "ng-antd": ["lib/public-api"],
       "ng-antd/*": ["lib/*"]
     }
   }
