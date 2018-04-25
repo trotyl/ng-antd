@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass } from '@angular/common'
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { getSizeToken } from '../core/lang'
@@ -17,39 +17,25 @@ export class Button implements OnChanges, OnInit {
   @Input() size: 'large' | 'small' | null = null
   @Input() icon: string | null = null
   @Input() shape: 'circle' | null = null
-
-  @Input()
-  set loading(value: boolean) { this._loading = boolify(value) }
-  get loading(): boolean { return this._loading }
-
-  @Input()
-  set ghost(value: boolean) { this._ghost = boolify(value) }
-  get ghost(): boolean { return this._ghost }
-
-  @Input()
-  set iconOnly(value: boolean) { this._iconOnly = boolify(value) }
-  get iconOnly(): boolean { return this._iconOnly }
+  @Input() loading: boolean = false
+  @Input() ghost: boolean = false
+  @Input() iconOnly: boolean = false
 
   @Input()
   set antBtn(value: 'primary' | 'dashed' | 'danger' | '' | null) {
     if (value !== '') { this.color = value }
   }
 
-  private _hasContent = true
-  private _loading = false
-  private _ghost = false
-  private _iconOnly = false
-
   constructor(@Self() private host: HostElement) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.checkNoConflicts()
+    if (isDevMode()) this.checkNoConflicts()
     this.updateHostClasses()
   }
 
   ngOnInit(): void {
     if (!this.host.classes) {
-      this.checkNoConflicts()
+      if (isDevMode()) this.checkNoConflicts()
       this.updateHostClasses()
     }
   }
@@ -60,18 +46,18 @@ export class Button implements OnChanges, OnInit {
       [`${prefix}-${this.color}`]: !!this.color,
       [`${prefix}-${getSizeToken(this.size)}`]: !!this.size,
       [`${prefix}-circle`]: !!this.shape,
-      [`${prefix}-icon-only`]: !!this.shape || this._iconOnly,
-      [`${prefix}-loading`]: this._loading,
-      [`${prefix}-background-ghost`]: this._ghost,
+      [`${prefix}-icon-only`]: !!this.shape || boolify(this.iconOnly),
+      [`${prefix}-loading`]: boolify(this.loading),
+      [`${prefix}-background-ghost`]: boolify(this.ghost),
     }
   }
 
   private checkNoConflicts(): void {
-    if (this._loading && this.icon) {
+    if (boolify(this.loading) && this.icon) {
       throw new Error(`Button with icon cannot have loading status`)
     }
 
-    if (this._iconOnly && !this.icon) {
+    if (boolify(this.iconOnly) && !this.icon) {
       throw new Error(`Button without an icon cannot be iconOnly`)
     }
   }
