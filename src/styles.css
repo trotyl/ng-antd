@@ -1,1 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
+section {
+  margin-bottom: 5px;
+}
+
+.ant-col {
+  border: 1px solid skyblue;
+  padding: 10px;
+  text-align: center;
+}
+
+layout-demos .ant-layout-header {
+  border: 1px solid skyblue;
+  min-height: 80px;
+  padding-top: 10px;
+  color: white;
+  text-align: center;
+}
+
+layout-demos .ant-layout-content {
+  border: 1px solid skyblue;
+  min-height: 80px;
+  padding-top: 30px;
+  text-align: center;
+}
+
+layout-demos .ant-layout-sider {
+  border: 1px solid skyblue;
+  color: white;
+  min-height: 80px;
+  padding-top: 30px;
+  text-align: center;
+}
+
+layout-demos .ant-layout-footer {
+  border: 1px solid skyblue;
+  min-height: 80px;
+  padding-top: 30px;
+  text-align: center;
+}
