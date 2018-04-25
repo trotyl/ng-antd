@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { exists, getSizeToken } from '../core/lang'
+import { getSizeToken } from '../core/lang'
 import { HostElement } from '../core/host-element'
 
 const prefix = 'ant-btn-group'
@@ -10,11 +10,11 @@ const prefix = 'ant-btn-group'
   providers: [ NgClass, HostElement ],
 })
 export class ButtonGroup implements OnChanges, OnInit {
-  @Input() size: 'large' | 'small' | 'default' = 'default'
+  @Input() size: 'large' | 'small' | null = null
 
   @Input()
-  set antBtnGroup(value: 'large' | 'small' | 'default' | '' | undefined) {
-    if (value) { this.size = value }
+  set antBtnGroup(value: 'large' | 'small' | '' | null) {
+    if (value !== '') { this.size = value }
   }
 
   constructor(@Self() private host: HostElement) { }
@@ -32,7 +32,7 @@ export class ButtonGroup implements OnChanges, OnInit {
   private updateHostClasses(): void {
     this.host.classes = {
       [`${prefix}`]: true,
-      [`${prefix}-${getSizeToken(this.size)}`]: exists(this.size),
+      [`${prefix}-${getSizeToken(this.size)}`]: !!this.size,
     }
   }
 }

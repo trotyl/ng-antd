@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
-import { boolify, exists } from '../core/lang'
+import { boolify } from '../core/lang'
 import { HostElement } from '../core/host-element'
 import { Row } from './row'
 
@@ -38,7 +38,7 @@ export class Column implements OnChanges, OnInit {
 
   constructor(
     private row: Row,
-    @Self() private hostElement: HostElement,
+    @Self() private host: HostElement,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -51,13 +51,13 @@ export class Column implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.hostElement.classes) {
+    if (!this.host.classes) {
       this.updateHostClasses()
     }
   }
 
   private updateHostClasses(): void {
-    this.hostElement.classes = {
+    this.host.classes = {
       [`${prefix}`]: true,
       [`${prefix}-${this.span}`]: true,
       [`${prefix}-offset-${this.offset}`]: this.offset > 0,
@@ -68,7 +68,7 @@ export class Column implements OnChanges, OnInit {
 
   private updateHostStyles(): void {
     const padding = this.row.normalizedGutter / 2
-    this.hostElement.styles = {
+    this.host.styles = {
       'padding-left': `${padding}px`,
       'padding-right': `${padding}px`,
     }

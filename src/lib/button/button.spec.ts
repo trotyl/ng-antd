@@ -96,7 +96,7 @@ describe('Button', () => {
 @Component({
   template: `
     <button antBtn>Default</button>
-    <button antBtn color="default">Default</button>
+    <button antBtn [color]="null">Default</button>
     <button antBtn color="primary">Primary</button>
     <button antBtn color="dashed">Dashed</button>
     <button antBtn color="danger">Danger</button>
@@ -108,7 +108,7 @@ class ButtonTypeTest { }
 @Component({
   template: `
     <button antBtn>Default</button>
-    <button antBtn size="default">Default</button>
+    <button antBtn [size]="null">Default</button>
     <button antBtn size="large">Large</button>
     <button antBtn size="small">Small</button>
   `

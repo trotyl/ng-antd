@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Directive, Input, OnChanges, OnDestroy, OnInit, Self
 import { NgClass, NgStyle } from '@angular/common'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
-import { boolify, exists } from '../core/index'
+import { boolify } from '../core/index'
 import { Breakpoint, ResponsiveConfig, ScreenManager } from '../core/screen-manager'
 import { HostElement } from '../core/host-element'
 
@@ -13,14 +13,14 @@ const prefix = 'ant-row'
   providers: [ NgClass, NgStyle, HostElement ],
 })
 export class Row implements OnChanges, OnDestroy, OnInit {
-  @Input() align: 'top' | 'middle' | 'bottom' | 'default' = 'default'
+  @Input() align: 'top' | 'middle' | 'bottom' | null = null
   @Input() gutter: number | ResponsiveConfig<number> = 0
-  @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' | 'default' = 'default'
-  @Input() type: 'flex' | 'default' = 'default'
+  @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' | null = null
+  @Input() type: 'flex' | null = null
 
   @Input()
-  set antRow(value: 'flex' | 'default' | '' | undefined) {
-    if (value) { this.type = value }
+  set antRow(value: 'flex' | '' | null) {
+    if (value !== '') { this.type = value }
   }
 
   get normalizedGutter(): number {
@@ -32,7 +32,7 @@ export class Row implements OnChanges, OnDestroy, OnInit {
 
   constructor(
     private screenManager: ScreenManager,
-    @Self() private hostElement: HostElement,
+    @Self() private host: HostElement,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -46,7 +46,7 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.hostElement.classes) {
+    if (!this.host.classes) {
       this.updateHostClasses()
     }
   }
@@ -59,23 +59,23 @@ export class Row implements OnChanges, OnDestroy, OnInit {
 
   private updateHostClasses(): void {
     const isFlex = this.type === 'flex'
-    this.hostElement.classes = {
+    this.host.classes = {
       [`${prefix}`]: !isFlex,
       [`${prefix}-flex`]: isFlex,
-      [`${prefix}-flex-${this.justify}`]: exists(this.justify),
-      [`${prefix}-flex-${this.align}`]: exists(this.align),
+      [`${prefix}-flex-${this.justify}`]: !!this.justify,
+      [`${prefix}-flex-${this.align}`]: !!this.align,
     }
   }
 
   private updateHostStyles(): void {
     const margin = this.normalizedGutter / -2
     if (margin !== 0) {
-      this.hostElement.styles = {
+      this.host.styles = {
         'margin-left': `${margin}px`,
         'margin-right': `${margin}px`,
       }
     } else {
-      this.hostElement.styles = { }
+      this.host.styles = { }
     }
   }
 }

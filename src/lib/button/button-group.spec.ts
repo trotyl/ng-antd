@@ -44,7 +44,7 @@ describe('ButtonGroup', () => {
 @Component({
   template: `
     <ant-btn-group>Default</ant-btn-group>
-    <ant-btn-group size="default">Default</ant-btn-group>
+    <ant-btn-group [size]="null">Default</ant-btn-group>
     <ant-btn-group size="large">Large</ant-btn-group>
     <ant-btn-group size="small">Small</ant-btn-group>
   `

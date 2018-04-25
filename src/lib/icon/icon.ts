@@ -1,6 +1,6 @@
 import { Directive, Input, OnChanges, Self, SimpleChanges } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { boolify, exists, TypedChanges } from '../core/index'
+import { boolify } from '../core/lang'
 import { HostElement } from '../core/host-element'
 
 const prefix = 'anticon'
@@ -23,16 +23,16 @@ export class Icon {
 
   private _spin = false
 
-  constructor(@Self() private hostElement: HostElement) { }
+  constructor(@Self() private host: HostElement) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.updateHostClasses()
   }
 
   private updateHostClasses(): void {
-    this.hostElement.classes = {
+    this.host.classes = {
       [`${prefix}`]: true,
-      [`${prefix}-${this.type}`]: exists(this.type),
+      [`${prefix}-${this.type}`]: !!this.type,
       [`${prefix}-spin`]: this._spin || this.type === 'loading',
     }
   }

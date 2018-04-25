@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, Self, SimpleChanges, ViewChild } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { boolify, exists, hasContent, getSizeToken } from '../core/index'
+import { boolify, hasContent, getSizeToken } from '../core/index'
 import { HostElement } from '../core/host-element'
 
 const prefix = 'ant-btn'
@@ -12,10 +12,10 @@ const prefix = 'ant-btn'
   providers: [ NgClass, HostElement ],
 })
 export class Button implements OnChanges, OnInit {
-  @Input() color: 'primary' | 'dashed' | 'danger' | 'default' = 'default'
-  @Input() size: 'large' | 'small' | 'default' = 'default'
+  @Input() color: 'primary' | 'dashed' | 'danger' | null = null
+  @Input() size: 'large' | 'small' | null = null
   @Input() icon: string | null = null
-  @Input() shape: 'circle' | 'default' = 'default'
+  @Input() shape: 'circle' | null = null
 
   @Input()
   set loading(value: boolean) { this._loading = boolify(value) }
@@ -26,8 +26,8 @@ export class Button implements OnChanges, OnInit {
   get ghost(): boolean { return this._ghost }
 
   @Input()
-  set antBtn(value: 'primary' | 'dashed' | 'danger' | 'default' | '' | undefined) {
-    if (value) { this.color = value }
+  set antBtn(value: 'primary' | 'dashed' | 'danger' | '' | null) {
+    if (value !== '') { this.color = value }
   }
 
   @ViewChild('content')
@@ -56,13 +56,12 @@ export class Button implements OnChanges, OnInit {
   }
 
   private updateHostClasses(): void {
-    const shaped = exists(this.shape)
     this.host.classes = {
       [`${prefix}`]: true,
-      [`${prefix}-${this.color}`]: exists(this.color),
-      [`${prefix}-${getSizeToken(this.size)}`]: exists(this.size),
-      [`${prefix}-circle`]: shaped,
-      [`${prefix}-icon-only`]: shaped || (exists(this.icon) && !this._hasContent),
+      [`${prefix}-${this.color}`]: !!this.color,
+      [`${prefix}-${getSizeToken(this.size)}`]: !!this.size,
+      [`${prefix}-circle`]: !!this.shape,
+      [`${prefix}-icon-only`]: !!this.shape || (!!this.icon && !this._hasContent),
       [`${prefix}-loading`]: this._loading,
       [`${prefix}-background-ghost`]: this._ghost,
     }
