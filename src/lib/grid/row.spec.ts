@@ -142,7 +142,7 @@ describe('Row', () => {
 @Component({
   template: `
     <ant-row></ant-row>
-    <ant-row type="default"></ant-row>
+    <ant-row [type]="null"></ant-row>
     <ant-row type="flex"></ant-row>
   `
 })
