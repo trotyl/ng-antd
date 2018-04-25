@@ -1,69 +1,15 @@
-<h2>General</h2>
-<h3>Button</h3>
-<h4>Type</h4>
-<button-demo-basic></button-demo-basic>
-<br>
-<h4>Size</h4>
-<button-demo-size></button-demo-size>
-<br>
-<h4>Loading</h4>
-<button-demo-loading></button-demo-loading>
-<br>
-<h4>Button Group</h4>
-<button-demo-button-group></button-demo-button-group>
-<br>
-<h4>Icon</h4>
-<button-demo-icon></button-demo-icon>
-<br>
-<h4>Disabled</h4>
-<button-demo-disabled></button-demo-disabled>
-<br>
-<h4>Multiple Buttons</h4>
-<button-demo-multiple></button-demo-multiple>
-<br>
-<h4>Ghost Button</h4>
-<button-demo-ghost></button-demo-ghost>
-<br>
-<h3>Icon</h3>
-<p>No case</p>
-<br>
-<h2>Layout</h2>
-<h3>Grid</h3>
-<h4>Basic Grid</h4>
-<grid-demo-basic></grid-demo-basic>
-<h4>Grid Gutter</h4>
-<grid-demo-gutter></grid-demo-gutter>
-<h4>Grid Offset</h4>
-<grid-demo-offset></grid-demo-offset>
-<h4>Grid Sort</h4>
-<grid-demo-sort></grid-demo-sort>
-<h4>Grid Flex</h4>
-<grid-demo-flex></grid-demo-flex>
-<h4>Flex Alignment</h4>
-<grid-demo-flex-align></grid-demo-flex-align>
-<h4>Responsive</h4>
-<grid-demo-responsive></grid-demo-responsive>
-<h4>More Responsive</h4>
-<grid-demo-responsive-more></grid-demo-responsive-more>
-<h4>Playground</h4>
-<grid-demo-playground></grid-demo-playground>
-<br>
-<h3>Layout</h3>
-<h4>Basic Structure</h4>
-<layout-demo-basic></layout-demo-basic>
-<h4>Header-Content-Footer</h4>
-<layout-demo-top></layout-demo-top>
-<h4>Header Sider 2</h4>
-<layout-demo-top-side-2></layout-demo-top-side-2>
-<h4>Header-Sider</h4>
-<layout-demo-top-side></layout-demo-top-side>
-<h4>Sider</h4>
-<layout-demo-side></layout-demo-side>
-<h4>Custom trigger</h4>
-<layout-demo-custom-trigger></layout-demo-custom-trigger>
-<h4>Responsive</h4>
-<layout-demo-responsive></layout-demo-responsive>
-<h4>Fixed Header</h4>
-<layout-demo-fixed></layout-demo-fixed>
-<h4>Fixed Sider</h4>
-<layout-demo-fixed-sider></layout-demo-fixed-sider>
+<ant-layout>
+  <ant-sider style="color: white; padding: 20px;">
+    <div *ngFor="let item of items">
+      <h2 style="color: white;">{{ item.type | titlecase }}</h2>
+      <ul >
+          <li *ngFor="let component of item.components">
+            <a [routerLink]="[component]">{{ component | titlecase }}</a>
+          </li>
+        </ul>
+    </div>
+  </ant-sider>
+  <ant-content style="padding: 20px;">
+    <router-outlet></router-outlet>
+  </ant-content>
+</ant-layout>

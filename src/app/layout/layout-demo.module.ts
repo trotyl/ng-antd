@@ -9,6 +9,7 @@ import { LayoutDemoCustomTrigger } from './layout-demo-custom-trigger'
 import { LayoutDemoResponsive } from './layout-demo-responsive'
 import { LayoutDemoFixed } from './layout-demo-fixed'
 import { LayoutDemoFixedSider } from './layout-demo-fixed-sider'
+import { LayoutDemos } from './layout-demos'
 
 const TYPES: Type<any>[] = [
   LayoutDemoBasic,
@@ -27,7 +28,7 @@ const NG_MODULES: Type<any>[] = [
 ]
 
 @NgModule({
-  declarations: [ TYPES ],
+  declarations: [ TYPES, LayoutDemos ],
   imports: [ NG_MODULES ],
   exports: [ NG_MODULES, TYPES ],
 })

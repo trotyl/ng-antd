@@ -8,6 +8,7 @@ import { ButtonDemoIcon } from './button-demo-icon'
 import { ButtonDemoDisabled } from './button-demo-disabled'
 import { ButtonDemoMultiple } from './button-demo-multiple'
 import { ButtonDemoGhost } from './button-demo-ghost'
+import { ButtonDemos } from './button-demos'
 
 const TYPES: Type<any>[] = [
   ButtonDemoBasic,
@@ -29,8 +30,8 @@ const NG_MODULES: Type<any>[] = [
 ]
 
 @NgModule({
-  declarations: [ TYPES ],
+  declarations: [ TYPES, ButtonDemos ],
   imports: [ NG_MODULES ],
-  exports: [ NG_MODULES, TYPES ],
+  exports: [ TYPES ],
 })
 export class ButtonDemoModule { }

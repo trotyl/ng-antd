@@ -10,6 +10,7 @@ import { GridDemoFlexAlign } from './grid-demo-flex-align'
 import { GridDemoResponsive } from './grid-demo-responsive'
 import { GridDemoResponsiveMore } from './grid-demo-responsive-more'
 import { GridDemoPlayground } from './grid-demo-playground'
+import { GridDemos } from './grid-demos'
 
 const TYPES: Type<any>[] = [
   GridDemoBasic,
@@ -29,8 +30,8 @@ const NG_MODULES: Type<any>[] = [
 ]
 
 @NgModule({
-  declarations: [ TYPES ],
+  declarations: [ TYPES, GridDemos ],
   imports: [ NG_MODULES ],
-  exports: [ NG_MODULES, TYPES ],
+  exports: [ TYPES ],
 })
 export class GridDemoModule { }
