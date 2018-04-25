@@ -9,14 +9,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --output-hashing none",
+    "build": "ng build --prod --output-hashing none --no-progress --no-colors",
     "test": "ng test --single-run --no-progress --no-colors --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "generate": "ng-packagr -p src/lib/package.json",
     "release": "cd publish && npm publish",
     "integration-cli": "cd integration/angular-cli && npm run integration",
-    "gh-build": "ng build --prod --base-href /ng-antd/",
+    "gh-build": "ng build --prod --base-href /ng-antd/ --no-progress --no-colors",
     "postgh-build": "cp -r .circleci/ dist/.circleci/",
     "deploy": "gh-pages -d dist -t"
   },

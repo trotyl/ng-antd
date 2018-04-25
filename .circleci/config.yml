@@ -126,16 +126,16 @@ jobs:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
 
-      - run: yarn gh-build
-
-      - run: yarn deploy
+      - run: yarn install
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
-        
-      - run: yarn generate && yarn integration-cli
+
+      - run: yarn gh-build
+
+      - run: yarn deploy
 
 workflows:
   version: 2
