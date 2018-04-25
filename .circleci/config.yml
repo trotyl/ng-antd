@@ -117,6 +117,10 @@ jobs:
           fingerprints:
             - "8e:3f:a1:06:c4:28:c5:b6:b8:14:28:0f:f4:7b:ec:34"
 
+      - run: |
+          git config --global user.email "trotyl@qq.com"
+          git config --global user.name "Trotyl Yu"
+
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
