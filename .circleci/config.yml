@@ -109,7 +109,19 @@ workflows:
   version: 2
   pipeline:
     jobs:
-      - build
-      - test
-      - lint
-      - integration
+      - build:
+          filters:
+            branches:
+              ignore: /gh-pages/
+      - test:
+          filters:
+            branches:
+              ignore: /gh-pages/
+      - lint:
+          filters:
+            branches:
+              ignore: /gh-pages/
+      - integration:
+          filters:
+            branches:
+              ignore: /gh-pages/
