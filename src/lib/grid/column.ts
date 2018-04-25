@@ -23,12 +23,6 @@ export class Column implements OnChanges {
   @Input() order: number = 0
   @Input() pull: number = 0
   @Input() push: number = 0
-  @Input() xs: number | ColumnOptions | undefined = undefined
-  @Input() sm: number | ColumnOptions | undefined = undefined
-  @Input() md: number | ColumnOptions | undefined = undefined
-  @Input() lg: number | ColumnOptions | undefined = undefined
-  @Input() xl: number | ColumnOptions | undefined = undefined
-  @Input() xxl: number | ColumnOptions | undefined = undefined
 
   @Input()
   set antCol(value: number | '') {
@@ -42,11 +36,7 @@ export class Column implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.updateHostClasses()
-
-    const padding = this.row.normalizedGutter / 2
-    if (padding !== 0) {
-      this.updateHostStyles()
-    }
+    this.updateHostStyles()
   }
 
   private updateHostClasses(): void {
@@ -60,7 +50,7 @@ export class Column implements OnChanges {
   }
 
   private updateHostStyles(): void {
-    const padding = this.row.normalizedGutter / 2
+    const padding = this.row.gutter / 2
     this.host.styles = {
       'padding-left': `${padding}px`,
       'padding-right': `${padding}px`,

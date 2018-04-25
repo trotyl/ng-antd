@@ -3,7 +3,6 @@ import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { getClassName, getStyle } from '../testing/helper'
 import { GridModule } from './grid.module'
-import { Row } from './row'
 import { Column } from './column'
 
 describe('Column', () => {
@@ -92,11 +91,10 @@ class ColSpanTest { }
 
 @Component({
   template: `
-    <ant-col [span]="6"></ant-col>
-  `,
-  providers: [
-    { provide: Row, useValue: { normalizedGutter: 16 }}
-  ]
+    <ant-row [gutter]="16">
+      <ant-col [span]="6"></ant-col>
+    </ant-row>
+  `
 })
 class ColGutterTest { }
 
