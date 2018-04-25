@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
 import { ScreenManager } from '../core/screen-manager'
-import { getClassName, getStyle, noop } from 'ng-antd/testing'
+import { getClassName, getStyle, noop } from '../testing/helper'
 import { GridModule } from './grid.module'
 import { Row } from './row'
 

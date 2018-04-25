@@ -1,7 +1,7 @@
 import { async, inject, TestBed } from '@angular/core/testing'
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout'
 import { Subject } from 'rxjs/Subject'
-import { noop } from 'ng-antd/testing'
+import { noop } from '../testing/helper'
 import { CoreModule } from './core.module'
 import { Breakpoint, ScreenManager } from './screen-manager'
 
