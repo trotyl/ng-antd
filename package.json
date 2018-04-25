@@ -15,7 +15,10 @@
     "e2e": "ng e2e",
     "generate": "ng-packagr -p src/lib/package.json",
     "release": "cd publish && npm publish",
-    "integration-cli": "cd integration/angular-cli && npm run integration"
+    "integration-cli": "cd integration/angular-cli && npm run integration",
+    "gh-build": "ng build --prod --base-href /ng-antd/",
+    "postgh-build": "cp -r .circleci/ dist/.circleci/",
+    "deploy": "gh-pages -d dist -t"
   },
   "private": true,
   "dependencies": {
@@ -44,6 +47,7 @@
     "antd": "^3.0.1",
     "codecov": "^3.0.0",
     "codelyzer": "^4.0.1",
+    "gh-pages": "^1.1.0",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
