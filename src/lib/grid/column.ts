@@ -1,4 +1,4 @@
-import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, Directive, Input, OnChanges, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
 import { HostElement } from '../core/host-element'
 import { Row } from './row'
@@ -17,7 +17,7 @@ export interface ColumnOptions {
   selector: 'ant-col, [antCol]',
   providers: [ NgClass, NgStyle, HostElement ],
 })
-export class Column implements OnChanges, OnInit {
+export class Column implements OnChanges {
   @Input() span: number = 0
   @Input() offset: number = 0
   @Input() order: number = 0
@@ -31,8 +31,8 @@ export class Column implements OnChanges, OnInit {
   @Input() xxl: number | ColumnOptions | undefined = undefined
 
   @Input()
-  set antCol(value: number | '' | undefined) {
-    if (value) { this.span = value }
+  set antCol(value: number | '') {
+    if (value !== '') { this.span = value }
   }
 
   constructor(
@@ -41,17 +41,13 @@ export class Column implements OnChanges, OnInit {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    /* istanbul ignore else */
+    if (isDevMode()) this.checkNoConflits()
     this.updateHostClasses()
 
     const padding = this.row.normalizedGutter / 2
     if (padding !== 0) {
       this.updateHostStyles()
-    }
-  }
-
-  ngOnInit(): void {
-    if (!this.host.classes) {
-      this.updateHostClasses()
     }
   }
 
@@ -70,6 +66,12 @@ export class Column implements OnChanges, OnInit {
     this.host.styles = {
       'padding-left': `${padding}px`,
       'padding-right': `${padding}px`,
+    }
+  }
+
+  private checkNoConflits(): void {
+    if (typeof this.span !== 'number') {
+      throw new Error(`Column must have a given numeric span`)
     }
   }
 }

@@ -1,4 +1,4 @@
-import { isDevMode, ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, Component, Input, OnChanges, Self, SimpleChanges } from '@angular/core'
 import { NgClass } from '@angular/common'
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { getSizeToken } from '../core/lang'
@@ -12,7 +12,7 @@ const prefix = 'ant-btn'
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ NgClass, HostElement ],
 })
-export class Button implements OnChanges, OnInit {
+export class Button implements OnChanges {
   @Input() color: 'primary' | 'dashed' | 'danger' | null = null
   @Input() size: 'large' | 'small' | null = null
   @Input() icon: string | null = null
@@ -29,15 +29,9 @@ export class Button implements OnChanges, OnInit {
   constructor(@Self() private host: HostElement) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    /* istanbul ignore else */
     if (isDevMode()) this.checkNoConflicts()
     this.updateHostClasses()
-  }
-
-  ngOnInit(): void {
-    if (!this.host.classes) {
-      if (isDevMode()) this.checkNoConflicts()
-      this.updateHostClasses()
-    }
   }
 
   private updateHostClasses(): void {

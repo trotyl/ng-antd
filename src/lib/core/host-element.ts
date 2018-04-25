@@ -3,6 +3,9 @@ import { NgClass, NgStyle } from '@angular/common'
 
 @Injectable()
 export class HostElement {
+  private _classes: string | string[] | Set<string> | {[klass: string]: any}
+  private _styles: {[key: string]: string}
+
   constructor(
     @Self() @Optional() private ngClassDir?: NgClass,
     @Self() @Optional() private ngStyleDir?: NgStyle,
@@ -10,24 +13,24 @@ export class HostElement {
 
   set classes(value: string | string[] | Set<string> | {[klass: string]: any}) {
     this.assertNgClass()
+    this._classes = value
     this.ngClassDir!.ngClass = value
     this.ngClassDir!.ngDoCheck()
   }
 
   get classes() {
-    this.assertNgClass()
-    return this.ngClassDir!.ngClass
+    return this._classes
   }
 
   set styles(value: {[key: string]: string}) {
     this.assertNgStyle()
+    this._styles = value
     this.ngStyleDir!.ngStyle = value
     this.ngStyleDir!.ngDoCheck()
   }
 
   get styles() {
-    this.assertNgStyle()
-    return this.ngStyleDir!.ngStyle
+    return this._styles
   }
 
   private assertNgClass(): void {
