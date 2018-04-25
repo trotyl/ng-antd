@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, Self, SimpleChanges, ViewChild } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { boolify, exists, hasContent, getSizeToken, Classes, TypedChanges } from '../core/index'
-import { StyledControl } from '../core/control'
+import { boolify, exists, hasContent, getSizeToken } from '../core/index'
+import { HostElement } from '../core/host-element'
 
 const prefix = 'ant-btn'
 
@@ -9,9 +9,9 @@ const prefix = 'ant-btn'
   selector: 'button[antBtn]',
   templateUrl: './button.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ NgClass ],
+  providers: [ NgClass, HostElement ],
 })
-export class Button extends StyledControl {
+export class Button implements OnChanges, OnInit {
   @Input() color: 'primary' | 'dashed' | 'danger' | 'default' = 'default'
   @Input() size: 'large' | 'small' | 'default' = 'default'
   @Input() icon: string | null = null
@@ -35,7 +35,7 @@ export class Button extends StyledControl {
     if (value) {
       const contentWrapper = value.nativeElement
       this._hasContent = hasContent(contentWrapper)
-      this.forceUpdate()
+      this.updateHostClasses()
     }
   }
 
@@ -43,9 +43,21 @@ export class Button extends StyledControl {
   private _loading = false
   private _ghost = false
 
-  ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void {
+  constructor(@Self() private host: HostElement) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateHostClasses()
+  }
+
+  ngOnInit(): void {
+    if (!this.host.classes) {
+      this.updateHostClasses()
+    }
+  }
+
+  private updateHostClasses(): void {
     const shaped = exists(this.shape)
-    this.hostClasses = {
+    this.host.classes = {
       [`${prefix}`]: true,
       [`${prefix}-${this.color}`]: exists(this.color),
       [`${prefix}-${getSizeToken(this.size)}`]: exists(this.size),

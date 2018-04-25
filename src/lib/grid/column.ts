@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Directive, Input, Self } from '@angular/core'
+import { ChangeDetectorRef, Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
-import { boolify, exists, TypedChanges } from '../core/index'
-import { StyledControl } from '../core/control'
+import { boolify, exists } from '../core/lang'
+import { HostElement } from '../core/host-element'
 import { Row } from './row'
 
 const prefix = 'ant-col'
@@ -16,9 +16,9 @@ export interface ColumnOptions {
 
 @Directive({
   selector: 'ant-col, [antCol]',
-  providers: [ NgClass, NgStyle ],
+  providers: [ NgClass, NgStyle, HostElement ],
 })
-export class Column extends StyledControl {
+export class Column implements OnChanges, OnInit {
   @Input() span: number = 0
   @Input() offset: number = 0
   @Input() order: number = 0
@@ -38,26 +38,39 @@ export class Column extends StyledControl {
 
   constructor(
     private row: Row,
-    cdRef: ChangeDetectorRef,
-    @Self() ngClass: NgClass,
-    @Self() ngStyle: NgStyle,
-  ) { super(cdRef, ngClass, ngStyle) }
+    @Self() private hostElement: HostElement,
+  ) { }
 
-  ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void {
-    this.hostClasses = {
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateHostClasses()
+
+    const padding = this.row.normalizedGutter / 2
+    if (padding !== 0) {
+      this.updateHostStyles()
+    }
+  }
+
+  ngOnInit(): void {
+    if (!this.hostElement.classes) {
+      this.updateHostClasses()
+    }
+  }
+
+  private updateHostClasses(): void {
+    this.hostElement.classes = {
       [`${prefix}`]: true,
       [`${prefix}-${this.span}`]: true,
       [`${prefix}-offset-${this.offset}`]: this.offset > 0,
       [`${prefix}-pull-${this.pull}`]: this.pull > 0,
       [`${prefix}-push-${this.push}`]: this.push > 0,
     }
+  }
 
+  private updateHostStyles(): void {
     const padding = this.row.normalizedGutter / 2
-    if (padding !== 0) {
-      this.hostStyles = {
-        'padding-left': `${padding}px`,
-        'padding-right': `${padding}px`,
-      }
+    this.hostElement.styles = {
+      'padding-left': `${padding}px`,
+      'padding-right': `${padding}px`,
     }
   }
 }
