@@ -20,9 +20,13 @@
       "prefix": "app",
       "styles": [
         "../node_modules/antd/dist/antd.css",
+        "../node_modules/prismjs/themes/prism-coy.css",
         "styles.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/prismjs/prism.js",
+        "../node_modules/prismjs/components/prism-typescript.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
