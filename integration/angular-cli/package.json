@@ -25,12 +25,12 @@
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
     "core-js": "^2.4.1",
-    "ng-antd": "file:../../publish",
+    "ng-antd": "file:../../publish.tgz",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
-    "@angular/cli": "1.6.2",
+    "@angular/cli": "^1.7.4",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
     "typescript": "~2.4.2"
