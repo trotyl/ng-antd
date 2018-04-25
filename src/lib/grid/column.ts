@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
-import { boolify } from '../core/lang'
+import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { HostElement } from '../core/host-element'
 import { Row } from './row'
 

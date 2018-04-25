@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, Self, SimpleChanges, ViewChild } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { boolify, hasContent, getSizeToken } from '../core/index'
+import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
+import { hasContent, getSizeToken } from '../core/index'
 import { HostElement } from '../core/host-element'
 
 const prefix = 'ant-btn'

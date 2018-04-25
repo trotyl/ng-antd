@@ -1,6 +1,6 @@
 import { Directive, Input, OnChanges, Self, SimpleChanges } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { boolify } from '../core/lang'
+import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { HostElement } from '../core/host-element'
 
 const prefix = 'anticon'
