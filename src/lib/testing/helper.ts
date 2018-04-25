@@ -7,5 +7,3 @@ export function getClassName(element: DebugElement): string {
 export function getStyle(element: DebugElement): { [style: string]: string | null } {
   return element.styles
 }
-
-export function noop() { }

@@ -1,7 +1,5 @@
-import { Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
+import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
-import { Subscription } from 'rxjs/Subscription'
-import { ResponsiveConfig, ScreenManager } from '../core/screen-manager'
 import { HostElement } from '../core/host-element'
 
 const prefix = 'ant-row'
@@ -10,9 +8,9 @@ const prefix = 'ant-row'
   selector: 'ant-row, [antRow]',
   providers: [ NgClass, NgStyle, HostElement ],
 })
-export class Row implements OnChanges, OnDestroy, OnInit {
+export class Row implements OnChanges, OnInit {
   @Input() align: 'top' | 'middle' | 'bottom' | null = null
-  @Input() gutter: number | ResponsiveConfig<number> = 0
+  @Input() gutter: number = 0
   @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' | null = null
   @Input() type: 'flex' | null = null
 
@@ -21,24 +19,11 @@ export class Row implements OnChanges, OnDestroy, OnInit {
     if (value !== '') { this.type = value }
   }
 
-  get normalizedGutter(): number {
-    return typeof this.gutter === 'number' ? this.gutter : this._gutter
-  }
-
-  private _gutter: number = 0
-  private _gutter$$: Subscription | null = null
-
   constructor(
-    private screenManager: ScreenManager,
     @Self() private host: HostElement,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (typeof this.gutter !== 'number' && !this._gutter$$) {
-      this._gutter$$ = this.screenManager.resolve(this.gutter)
-        .subscribe(val => this._gutter = val || 0)
-    }
-
     this.updateHostClasses()
     this.updateHostStyles()
   }
@@ -46,12 +31,6 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   ngOnInit(): void {
     if (!this.host.classes) {
       this.updateHostClasses()
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this._gutter$$) {
-      this._gutter$$.unsubscribe()
     }
   }
 
@@ -66,7 +45,7 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   }
 
   private updateHostStyles(): void {
-    const margin = this.normalizedGutter / -2
+    const margin = this.gutter / -2
     if (margin !== 0) {
       this.host.styles = {
         'margin-left': `${margin}px`,
