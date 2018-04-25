@@ -1,18 +1,22 @@
-<span>
+<section>
   <button antBtn color="primary" loading>
     Loading
   </button>
   <button antBtn color="primary" size="small" loading>
     Loading
   </button>
-  <br>
+</section>
+
+<section>
   <button antBtn color="primary" [loading]="loading" (click)="enterLoading()">
     Click me!
   </button>
   <button antBtn color="primary" icon="poweroff" [loading]="iconLoading" (click)="enterIconLoading()">
     Click me!
   </button>
-  <br>
+</section>
+
+<section>
   <button antBtn shape="circle" loading></button>
-  <button antBtn color="primary" shape="circle" loading></button>
-</span>
+  <button antBtn color="primary" shape="circle" loading></button>  
+</section>
