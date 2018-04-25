@@ -1,9 +1,7 @@
-import { ChangeDetectorRef, Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
+import { Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
-import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
-import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { Breakpoint, ResponsiveConfig, ScreenManager } from '../core/screen-manager'
+import { ResponsiveConfig, ScreenManager } from '../core/screen-manager'
 import { HostElement } from '../core/host-element'
 
 const prefix = 'ant-row'

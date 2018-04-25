@@ -6,8 +6,6 @@ import { LayoutModule } from './layout.module'
 import { Sider } from './sider'
 
 describe('Column', () => {
-  const colPrefix = 'ant-col'
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ LayoutModule ],
