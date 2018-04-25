@@ -7,6 +7,11 @@ const API_BASE = 'https://raw.githubusercontent.com/trotyl/ng-antd/master/src/ap
 @Component({
   selector: 'source-viewer',
   templateUrl: './source-viewer.component.html',
+  styles: [`
+    .code-block {
+      margin-top: 5px;
+    }
+  `],
   host: { '[style.display]': `'block'` },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
