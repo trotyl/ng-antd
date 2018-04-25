@@ -104,6 +104,34 @@ jobs:
         
       - run: yarn generate && yarn integration-cli
 
+  deploy:
+    docker:
+      - image: circleci/node:8.9-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - add_ssh_keys:
+          fingerprints:
+            - "8e:3f:a1:06:c4:28:c5:b6:b8:14:28:0f:f4:7b:ec:34"
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
+
+      - run: yarn gh-build
+
+      - run: yarn deploy
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+        
+      - run: yarn generate && yarn integration-cli
 
 workflows:
   version: 2
@@ -125,3 +153,7 @@ workflows:
           filters:
             branches:
               ignore: /gh-pages/
+      - deploy:
+          filters:
+            branches:
+              only: master
