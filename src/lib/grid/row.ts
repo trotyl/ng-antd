@@ -1,18 +1,18 @@
-import { ChangeDetectorRef, Directive, Input, OnDestroy, Self } from '@angular/core'
+import { ChangeDetectorRef, Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
-import { boolify, exists, ObjMap, TypedChanges } from '../core/index'
-import { StyledControl } from '../core/control'
+import { boolify, exists } from '../core/index'
 import { Breakpoint, ResponsiveConfig, ScreenManager } from '../core/screen-manager'
+import { HostElement } from '../core/host-element'
 
 const prefix = 'ant-row'
 
 @Directive({
   selector: 'ant-row, [antRow]',
-  providers: [ NgClass, NgStyle ],
+  providers: [ NgClass, NgStyle, HostElement ],
 })
-export class Row extends StyledControl implements OnDestroy {
+export class Row implements OnChanges, OnDestroy, OnInit {
   @Input() align: 'top' | 'middle' | 'bottom' | 'default' = 'default'
   @Input() gutter: number | ResponsiveConfig<number> = 0
   @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' | 'default' = 'default'
@@ -32,39 +32,50 @@ export class Row extends StyledControl implements OnDestroy {
 
   constructor(
     private screenManager: ScreenManager,
-    cdRef: ChangeDetectorRef,
-    @Self() ngClass: NgClass,
-    @Self() ngStyle: NgStyle,
-  ) { super(cdRef, ngClass, ngStyle) }
+    @Self() private hostElement: HostElement,
+  ) { }
 
-  ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (typeof this.gutter !== 'number' && !this._gutter$$) {
       this._gutter$$ = this.screenManager.resolve(this.gutter)
         .subscribe(val => this._gutter = val || 0)
     }
 
-    const isFlex = this.type === 'flex'
-    this.hostClasses = {
-      [`${prefix}`]: !isFlex,
-      [`${prefix}-flex`]: isFlex,
-      [`${prefix}-flex-${this.justify}`]: exists(this.justify),
-      [`${prefix}-flex-${this.align}`]: exists(this.align),
-    }
+    this.updateHostClasses()
+    this.updateHostStyles()
+  }
 
-    const margin = this.normalizedGutter / -2
-    if (margin !== 0) {
-      this.hostStyles = {
-        'margin-left': `${margin}px`,
-        'margin-right': `${margin}px`,
-      }
-    } else {
-      this.hostStyles = { }
+  ngOnInit(): void {
+    if (!this.hostElement.classes) {
+      this.updateHostClasses()
     }
   }
 
   ngOnDestroy(): void {
     if (this._gutter$$) {
       this._gutter$$.unsubscribe()
+    }
+  }
+
+  private updateHostClasses(): void {
+    const isFlex = this.type === 'flex'
+    this.hostElement.classes = {
+      [`${prefix}`]: !isFlex,
+      [`${prefix}-flex`]: isFlex,
+      [`${prefix}-flex-${this.justify}`]: exists(this.justify),
+      [`${prefix}-flex-${this.align}`]: exists(this.align),
+    }
+  }
+
+  private updateHostStyles(): void {
+    const margin = this.normalizedGutter / -2
+    if (margin !== 0) {
+      this.hostElement.styles = {
+        'margin-left': `${margin}px`,
+        'margin-right': `${margin}px`,
+      }
+    } else {
+      this.hostElement.styles = { }
     }
   }
 }

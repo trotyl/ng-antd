@@ -3,7 +3,7 @@ export function boolify(value: boolean | string): boolean {
 }
 
 export function exists(value: string | null | undefined): boolean {
-  return typeof value === 'string' ? value !== 'default' && value !== '' : !!value
+  return !!value && value !== 'default'
 }
 
 export function getSizeToken(value: string): 'lg' | 'sm' | 'nosize' {

@@ -1,15 +1,15 @@
-import { Directive, Input } from '@angular/core'
+import { Directive, Input, OnChanges, Self, SimpleChanges } from '@angular/core'
 import { NgClass } from '@angular/common'
 import { boolify, exists, TypedChanges } from '../core/index'
-import { StyledControl } from '../core/control'
+import { HostElement } from '../core/host-element'
 
 const prefix = 'anticon'
 
 @Directive({
   selector: 'i[antIcon]',
-  providers: [ NgClass ],
+  providers: [ NgClass, HostElement ],
 })
-export class Icon extends StyledControl {
+export class Icon {
   @Input() type: string
 
   @Input()
@@ -23,8 +23,14 @@ export class Icon extends StyledControl {
 
   private _spin = false
 
-  ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void {
-    this.hostClasses = {
+  constructor(@Self() private hostElement: HostElement) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateHostClasses()
+  }
+
+  private updateHostClasses(): void {
+    this.hostElement.classes = {
       [`${prefix}`]: true,
       [`${prefix}-${this.type}`]: exists(this.type),
       [`${prefix}-spin`]: this._spin || this.type === 'loading',

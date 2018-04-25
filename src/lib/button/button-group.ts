@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Directive, Input } from '@angular/core'
+import { ChangeDetectionStrategy, Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { exists, getSizeToken, TypedChanges } from '../core/index'
-import { StyledControl } from '../core/control'
+import { exists, getSizeToken } from '../core/lang'
+import { HostElement } from '../core/host-element'
 
 const prefix = 'ant-btn-group'
 
 @Directive({
   selector: 'ant-btn-group, [antBtnGroup]',
-  providers: [ NgClass ],
+  providers: [ NgClass, HostElement ],
 })
-export class ButtonGroup extends StyledControl {
+export class ButtonGroup implements OnChanges, OnInit {
   @Input() size: 'large' | 'small' | 'default' = 'default'
 
   @Input()
@@ -17,8 +17,20 @@ export class ButtonGroup extends StyledControl {
     if (value) { this.size = value }
   }
 
-  ngOnUpdate(changes: TypedChanges<this>, firstChange: boolean): void {
-    this.hostClasses = {
+  constructor(@Self() private host: HostElement) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateHostClasses()
+  }
+
+  ngOnInit(): void {
+    if (!this.host.classes) {
+      this.updateHostClasses()
+    }
+  }
+
+  private updateHostClasses(): void {
+    this.host.classes = {
       [`${prefix}`]: true,
       [`${prefix}-${getSizeToken(this.size)}`]: exists(this.size),
     }
