@@ -102,7 +102,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
         
-      - run: yarn generate && yarn integration-cli
+      - run: yarn generate && yarn integration:cli
 
   deploy:
     docker:
