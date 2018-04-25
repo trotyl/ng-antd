@@ -1,5 +1,5 @@
 import { Component, Self } from '@angular/core'
-import { async, inject, TestBed } from '@angular/core/testing'
+import { async, TestBed } from '@angular/core/testing'
 import { NgClass, NgStyle } from '@angular/common'
 import { getClassName, getStyle } from '../testing/helper'
 import { CoreModule } from './core.module'

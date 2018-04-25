@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
+import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass } from '@angular/common'
 import { getSizeToken } from '../core/lang'
 import { HostElement } from '../core/host-element'
