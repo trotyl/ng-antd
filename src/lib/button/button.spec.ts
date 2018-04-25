@@ -19,6 +19,8 @@ describe('Button', () => {
         ButtonLoadingTest,
         ButtonIconTest,
         ButtonGhostTest,
+        ButtonErrorIconLoadingTest,
+        ButtonErrorIconIconOnlyTest,
       ]
     }).compileComponents()
   }))
@@ -89,6 +91,16 @@ describe('Button', () => {
     expect(getClassName(buttons[5])).toBe(`${btnPrefix}`)
   }))
 
+  it('should report error when set icon and loading', async(() => {
+    const fixture = TestBed.createComponent(ButtonErrorIconLoadingTest)
+    expect(() => fixture.detectChanges()).toThrowError(/Antd: button with icon 'search' cannot have loading status/)
+  }))
+
+  it('should report error when set iconOnly but not icon', async(() => {
+    const fixture = TestBed.createComponent(ButtonErrorIconIconOnlyTest)
+    expect(() => fixture.detectChanges()).toThrowError(/Antd: button without an icon cannot be iconOnly/)
+  }))
+
 })
 
 @Component({
@@ -146,3 +158,17 @@ class ButtonIconTest { }
   `
 })
 class ButtonGhostTest { }
+
+@Component({
+  template: `
+    <button antBtn icon="search" loading>Searching</button>
+  `
+})
+class ButtonErrorIconLoadingTest { }
+
+@Component({
+  template: `
+    <button antBtn iconOnly>Default</button>
+  `
+})
+class ButtonErrorIconIconOnlyTest { }

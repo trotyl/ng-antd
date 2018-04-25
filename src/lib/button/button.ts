@@ -7,7 +7,7 @@ import { HostElement } from '../core/host-element'
 const prefix = 'ant-btn'
 
 @Component({
-  selector: 'button[antBtn]',
+  selector: '[antBtn]',
   templateUrl: './button.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ NgClass, HostElement ],
@@ -48,11 +48,11 @@ export class Button implements OnChanges {
 
   private checkNoConflicts(): void {
     if (boolify(this.loading) && this.icon) {
-      throw new Error(`Button with icon cannot have loading status`)
+      throw new Error(`Antd: button with icon '${this.icon}' cannot have loading status`)
     }
 
     if (boolify(this.iconOnly) && !this.icon) {
-      throw new Error(`Button without an icon cannot be iconOnly`)
+      throw new Error(`Antd: button without an icon cannot be iconOnly`)
     }
   }
 }
