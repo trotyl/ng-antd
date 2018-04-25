@@ -1,5 +1,11 @@
-export function getSizeToken(value: string | null): 'lg' | 'sm' | 'nosize' {
-  return value === 'large' ? 'lg' :
-    value === 'small' ? 'sm' :
-    'nosize'
+const sizeMap = {
+  'large': 'lg',
+  'small': 'sm',
+}
+
+export function getSizeToken(value: 'large' | 'small' | null): 'lg' | 'sm' | 'noop' {
+  if (value && !sizeMap.hasOwnProperty(value)) {
+    throw new Error(`Invalid size value: ${value}`)
+  }
+  return (value && sizeMap[value] as 'lg' | 'sm') || 'noop'
 }
