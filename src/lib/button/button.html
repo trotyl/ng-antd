@@ -1,4 +1,3 @@
-<i [antIcon]="loading ? 'loading' : icon" *ngIf="icon || loading"></i>
-<span #content *ngIf="!shape">
-  <ng-content></ng-content>
-</span>
+<i *ngIf="loading" antIcon="loading"></i>
+<i *ngIf="icon" [antIcon]="icon"></i>
+<ng-content></ng-content>
