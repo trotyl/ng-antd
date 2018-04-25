@@ -1,6 +1,7 @@
 import { Component, Self } from '@angular/core'
 import { async, inject, TestBed } from '@angular/core/testing'
 import { NgClass, NgStyle } from '@angular/common'
+import { getClassName, getStyle } from '../testing/helper'
 import { CoreModule } from './core.module'
 import { HostElement } from './host-element'
 
@@ -25,7 +26,7 @@ describe('HostElement', () => {
     }
 
     fixture.detectChanges()
-    expect(fixture.debugElement.classes).toEqual({'foo': true, 'bar': false})
+    expect(getClassName(fixture.debugElement)).toEqual(`foo`)
   })
 
   it('should set host styles', () => {
@@ -38,7 +39,7 @@ describe('HostElement', () => {
     }
 
     fixture.detectChanges()
-    expect(fixture.debugElement.styles).toEqual({
+    expect(getStyle(fixture.debugElement)).toEqual({
       'margin': '10px',
       'padding': '5px',
     })
