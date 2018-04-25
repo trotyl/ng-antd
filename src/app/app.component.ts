@@ -7,4 +7,9 @@ import { Component } from '@angular/core'
 })
 export class AppComponent {
   title = 'app'
+
+  items = [
+    { type: 'general', components: ['button', 'icon'] },
+    { type: 'layout', components: ['grid', 'layout'] },
+  ]
 }
