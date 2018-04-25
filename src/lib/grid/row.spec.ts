@@ -41,7 +41,7 @@ describe('Row', () => {
     fixture.detectChanges()
 
     const rows = fixture.debugElement.queryAll(By.directive(Row))
-    expect(getStyle(rows[0])).toEqual({ 'marginLeft': '-8px', 'marginRight': '-8px' })
+    expect(getStyle(rows[0])).toEqual({ 'margin-left': '-8px', 'margin-right': '-8px' })
   }))
 
   describe('should set gutter (dynamic) styles properly', () => {
@@ -71,7 +71,7 @@ describe('Row', () => {
 
       const rows = fixture.debugElement.queryAll(By.directive(Row))
       const rowDir = rows[0].injector.get(Row)
-      expect(getStyle(rows[0])).toEqual({ 'marginLeft': '-8px', 'marginRight': '-8px' })
+      expect(getStyle(rows[0])).toEqual({ 'margin-left': '-8px', 'margin-right': '-8px' })
       expect(rowDir.normalizedGutter).toBe(16)
       expect(resolveSpy).toHaveBeenCalledWith({ md: 16 })
 

@@ -39,7 +39,7 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getStyle(cols[0])).toEqual({ 'paddingLeft': '8px', 'paddingRight': '8px' })
+    expect(getStyle(cols[0])).toEqual({ 'padding-left': '8px', 'padding-right': '8px' })
   }))
 
   it('should set offset classes properly', async(() => {
