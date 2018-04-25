@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName, getStyle } from 'ng-antd/testing'
+import { getClassName, getStyle } from '../testing/helper'
 import { GridModule } from './grid.module'
 import { Row } from './row'
 import { Column } from './column'

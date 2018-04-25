@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getStyle } from 'ng-antd/testing'
+import { getStyle } from '../testing/helper'
 import { LayoutModule } from './layout.module'
 import { Sider } from './sider'
 
