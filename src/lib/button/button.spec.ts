@@ -137,12 +137,12 @@ class ButtonIconTest { }
 
 @Component({
   template: `
-  <button antBtn>Default</button>
-  <button antBtn ghost>Ghost</button>
-  <button antBtn ghost="true">Ghost</button>
-  <button antBtn ghost="false">Default</button>
-  <button antBtn [ghost]="true">Ghost</button>
-  <button antBtn [ghost]="false">Default</button>
+    <button antBtn>Default</button>
+    <button antBtn ghost>Ghost</button>
+    <button antBtn ghost="true">Ghost</button>
+    <button antBtn ghost="false">Default</button>
+    <button antBtn [ghost]="true">Ghost</button>
+    <button antBtn [ghost]="false">Default</button>
   `
 })
 class ButtonGhostTest { }
