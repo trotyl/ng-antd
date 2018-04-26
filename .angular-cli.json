@@ -19,6 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "../node_modules/@angular/cdk/overlay-prebuilt.css",
         "../node_modules/antd/dist/antd.css",
         "../node_modules/prismjs/themes/prism-coy.css",
         "styles.css"
