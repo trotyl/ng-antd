@@ -1,17 +1,15 @@
-<section>
-  <button antBtn="primary">primary</button>
-  <button antBtn>secondary</button>
-  <button antBtn antDropdown [overlay]="menu">
-    Actions
-    <i antIcon="down"></i>
-  </button>
-</section>
-
-<section>
-  <p>TODO: require menu component</p>
-  <ul antMenu #menu="antMenu">
+<button antBtn="primary">primary</button>
+<button antBtn>secondary</button>
+<button antBtn antDropdown>
+  Actions
+  <i antIcon="down"></i>
+  <ul *antOverlay antMenu>
     <li antMenuItem>1st item</li>
     <li antMenuItem>2nd item</li>
     <li antMenuItem>3rd item</li>
   </ul>
-</section>
+</button>
+
+<br>
+
+<p>TODO: require menu component</p>
