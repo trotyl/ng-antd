@@ -7,8 +7,4 @@ import { Component } from '@angular/core'
 })
 export class ButtonDemoSize {
   size = 'large'
-
-  handleSizeChange(event: Event) {
-    this.size = (event.target as HTMLInputElement).value
-  }
 }
