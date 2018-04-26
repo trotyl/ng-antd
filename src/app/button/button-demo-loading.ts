@@ -8,12 +8,4 @@ import { Component } from '@angular/core'
 export class ButtonDemoLoading {
   loading = false
   iconLoading = false
-
-  enterLoading() {
-    this.loading = true
-  }
-
-  enterIconLoading = () => {
-    this.iconLoading = true
-  }
 }
