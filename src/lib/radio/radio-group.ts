@@ -1,9 +1,19 @@
-import { Component, Input } from '@angular/core'
+import { Directive, EventEmitter, Input, Output } from '@angular/core'
 
-@Component({
+@Directive({
   selector: 'ant-radio-group',
-  templateUrl: './radio-group.html'
+  host: {
+    '[class.ant-radio-group]': `true`,
+  },
 })
-export class RadioGroup {
-  @Input() value: string
+export class RadioGroup<T> {
+  @Input() value: T | null = null
+  @Output() valueChange = new EventEmitter<T>()
+
+  update(value: T): void {
+    if (this.value !== value) {
+      this.value = value
+      this.valueChange.emit(value)
+    }
+  }
 }

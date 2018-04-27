@@ -9,6 +9,10 @@ section {
   text-align: center;
 }
 
+button-demos button[antbtn] {
+  margin-right: 5px;
+}
+
 layout-demos .ant-layout-header {
   border: 1px solid skyblue;
   min-height: 80px;

@@ -1,8 +1,7 @@
-<p>TODO: require radio component</p>
 <section>
   <ant-radio-group [(value)]="size">
     <ant-radio-btn value="large">Large</ant-radio-btn>
-    <ant-radio-btn value="default">Default</ant-radio-btn>
+    <ant-radio-btn [value]="null">Default</ant-radio-btn>
     <ant-radio-btn value="small">Small</ant-radio-btn>
   </ant-radio-group>
 </section>
@@ -15,7 +14,7 @@
 </section>
 
 <section>
-  <button antBtn="primary" shape="circle" icon="download" [size]="size" ></button>
+  <button antBtn="primary" shape="circle" icon="download" [size]="size"></button>
   <button antBtn="primary" icon="download" [size]="size">Download</button>
 </section>
 
