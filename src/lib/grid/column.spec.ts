@@ -18,11 +18,18 @@ describe('Column', () => {
         ColSpanResponsiveTest,
         ColGutterTest,
         ColOffsetTest,
+        ColOffsetResponsiveTest,
         ColPullTest,
+        ColPullResponsiveTest,
         ColPushTest,
+        ColPushResponsiveTest,
         ColOrderTest,
+        ColOrderResponsiveTest,
         ColAttributeSelectorTest,
-      ]
+      ],
+      providers: [
+        { provide: Responsive, useValue: { resolve: (opt: any) => of(opt.md) } }
+      ],
     }).compileComponents()
   }))
 
@@ -38,8 +45,6 @@ describe('Column', () => {
   }))
 
   it('should set span classes when responsive properly', async(() => {
-    TestBed.overrideProvider(Responsive, { useValue: { resolve: (opt: any) => of(opt.md) } })
-
     const fixture = TestBed.createComponent(ColSpanResponsiveTest)
     fixture.detectChanges()
 
@@ -63,12 +68,28 @@ describe('Column', () => {
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-offset-4`)
   }))
 
+  it('should set offset classes when responsive properly', async(() => {
+    const fixture = TestBed.createComponent(ColOffsetResponsiveTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
+    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-offset-8`)
+  }))
+
   it('should set pull classes properly', async(() => {
     const fixture = TestBed.createComponent(ColPullTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-pull-4`)
+  }))
+
+  it('should set pull classes when responsive properly', async(() => {
+    const fixture = TestBed.createComponent(ColPullResponsiveTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
+    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-pull-8`)
   }))
 
   it('should set push classes properly', async(() => {
@@ -79,12 +100,28 @@ describe('Column', () => {
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-push-4`)
   }))
 
+  it('should set push classes when responsive properly', async(() => {
+    const fixture = TestBed.createComponent(ColPushResponsiveTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
+    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-push-8`)
+  }))
+
   it('should set order classes properly', async(() => {
     const fixture = TestBed.createComponent(ColOrderTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-order-4`)
+  }))
+
+  it('should set order classes when responsive properly', async(() => {
+    const fixture = TestBed.createComponent(ColOrderResponsiveTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
+    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-order-8`)
   }))
 
   it('should support attribute selector usage', async(() => {
@@ -141,11 +178,29 @@ class ColOffsetTest { }
 @Component({
   template: `
     <ant-row>
+      <ant-col [span]="6" [offset]="4" [offset.md]="8"></ant-col>
+    </ant-row>
+  `
+})
+class ColOffsetResponsiveTest { }
+
+@Component({
+  template: `
+    <ant-row>
       <ant-col [span]="6" [pull]="4"></ant-col>
     </ant-row>
   `
 })
 class ColPullTest { }
+
+@Component({
+  template: `
+    <ant-row>
+      <ant-col [span]="6" [pull]="4" [pull.md]="8"></ant-col>
+    </ant-row>
+  `
+})
+class ColPullResponsiveTest { }
 
 @Component({
   template: `
@@ -159,11 +214,29 @@ class ColPushTest { }
 @Component({
   template: `
     <ant-row>
+      <ant-col [span]="6" [push]="4" [push.md]="8"></ant-col>
+    </ant-row>
+  `
+})
+class ColPushResponsiveTest { }
+
+@Component({
+  template: `
+    <ant-row>
       <ant-col [span]="6" [order]="4"></ant-col>
     </ant-row>
   `
 })
 class ColOrderTest { }
+
+@Component({
+  template: `
+    <ant-row>
+      <ant-col [span]="6" [order]="4" [order.md]="8"></ant-col>
+    </ant-row>
+  `
+})
+class ColOrderResponsiveTest { }
 
 @Component({
   template: `
