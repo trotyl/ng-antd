@@ -17,6 +17,7 @@ describe('Column', () => {
         ColOffsetTest,
         ColPullTest,
         ColPushTest,
+        ColOrderTest,
         ColAttributeSelectorTest,
       ]
     }).compileComponents()
@@ -63,6 +64,14 @@ describe('Column', () => {
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-push-4`)
+  }))
+
+  it('should set order classes properly', async(() => {
+    const fixture = TestBed.createComponent(ColOrderTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
+    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-order-4`)
   }))
 
   it('should support attribute selector usage', async(() => {
@@ -124,6 +133,15 @@ class ColPullTest { }
   `
 })
 class ColPushTest { }
+
+@Component({
+  template: `
+    <ant-row>
+      <ant-col [span]="6" [order]="4"></ant-col>
+    </ant-row>
+  `
+})
+class ColOrderTest { }
 
 @Component({
   template: `
