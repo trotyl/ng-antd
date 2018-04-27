@@ -1,4 +1,4 @@
-import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
+import { Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
 import { Observable } from 'rxjs/Observable'
 import {Subject} from 'rxjs/Subject'
@@ -13,7 +13,7 @@ const prefix = 'ant-row'
   selector: 'ant-row, [antRow]',
   providers: [ NgClass, NgStyle, HostElement ],
 })
-export class Row implements OnChanges, OnInit {
+export class Row implements OnChanges, OnDestroy, OnInit {
   @Input() align: 'top' | 'middle' | 'bottom' | null = null
   @Input() gutter: number = 0
   @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' | null = null
@@ -56,6 +56,10 @@ export class Row implements OnChanges, OnInit {
     if (!this.host.classes) {
       this.updateHostClasses()
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.status$$) this.status$$.unsubscribe()
   }
 
   private updateHostClasses(): void {

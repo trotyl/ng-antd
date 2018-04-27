@@ -1,4 +1,4 @@
-import { Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
@@ -15,7 +15,7 @@ const prefix = 'ant-col'
   providers: [ NgClass, NgStyle, HostElement ],
 })
 export class Column implements OnChanges, OnDestroy, OnInit {
-  @Input() span: number = 0
+  @Input() span: number = NaN
   @Input() offset: number = 0
   @Input() order: number = 0
   @Input() pull: number = 0
@@ -84,6 +84,9 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
+    /* istanbul ignore else */
+    if (isDevMode()) this.checkNoConflits()
+
     this.rowStatus$$ = this.row.status$.subscribe(() => this.updateHostStyles())
 
     const span$ = this.rsp.resolve(this.rSpan, () => this.span, this.changes$)
@@ -102,8 +105,8 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
-    this.status$$.unsubscribe()
-    this.rowStatus$$.unsubscribe()
+    if (this.status$$) this.status$$.unsubscribe()
+    if (this.rowStatus$$) this.rowStatus$$.unsubscribe()
   }
 
   private updateHostClasses(): void {
@@ -126,6 +129,12 @@ export class Column implements OnChanges, OnDestroy, OnInit {
       }
     } else {
       this.host.styles = { }
+    }
+  }
+
+  private checkNoConflits(): void {
+    if (Number.isNaN(this.span)) {
+      throw new Error(`Antd: the 'span' must be specified in column`)
     }
   }
 }
