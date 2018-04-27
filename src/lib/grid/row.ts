@@ -1,6 +1,7 @@
 import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
 import { Observable } from 'rxjs/Observable'
+import {Subject} from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { tap, map } from 'rxjs/operators'
 import { HostElement } from '../core/host-element'
@@ -35,26 +36,26 @@ export class Row implements OnChanges, OnInit {
   rGutter: Rsp<number> = {}
   fGutter: number = 0
 
+  private changes$ = new Subject<void>()
+
   constructor(
     @Self() private host: HostElement,
     private rsp: Responsive,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.changes$.next()
     this.updateHostClasses()
   }
 
   ngOnInit(): void {
-    this.initGutterObserve()
+    const gutter$ = this.rsp.resolve(this.rGutter, () => this.gutter, this.changes$)
+    this.status$ = gutter$.pipe(tap(x => this.fGutter = x), map(() => {}))
+    this.status$$ = this.status$.subscribe(() => this.updateHostStyles())
+
     if (!this.host.classes) {
       this.updateHostClasses()
     }
-  }
-
-  private initGutterObserve(): void {
-    const gutter$ = this.rsp.resolve(this.rGutter, this.gutter)
-    this.status$ = gutter$.pipe(tap(x => this.fGutter = x), map(() => {}))
-    this.status$$ = this.status$.subscribe(() => this.updateHostStyles())
   }
 
   private updateHostClasses(): void {

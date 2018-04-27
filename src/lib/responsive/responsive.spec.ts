@@ -1,5 +1,6 @@
 import { TestBed, async, inject } from '@angular/core/testing'
 import { BreakpointObserver } from '@angular/cdk/layout'
+import { empty } from 'rxjs/observable/empty'
 import { of } from 'rxjs/observable/of'
 import { ResponsiveModule } from './responsive.module'
 import { Responsive } from './responsive'
@@ -25,7 +26,7 @@ describe('Responsive', () => {
 
   it('should resolve to largest screen', inject([Responsive], (rsp: Responsive) => {
     let res: number
-    rsp.resolve({ lg: 5, md: 2 }, 0 as number).subscribe(x => res = x)
+    rsp.resolve({ lg: 5, md: 2 }, () => 0, empty()).subscribe(x => res = x)
 
     expect(res!).toBe(5)
   }))
