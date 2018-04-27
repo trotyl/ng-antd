@@ -1,6 +1,8 @@
 import { Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
+import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
+import { merge } from 'rxjs/observable/merge'
 import { tap } from 'rxjs/operators'
 import { HostElement } from '../core/host-element'
 import { ResponsiveOption as Rsp, Responsive } from '../responsive/responsive'
@@ -66,13 +68,10 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   fPull: number = 0
   fPush: number = 0
 
-  private span$$: ISubscription | null = null
-  private offset$$: ISubscription | null = null
-  private order$$: ISubscription | null = null
-  private pull$$: ISubscription | null = null
-  private push$$: ISubscription | null = null
+  private changes$ = new Subject<void>()
 
-  private row$$: ISubscription
+  private status$$: ISubscription
+  private rowStatus$$: ISubscription
 
   constructor(
     @Self() private host: HostElement,
@@ -81,77 +80,30 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.handleSpanChange()
-    this.handleOffsetChange()
-    this.handleOrderChange()
-    this.handlePullChange()
-    this.handlePushChange()
-
-    this.updateHostClasses()
-    this.updateHostStyles()
+    this.changes$.next()
   }
 
   ngOnInit(): void {
-    this.row$$ = this.row.status$.subscribe(() => this.updateHostStyles())
+    this.rowStatus$$ = this.row.status$.subscribe(() => this.updateHostStyles())
+
+    const span$ = this.rsp.resolve(this.rSpan, () => this.span, this.changes$)
+    const offset$ = this.rsp.resolve(this.rOffset, () => this.offset, this.changes$)
+    const order$ = this.rsp.resolve(this.rOrder, () => this.order, this.changes$)
+    const pull$ = this.rsp.resolve(this.rPull, () => this.pull, this.changes$)
+    const push$ = this.rsp.resolve(this.rPush, () => this.push, this.changes$)
+
+    this.status$$ = merge(
+      span$.pipe(tap(x => this.fSpan = x)),
+      offset$.pipe(tap(x => this.fOffset = x)),
+      order$.pipe(tap(x => this.fOrder = x)),
+      pull$.pipe(tap(x => this.fPull = x)),
+      push$.pipe(tap(x => this.fPush = x)),
+    ).subscribe(() => this.updateHostClasses())
   }
 
   ngOnDestroy(): void {
-    if (this.span$$) this.span$$.unsubscribe()
-    if (this.offset$$) this.offset$$.unsubscribe()
-    if (this.order$$) this.order$$.unsubscribe()
-    if (this.push$$) this.push$$.unsubscribe()
-    if (this.pull$$) this.pull$$.unsubscribe()
-    this.row$$.unsubscribe()
-  }
-
-  private handleSpanChange(): void {
-    if (!this.span$$ && Object.keys(this.rSpan).length > 0) {
-      this.span$$ = this.rsp.resolve(this.rSpan, this.span)
-        .pipe(tap(x => this.fSpan = x))
-        .subscribe(() => this.updateHostClasses())
-    } else {
-      this.fSpan = this.span
-    }
-  }
-
-  private handleOffsetChange(): void {
-    if (!this.offset$$ && Object.keys(this.rOffset).length > 0) {
-      this.offset$$ = this.rsp.resolve(this.rOffset, this.offset)
-        .pipe(tap(x => this.fOffset = x))
-        .subscribe(() => this.updateHostClasses())
-    } else {
-      this.fOffset = this.offset
-    }
-  }
-
-  private handleOrderChange(): void {
-    if (!this.order$$ && Object.keys(this.rOrder).length > 0) {
-      this.order$$ = this.rsp.resolve(this.rOrder, this.order)
-        .pipe(tap(x => this.fOrder = x))
-        .subscribe(() => this.updateHostClasses())
-    } else {
-      this.fOrder = this.order
-    }
-  }
-
-  private handlePullChange(): void {
-    if (!this.pull$$ && Object.keys(this.rPull).length > 0) {
-      this.pull$$ = this.rsp.resolve(this.rPull, this.pull)
-        .pipe(tap(x => this.fPull = x))
-        .subscribe(() => this.updateHostClasses())
-    } else {
-      this.fPull = this.pull
-    }
-  }
-
-  private handlePushChange(): void {
-    if (!this.push$$ && Object.keys(this.rPush).length > 0) {
-      this.push$$ = this.rsp.resolve(this.rPush, this.push)
-        .pipe(tap(x => this.fPush = x))
-        .subscribe(() => this.updateHostClasses())
-    } else {
-      this.fPush = this.push
-    }
+    this.status$$.unsubscribe()
+    this.rowStatus$$.unsubscribe()
   }
 
   private updateHostClasses(): void {
