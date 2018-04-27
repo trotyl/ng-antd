@@ -6,7 +6,7 @@ import { HostElement } from '../core/host-element'
 const prefix = 'anticon'
 
 @Directive({
-  selector: 'i[antIcon]',
+  selector: '[antIcon]',
   providers: [ NgClass, HostElement ],
 })
 export class Icon implements OnChanges {
@@ -14,8 +14,8 @@ export class Icon implements OnChanges {
   @Input() spin: boolean = false
 
   @Input()
-  set antIcon(value: string | undefined) {
-    if (value) { this.type = value }
+  set antIcon(value: string) {
+    if (value !== '') { this.type = value }
   }
 
   constructor(@Self() private host: HostElement) { }
