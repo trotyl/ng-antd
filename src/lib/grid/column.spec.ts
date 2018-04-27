@@ -27,6 +27,7 @@ describe('Column', () => {
         ColOrderTest,
         ColOrderResponsiveTest,
         ColAttributeSelectorTest,
+        ColErrorSpanTest,
       ],
       providers: [
         { provide: Responsive, useValue: { resolve: (opt: any, dg: any) => of(opt.md || dg()) } }
@@ -138,10 +139,15 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-0`)
-    expect(getClassName(cols[1])).toBe(`${colPrefix} ${colPrefix}-1`)
+    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-1`)
+    expect(getClassName(cols[1])).toBe(`${colPrefix} ${colPrefix}-2`)
     expect(getClassName(cols[2])).toBe(`${colPrefix} ${colPrefix}-1`)
   }))
+
+  it('should report error when span not set', () => {
+    const fixture = TestBed.createComponent(ColErrorSpanTest)
+    expect(() => fixture.detectChanges()).toThrowError(/Antd: the 'span' must be specified in column/)
+  })
 
 })
 
@@ -259,10 +265,19 @@ class ColOrderResponsiveTest { }
 @Component({
   template: `
     <ant-row>
-      <div antCol></div>
       <div antCol [span]="1"></div>
+      <div antCol [span]="2"></div>
       <div [antCol]="1"></div>
     </ant-row>
   `
 })
 class ColAttributeSelectorTest { }
+
+@Component({
+  template: `
+    <ant-row>
+      <ant-col></ant-col>
+    </ant-row>
+  `
+})
+class ColErrorSpanTest { }
