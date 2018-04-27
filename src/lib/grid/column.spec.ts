@@ -1,7 +1,9 @@
 import { Component } from '@angular/core'
 import { TestBed, async } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import { of } from 'rxjs/observable/of'
 import { getClassName, getStyle } from '../testing/helper'
+import { Responsive } from '../responsive/responsive'
 import { GridModule } from './grid.module'
 import { Column } from './column'
 
@@ -13,6 +15,7 @@ describe('Column', () => {
       imports: [ GridModule ],
       declarations: [
         ColSpanTest,
+        ColSpanResponsiveTest,
         ColGutterTest,
         ColOffsetTest,
         ColPullTest,
@@ -32,6 +35,16 @@ describe('Column', () => {
     expect(getClassName(cols[1])).toBe(`${colPrefix} ${colPrefix}-1`)
     expect(getClassName(cols[2])).toBe(`${colPrefix} ${colPrefix}-4`)
     expect(getClassName(cols[3])).toBe(`${colPrefix} ${colPrefix}-6`)
+  }))
+
+  it('should set span classes when responsive properly', async(() => {
+    TestBed.overrideProvider(Responsive, { useValue: { resolve: (opt: any) => of(opt.md) } })
+
+    const fixture = TestBed.createComponent(ColSpanResponsiveTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
+    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6`)
   }))
 
   it('should set gutter styles properly', async(() => {
@@ -97,6 +110,15 @@ describe('Column', () => {
   `
 })
 class ColSpanTest { }
+
+@Component({
+  template: `
+    <ant-row>
+      <ant-col [span]="4" [span.md]="6"></ant-col>
+    </ant-row>
+  `
+})
+class ColSpanResponsiveTest { }
 
 @Component({
   template: `
