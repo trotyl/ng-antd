@@ -1,4 +1,4 @@
-import { Injectable, Optional, Self } from '@angular/core'
+import { ElementRef, Injectable, Optional, Renderer2, Self } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
 
 @Injectable()
@@ -7,6 +7,8 @@ export class HostElement {
   private _styles: {[key: string]: string}
 
   constructor(
+    private element: ElementRef,
+    private renderer: Renderer2,
     @Self() @Optional() private ngClassDir?: NgClass,
     @Self() @Optional() private ngStyleDir?: NgStyle,
   ) { }
@@ -31,6 +33,10 @@ export class HostElement {
 
   get styles() {
     return this._styles
+  }
+
+  addClass(name: string): void {
+    this.renderer.addClass(this.element.nativeElement, name)
   }
 
   private assertNgClass(): void {

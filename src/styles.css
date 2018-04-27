@@ -31,6 +31,7 @@ layout-demos .ant-layout-content {
 layout-demos .ant-layout-sider {
   border: 1px solid skyblue;
   color: white;
+  min-width: 200px;
   min-height: 80px;
   padding-top: 30px;
   text-align: center;
