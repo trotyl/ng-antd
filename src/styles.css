@@ -13,6 +13,26 @@ button-demos button[antbtn] {
   margin-right: 5px;
 }
 
+grid-demos .height-100 {
+  height: 100px;
+  line-height: 100px;
+}
+
+grid-demos .height-150 {
+  height: 150px;
+  line-height: 150px;
+}
+
+grid-demos .height-80 {
+  height: 80px;
+  line-height: 80px;
+}
+
+grid-demos .height-120 {
+  height: 120px;
+  line-height: 120px;
+}
+
 layout-demos .ant-layout-header {
   border: 1px solid skyblue;
   min-height: 80px;
