@@ -27,6 +27,16 @@ describe('HostElement', () => {
     expect(getClassName(fixture.debugElement)).toEqual(`foo`)
   })
 
+  it('should add host classes', () => {
+    const fixture = TestBed.createComponent(HostElementTest)
+    const component = fixture.componentInstance
+
+    component.host.addClass('baz')
+
+    fixture.detectChanges()
+    expect(getClassName(fixture.debugElement)).toEqual(`baz`)
+  })
+
   it('should set host styles', () => {
     const fixture = TestBed.createComponent(HostElementTest)
     const component = fixture.componentInstance
