@@ -1,6 +1,10 @@
 import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
+import { Observable } from 'rxjs/Observable'
+import { ISubscription } from 'rxjs/Subscription'
+import { tap, map } from 'rxjs/operators'
 import { HostElement } from '../core/host-element'
+import { ResponsiveOption as Rsp, Responsive } from '../responsive/responsive'
 
 const prefix = 'ant-row'
 
@@ -19,19 +23,38 @@ export class Row implements OnChanges, OnInit {
     if (value !== '') { this.type = value }
   }
 
+  @Input('gutter.xs') set gutterXs(value: number) { this.rGutter.xs = value }
+  @Input('gutter.sm') set gutterSm(value: number) { this.rGutter.sm = value }
+  @Input('gutter.md') set gutterMd(value: number) { this.rGutter.md = value }
+  @Input('gutter.lg') set gutterLg(value: number) { this.rGutter.lg = value }
+  @Input('gutter.xl') set gutterXl(value: number) { this.rGutter.xl = value }
+
+  status$: Observable<void>
+  status$$: ISubscription
+
+  rGutter: Rsp<number> = {}
+  fGutter: number = 0
+
   constructor(
     @Self() private host: HostElement,
+    private rsp: Responsive,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.updateHostClasses()
-    this.updateHostStyles()
   }
 
   ngOnInit(): void {
+    this.initGutterObserve()
     if (!this.host.classes) {
       this.updateHostClasses()
     }
+  }
+
+  private initGutterObserve(): void {
+    const gutter$ = this.rsp.resolve(this.rGutter, this.gutter)
+    this.status$ = gutter$.pipe(tap(x => this.fGutter = x), map(() => {}))
+    this.status$$ = this.status$.subscribe(() => this.updateHostStyles())
   }
 
   private updateHostClasses(): void {
@@ -45,7 +68,7 @@ export class Row implements OnChanges, OnInit {
   }
 
   private updateHostStyles(): void {
-    const margin = this.gutter / -2
+    const margin = this.fGutter / -2
     if (margin !== 0) {
       this.host.styles = {
         'margin-left': `${margin}px`,

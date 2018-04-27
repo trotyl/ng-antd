@@ -17,6 +17,7 @@ describe('Column', () => {
         ColSpanTest,
         ColSpanResponsiveTest,
         ColGutterTest,
+        ColGutterResponsiveTest,
         ColOffsetTest,
         ColOffsetResponsiveTest,
         ColPullTest,
@@ -28,7 +29,7 @@ describe('Column', () => {
         ColAttributeSelectorTest,
       ],
       providers: [
-        { provide: Responsive, useValue: { resolve: (opt: any) => of(opt.md) } }
+        { provide: Responsive, useValue: { resolve: (opt: any, dv: any) => of(opt.md || dv) } }
       ],
     }).compileComponents()
   }))
@@ -58,6 +59,14 @@ describe('Column', () => {
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getStyle(cols[0])).toEqual({ 'padding-left': '8px', 'padding-right': '8px' })
+  }))
+
+  it('should set gutter styles when responsive properly', async(() => {
+    const fixture = TestBed.createComponent(ColGutterResponsiveTest)
+    fixture.detectChanges()
+
+    const cols = fixture.debugElement.queryAll(By.directive(Column))
+    expect(getStyle(cols[0])).toEqual({ 'padding-left': '12px', 'padding-right': '12px' })
   }))
 
   it('should set offset classes properly', async(() => {
@@ -165,6 +174,15 @@ class ColSpanResponsiveTest { }
   `
 })
 class ColGutterTest { }
+
+@Component({
+  template: `
+    <ant-row [gutter]="16" [gutter.md]="24">
+      <ant-col [span]="6"></ant-col>
+    </ant-row>
+  `
+})
+class ColGutterResponsiveTest { }
 
 @Component({
   template: `
