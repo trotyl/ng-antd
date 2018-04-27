@@ -1,4 +1,4 @@
-import { Directive, Input, OnChanges, OnDestroy, Self, SimpleChanges } from '@angular/core'
+import { Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
 import { ISubscription } from 'rxjs/Subscription'
 import { tap } from 'rxjs/operators'
@@ -12,7 +12,7 @@ const prefix = 'ant-col'
   selector: 'ant-col, [antCol]',
   providers: [ NgClass, NgStyle, HostElement ],
 })
-export class Column implements OnChanges, OnDestroy {
+export class Column implements OnChanges, OnDestroy, OnInit {
   @Input() span: number = 0
   @Input() offset: number = 0
   @Input() order: number = 0
@@ -72,6 +72,8 @@ export class Column implements OnChanges, OnDestroy {
   private pull$$: ISubscription | null = null
   private push$$: ISubscription | null = null
 
+  private row$$: ISubscription
+
   constructor(
     @Self() private host: HostElement,
     private rsp: Responsive,
@@ -89,12 +91,17 @@ export class Column implements OnChanges, OnDestroy {
     this.updateHostStyles()
   }
 
+  ngOnInit(): void {
+    this.row$$ = this.row.status$.subscribe(() => this.updateHostStyles())
+  }
+
   ngOnDestroy(): void {
     if (this.span$$) this.span$$.unsubscribe()
     if (this.offset$$) this.offset$$.unsubscribe()
     if (this.order$$) this.order$$.unsubscribe()
     if (this.push$$) this.push$$.unsubscribe()
     if (this.pull$$) this.pull$$.unsubscribe()
+    this.row$$.unsubscribe()
   }
 
   private handleSpanChange(): void {
@@ -159,7 +166,7 @@ export class Column implements OnChanges, OnDestroy {
   }
 
   private updateHostStyles(): void {
-    const padding = this.row.gutter / 2
+    const padding = this.row.fGutter / 2
     if (padding !== 0) {
       this.host.styles = {
         'padding-left': `${padding}px`,
