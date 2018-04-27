@@ -38,6 +38,7 @@ export class Column implements OnChanges {
       [`${prefix}-offset-${this.offset}`]: this.offset > 0,
       [`${prefix}-pull-${this.pull}`]: this.pull > 0,
       [`${prefix}-push-${this.push}`]: this.push > 0,
+      [`${prefix}-order-${this.order}`]: this.order > 0,
     }
   }
 
