@@ -13,7 +13,7 @@ describe('Layout', () => {
       imports: [ LayoutModule ],
       declarations: [
         LayoutSiderTest,
-      ]
+      ],
     }).compileComponents()
   })
 
@@ -34,6 +34,6 @@ describe('Layout', () => {
     <ant-layout>
       <ant-sider>Sider</ant-sider>
     </ant-layout>
-  `
+  `,
 })
 class LayoutSiderTest { }

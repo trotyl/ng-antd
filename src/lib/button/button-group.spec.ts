@@ -14,7 +14,7 @@ describe('ButtonGroup', () => {
       declarations: [
         ButtonGroupSizeTest,
         ButtonGroupAttributeSelectorTest,
-      ]
+      ],
     }).compileComponents()
   })
 
@@ -47,7 +47,7 @@ describe('ButtonGroup', () => {
     <ant-btn-group [size]="null">Default</ant-btn-group>
     <ant-btn-group size="large">Large</ant-btn-group>
     <ant-btn-group size="small">Small</ant-btn-group>
-  `
+  `,
 })
 class ButtonGroupSizeTest { }
 
@@ -56,6 +56,6 @@ class ButtonGroupSizeTest { }
     <div antBtnGroup>Default</div>
     <div antBtnGroup size="large">Large</div>
     <div antBtnGroup="large">Small</div>
-  `
+  `,
 })
 class ButtonGroupAttributeSelectorTest { }

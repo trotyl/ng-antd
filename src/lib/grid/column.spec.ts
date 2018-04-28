@@ -30,7 +30,7 @@ describe('Column', () => {
         ColErrorSpanTest,
       ],
       providers: [
-        { provide: Responsive, useValue: { resolve: (opt: any, dg: any) => of(opt.md || dg()) } }
+        { provide: Responsive, useValue: { resolve: (opt: any, dg: any) => of(opt.md || dg()) } },
       ],
     }).compileComponents()
   })
@@ -159,7 +159,7 @@ describe('Column', () => {
       <ant-col [span]="4"></ant-col>
       <ant-col [span]="6"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColSpanTest { }
 
@@ -168,7 +168,7 @@ class ColSpanTest { }
     <ant-row>
       <ant-col [span]="4" [span.md]="6"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColSpanResponsiveTest { }
 
@@ -177,7 +177,7 @@ class ColSpanResponsiveTest { }
     <ant-row [gutter]="16">
       <ant-col [span]="6"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColGutterTest { }
 
@@ -186,7 +186,7 @@ class ColGutterTest { }
     <ant-row [gutter]="16" [gutter.md]="24">
       <ant-col [span]="6"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColGutterResponsiveTest { }
 
@@ -195,7 +195,7 @@ class ColGutterResponsiveTest { }
     <ant-row>
       <ant-col [span]="6" [offset]="4"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColOffsetTest { }
 
@@ -204,7 +204,7 @@ class ColOffsetTest { }
     <ant-row>
       <ant-col [span]="6" [offset]="4" [offset.md]="8"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColOffsetResponsiveTest { }
 
@@ -213,7 +213,7 @@ class ColOffsetResponsiveTest { }
     <ant-row>
       <ant-col [span]="6" [pull]="4"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColPullTest { }
 
@@ -222,7 +222,7 @@ class ColPullTest { }
     <ant-row>
       <ant-col [span]="6" [pull]="4" [pull.md]="8"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColPullResponsiveTest { }
 
@@ -231,7 +231,7 @@ class ColPullResponsiveTest { }
     <ant-row>
       <ant-col [span]="6" [push]="4"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColPushTest { }
 
@@ -240,7 +240,7 @@ class ColPushTest { }
     <ant-row>
       <ant-col [span]="6" [push]="4" [push.md]="8"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColPushResponsiveTest { }
 
@@ -249,7 +249,7 @@ class ColPushResponsiveTest { }
     <ant-row>
       <ant-col [span]="6" [order]="4"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColOrderTest { }
 
@@ -258,7 +258,7 @@ class ColOrderTest { }
     <ant-row>
       <ant-col [span]="6" [order]="4" [order.md]="8"></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColOrderResponsiveTest { }
 
@@ -269,7 +269,7 @@ class ColOrderResponsiveTest { }
       <div antCol [span]="2"></div>
       <div [antCol]="1"></div>
     </ant-row>
-  `
+  `,
 })
 class ColAttributeSelectorTest { }
 
@@ -278,6 +278,6 @@ class ColAttributeSelectorTest { }
     <ant-row>
       <ant-col></ant-col>
     </ant-row>
-  `
+  `,
 })
 class ColErrorSpanTest { }

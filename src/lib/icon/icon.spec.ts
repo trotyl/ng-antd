@@ -15,7 +15,7 @@ describe('Icon', () => {
         IconTypeTest,
         IconSpinTest,
         IconErrorTypeTest,
-      ]
+      ],
     }).compileComponents()
   })
 
@@ -53,7 +53,7 @@ describe('Icon', () => {
   template: `
     <i antIcon type="search"></i>
     <i antIcon="search"></i>
-  `
+  `,
 })
 class IconTypeTest { }
 
@@ -66,13 +66,13 @@ class IconTypeTest { }
     <i antIcon type="search" [spin]="true"></i>
     <i antIcon type="search" [spin]="false"></i>
     <i antIcon type="loading"></i>
-  `
+  `,
 })
 class IconSpinTest { }
 
 @Component({
   template: `
     <i antIcon></i>
-  `
+  `,
 })
 class IconErrorTypeTest { }

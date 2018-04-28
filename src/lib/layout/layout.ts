@@ -16,7 +16,7 @@ const prefix = 'ant-layout'
   host: {
     '[class.ant-layout]': `true`,
     '[class.ant-layout-has-sider]': `siders.length + asides.length > 0`,
-  }
+  },
 })
 export class Layout implements AfterContentInit, OnDestroy {
   @ContentChildren(HeaderElement) headers: QueryList<HeaderElement>

@@ -21,7 +21,7 @@ describe('Button', () => {
         ButtonGhostTest,
         ButtonErrorIconLoadingTest,
         ButtonErrorIconIconOnlyTest,
-      ]
+      ],
     }).compileComponents()
   })
 
@@ -111,7 +111,7 @@ describe('Button', () => {
     <button antBtn color="dashed">Dashed</button>
     <button antBtn color="danger">Danger</button>
     <button antBtn="primary">Primary</button>
-  `
+  `,
 })
 class ButtonTypeTest { }
 
@@ -121,7 +121,7 @@ class ButtonTypeTest { }
     <button antBtn [size]="null">Default</button>
     <button antBtn size="large">Large</button>
     <button antBtn size="small">Small</button>
-  `
+  `,
 })
 class ButtonSizeTest { }
 
@@ -133,7 +133,7 @@ class ButtonSizeTest { }
     <button antBtn loading="false">Default</button>
     <button antBtn [loading]="true">Loading</button>
     <button antBtn [loading]="false">Default</button>
-  `
+  `,
 })
 class ButtonLoadingTest { }
 
@@ -143,7 +143,7 @@ class ButtonLoadingTest { }
     <button antBtn icon="search">Search</button>
     <button antBtn icon="search" shape="circle">Search</button>
     <button antBtn icon="search" iconOnly></button>
-  `
+  `,
 })
 class ButtonIconTest { }
 
@@ -155,20 +155,20 @@ class ButtonIconTest { }
     <button antBtn ghost="false">Default</button>
     <button antBtn [ghost]="true">Ghost</button>
     <button antBtn [ghost]="false">Default</button>
-  `
+  `,
 })
 class ButtonGhostTest { }
 
 @Component({
   template: `
     <button antBtn icon="search" loading>Searching</button>
-  `
+  `,
 })
 class ButtonErrorIconLoadingTest { }
 
 @Component({
   template: `
     <button antBtn iconOnly>Default</button>
-  `
+  `,
 })
 class ButtonErrorIconIconOnlyTest { }

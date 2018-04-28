@@ -12,7 +12,7 @@ describe('Column', () => {
       declarations: [
         SiderWidthTest,
         SiderAttributeSelectorTest,
-      ]
+      ],
     }).compileComponents()
   })
 
@@ -43,7 +43,7 @@ describe('Column', () => {
       <ant-sider></ant-sider>
       <ant-sider [width]="100"></ant-sider>
     </ant-layout>
-  `
+  `,
 })
 class SiderWidthTest { }
 
@@ -54,6 +54,6 @@ class SiderWidthTest { }
       <div antSider [width]="100"></div>
       <div antSider="100"></div>
     </ant-layout>
-  `
+  `,
 })
 class SiderAttributeSelectorTest { }
