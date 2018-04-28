@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostListener, Input } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, Component, HostListener, Input, OnInit, Optional } from '@angular/core'
 import { RadioGroup } from './radio-group'
 
 @Component({
@@ -11,17 +11,27 @@ import { RadioGroup } from './radio-group'
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class RadioButton<T> {
+export class RadioButton<T> implements OnInit {
   @Input() value: T
 
   get checked(): boolean {
     return this.value === this.group.value
   }
 
-  constructor(private group: RadioGroup<T>) { }
+  constructor(@Optional() private group: RadioGroup<T>) { }
 
   @HostListener('click')
   onClick(): void {
     this.group.update(this.value)
+  }
+
+  ngOnInit(): void {
+    if (isDevMode()) this.checkNoConflits()
+  }
+
+  private checkNoConflits(): void {
+    if (!this.group) {
+      throw new Error(`Antd: radio button can only be used inside a radio group`)
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common'
-import { isDevMode, Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, Directive, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { merge } from 'rxjs/observable/merge'
@@ -76,7 +76,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   constructor(
     @Self() private host: HostElement,
     private rsp: Responsive,
-    private row: Row,
+    @Optional() private row: Row,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -133,6 +133,10 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   }
 
   private checkNoConflits(): void {
+    if (!this.row) {
+      throw new Error(`Antd: column can only be used inside a row`)
+    }
+
     if (Number.isNaN(this.span) && Object.keys(this.rSpan).length === 0) {
       throw new Error(`Antd: the 'span' must be specified in column`)
     }
