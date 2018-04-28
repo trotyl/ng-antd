@@ -1,4 +1,5 @@
 import { NgModule, Type } from '@angular/core'
+import { FormsModule } from '@angular/forms'
 import { ButtonModule, DropdownModule, IconModule, MenuModule, RadioModule } from 'ng-antd'
 import { SharedModule } from '../shared/shared.module'
 import { ButtonDemoBasic } from './button-demo-basic'
@@ -32,7 +33,7 @@ const NG_MODULES: Type<any>[] = [
 
 @NgModule({
   declarations: [ TYPES, ButtonDemos ],
-  imports: [ SharedModule, NG_MODULES ],
+  imports: [ FormsModule, SharedModule, NG_MODULES ],
   exports: [ TYPES ],
 })
 export class ButtonDemoModule { }
