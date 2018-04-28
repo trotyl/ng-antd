@@ -22,7 +22,7 @@
         "../node_modules/@angular/cdk/overlay-prebuilt.css",
         "../node_modules/antd/dist/antd.css",
         "../node_modules/prismjs/themes/prism-coy.css",
-        "styles.css"
+        "styles.scss"
       ],
       "scripts": [
         "../node_modules/prismjs/prism.js",
