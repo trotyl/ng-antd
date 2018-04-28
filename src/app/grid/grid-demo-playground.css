@@ -1,0 +1,10 @@
+ant-col {
+  border: 0;
+}
+
+ant-col > div {
+  background: #00A0E9;
+  height: 120px;
+  line-height: 120px;
+  font-size: 13px;
+}

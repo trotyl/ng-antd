@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { NgModule, Type } from '@angular/core'
-import { GridModule } from 'ng-antd'
+import { FormsModule } from '@angular/forms'
+import { GridModule, SliderModule } from 'ng-antd'
 import { SharedModule } from '../shared/shared.module'
 import { GridDemoBasic } from './grid-demo-basic'
 import { GridDemoFlex } from './grid-demo-flex'
@@ -30,11 +31,12 @@ const TYPES: Type<any>[] = [
 const NG_MODULES: Type<any>[] = [
   CommonModule,
   GridModule,
+  SliderModule,
 ]
 
 @NgModule({
   declarations: [ TYPES, GridDemos ],
-  imports: [ SharedModule, NG_MODULES ],
+  imports: [ FormsModule, SharedModule, NG_MODULES ],
   exports: [ TYPES ],
 })
 export class GridDemoModule { }
