@@ -1,11 +1,11 @@
-import { isDevMode, Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
+import { isDevMode, Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { merge } from 'rxjs/observable/merge'
 import { tap } from 'rxjs/operators'
 import { HostElement } from '../core/host-element'
-import { ResponsiveOption as Rsp, Responsive } from '../responsive/responsive'
+import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
 import { Row } from './row'
 
 const prefix = 'ant-col'

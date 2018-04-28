@@ -106,6 +106,13 @@
       "check-whitespace"
     ],
     "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-last",
+        "named-imports-order": "lowercase-first"
+      }
+    ],
     "prefer-const": true,
     "promise-function-async": true,
     "quotemark": [

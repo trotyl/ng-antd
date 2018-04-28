@@ -1,5 +1,5 @@
-import { Directive, NgModule, Self } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
+import { Directive, NgModule, Self } from '@angular/core'
 import { HostElement } from '../core/host-element'
 
 @Directive({

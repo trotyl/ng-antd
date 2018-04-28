@@ -1,7 +1,7 @@
-import { NgModule, Type } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { SourceViewer } from './source-viewer.component'
+import { NgModule, Type } from '@angular/core'
 import { HightLight } from './highlight.directive'
+import { SourceViewer } from './source-viewer.component'
 
 const TYPES: Type<any>[] = [
   SourceViewer,

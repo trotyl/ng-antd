@@ -1,6 +1,6 @@
-import { isDevMode, Directive, Input, OnChanges, Self, SimpleChanges } from '@angular/core'
-import { NgClass } from '@angular/common'
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
+import { NgClass } from '@angular/common'
+import { isDevMode, Directive, Input, OnChanges, Self, SimpleChanges } from '@angular/core'
 import { HostElement } from '../core/host-element'
 
 const prefix = 'anticon'

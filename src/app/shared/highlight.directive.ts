@@ -1,4 +1,4 @@
-import { Directive, Attribute, ElementRef, Renderer2, AfterViewInit } from '@angular/core'
+import { AfterViewInit, Attribute, Directive, ElementRef, Renderer2 } from '@angular/core'
 
 declare var Prism: {
   highlightElement(el: any): void,

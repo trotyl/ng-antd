@@ -1,6 +1,6 @@
+import { OverlayModule } from '@angular/cdk/overlay'
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { OverlayModule } from '@angular/cdk/overlay'
 import { Dropdown } from './dropdown'
 import { Overlay } from './overlay'
 

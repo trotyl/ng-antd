@@ -1,5 +1,5 @@
-import { Component, Attribute, ChangeDetectionStrategy } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
+import { Attribute, ChangeDetectionStrategy, Component } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 
 const API_BASE = 'https://raw.githubusercontent.com/trotyl/ng-antd/master/src/app'

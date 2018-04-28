@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core'
+import { AsideElementModule } from '../elements/aside'
 import { FooterElementModule } from '../elements/footer'
 import { HeaderElementModule } from '../elements/header'
 import { MainElementModule } from '../elements/main'
-import { AsideElementModule } from '../elements/aside'
-import { Layout } from './layout'
-import { Header } from './header'
 import { Content } from './content'
 import { Footer } from './footer'
+import { Header } from './header'
+import { Layout } from './layout'
 import { Sider } from './sider'
 
 const TYPES = [
