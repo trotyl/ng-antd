@@ -1,1 +1,15 @@
-<p>TODO: require slider component</p>
+<div style="margin-bottom: 16px;">
+  <span style="margin-right: 6px;">Gutter (px): </span>
+  <div style="width: 50%;">
+    <ant-slider [(ngModel)]="gutter" [max]="gutters.length - 1" [marks]="gutters"></ant-slider>
+  </div>
+  <span style="margin-right: 6px;">Column Count:</span>
+  <div style="width: 50%;">
+    <ant-slider [(ngModel)]="col" [max]="cols.length - 1" [marks]="cols"></ant-slider>
+  </div>
+</div>
+<ant-row [gutter]="gutters[gutter]">
+  <ant-col *ngFor="let _ of colRange" [span]="24 / cols[col]">
+    <div>Column</div>
+  </ant-col>
+</ant-row>
