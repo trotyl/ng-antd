@@ -133,7 +133,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   }
 
   private checkNoConflits(): void {
-    if (Number.isNaN(this.span)) {
+    if (Number.isNaN(this.span) && Object.keys(this.rSpan).length === 0) {
       throw new Error(`Antd: the 'span' must be specified in column`)
     }
   }
