@@ -92,7 +92,9 @@
       "check-else",
       "check-whitespace"
     ],
+    "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
     "prefer-const": true,
+    "promise-function-async": true,
     "quotemark": [
       true,
       "single"
