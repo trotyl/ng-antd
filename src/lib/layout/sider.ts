@@ -6,6 +6,7 @@ import { Component, HostBinding, Input } from '@angular/core'
   host: {
     '[class.ant-layout-sider]': 'true',
   },
+  preserveWhitespaces: false,
 })
 export class Sider {
   @Input() @HostBinding('style.width.px') width: number = 200

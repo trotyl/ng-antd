@@ -9,8 +9,9 @@ const prefix = 'ant-btn'
 @Component({
   selector: '[antBtn]',
   templateUrl: './button.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ NgClass, HostElement ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  preserveWhitespaces: false,
 })
 export class Button implements OnChanges {
   @Input() color: 'primary' | 'dashed' | 'danger' | null = null

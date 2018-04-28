@@ -8,6 +8,7 @@ import { RadioGroup } from './radio-group'
     '[class.ant-radio-button-wrapper]': `true`,
     '[class.ant-radio-button-wrapper-checked]': `checked`,
   },
+  preserveWhitespaces: false,
 })
 export class RadioButton<T> {
   @Input() value: T
