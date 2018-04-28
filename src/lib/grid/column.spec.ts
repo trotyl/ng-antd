@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { TestBed, async } from '@angular/core/testing'
+import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { of } from 'rxjs/observable/of'
 import { getClassName, getStyle } from '../testing/helper'
@@ -10,8 +10,8 @@ import { Column } from './column'
 describe('Column', () => {
   const colPrefix = 'ant-col'
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [ GridModule ],
       declarations: [
         ColSpanTest,
@@ -33,9 +33,9 @@ describe('Column', () => {
         { provide: Responsive, useValue: { resolve: (opt: any, dg: any) => of(opt.md || dg()) } }
       ],
     }).compileComponents()
-  }))
+  })
 
-  it('should set span classes properly', async(() => {
+  it('should set span classes properly', () => {
     const fixture = TestBed.createComponent(ColSpanTest)
     fixture.detectChanges()
 
@@ -44,97 +44,97 @@ describe('Column', () => {
     expect(getClassName(cols[1])).toBe(`${colPrefix} ${colPrefix}-1`)
     expect(getClassName(cols[2])).toBe(`${colPrefix} ${colPrefix}-4`)
     expect(getClassName(cols[3])).toBe(`${colPrefix} ${colPrefix}-6`)
-  }))
+  })
 
-  it('should set span classes when responsive properly', async(() => {
+  it('should set span classes when responsive properly', () => {
     const fixture = TestBed.createComponent(ColSpanResponsiveTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6`)
-  }))
+  })
 
-  it('should set gutter styles properly', async(() => {
+  it('should set gutter styles properly', () => {
     const fixture = TestBed.createComponent(ColGutterTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getStyle(cols[0])).toEqual({ 'padding-left': '8px', 'padding-right': '8px' })
-  }))
+  })
 
-  it('should set gutter styles when responsive properly', async(() => {
+  it('should set gutter styles when responsive properly', () => {
     const fixture = TestBed.createComponent(ColGutterResponsiveTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getStyle(cols[0])).toEqual({ 'padding-left': '12px', 'padding-right': '12px' })
-  }))
+  })
 
-  it('should set offset classes properly', async(() => {
+  it('should set offset classes properly', () => {
     const fixture = TestBed.createComponent(ColOffsetTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-offset-4`)
-  }))
+  })
 
-  it('should set offset classes when responsive properly', async(() => {
+  it('should set offset classes when responsive properly', () => {
     const fixture = TestBed.createComponent(ColOffsetResponsiveTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-offset-8`)
-  }))
+  })
 
-  it('should set pull classes properly', async(() => {
+  it('should set pull classes properly', () => {
     const fixture = TestBed.createComponent(ColPullTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-pull-4`)
-  }))
+  })
 
-  it('should set pull classes when responsive properly', async(() => {
+  it('should set pull classes when responsive properly', () => {
     const fixture = TestBed.createComponent(ColPullResponsiveTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-pull-8`)
-  }))
+  })
 
-  it('should set push classes properly', async(() => {
+  it('should set push classes properly', () => {
     const fixture = TestBed.createComponent(ColPushTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-push-4`)
-  }))
+  })
 
-  it('should set push classes when responsive properly', async(() => {
+  it('should set push classes when responsive properly', () => {
     const fixture = TestBed.createComponent(ColPushResponsiveTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-push-8`)
-  }))
+  })
 
-  it('should set order classes properly', async(() => {
+  it('should set order classes properly', () => {
     const fixture = TestBed.createComponent(ColOrderTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-order-4`)
-  }))
+  })
 
-  it('should set order classes when responsive properly', async(() => {
+  it('should set order classes when responsive properly', () => {
     const fixture = TestBed.createComponent(ColOrderResponsiveTest)
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-order-8`)
-  }))
+  })
 
-  it('should support attribute selector usage', async(() => {
+  it('should support attribute selector usage', () => {
     const fixture = TestBed.createComponent(ColAttributeSelectorTest)
     fixture.detectChanges()
 
@@ -142,7 +142,7 @@ describe('Column', () => {
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-1`)
     expect(getClassName(cols[1])).toBe(`${colPrefix} ${colPrefix}-2`)
     expect(getClassName(cols[2])).toBe(`${colPrefix} ${colPrefix}-1`)
-  }))
+  })
 
   it('should report error when span not set', () => {
     const fixture = TestBed.createComponent(ColErrorSpanTest)

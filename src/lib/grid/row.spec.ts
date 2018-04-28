@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { TestBed, async } from '@angular/core/testing'
+import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { of } from 'rxjs/observable/of'
 import { getClassName, getStyle } from '../testing/helper'
@@ -10,8 +10,8 @@ import { Row } from './row'
 describe('Row', () => {
   const rowPrefix = 'ant-row'
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [ GridModule ],
       declarations: [
         RowTypeTest,
@@ -25,9 +25,9 @@ describe('Row', () => {
         { provide: Responsive, useValue: { resolve: (opt: any, dg: any) => of(opt.md || dg()) } }
       ],
     }).compileComponents()
-  }))
+  })
 
-  it('should set type classes properly', async(() => {
+  it('should set type classes properly', () => {
     const fixture = TestBed.createComponent(RowTypeTest)
     fixture.detectChanges()
 
@@ -35,25 +35,25 @@ describe('Row', () => {
     expect(getClassName(rows[0])).toBe(`${rowPrefix}`)
     expect(getClassName(rows[1])).toBe(`${rowPrefix}`)
     expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex`)
-  }))
+  })
 
-  it('should set gutter styles properly', async(() => {
+  it('should set gutter styles properly', () => {
     const fixture = TestBed.createComponent(RowGutterTest)
     fixture.detectChanges()
 
     const rows = fixture.debugElement.queryAll(By.directive(Row))
     expect(getStyle(rows[0])).toEqual({ 'margin-left': '-8px', 'margin-right': '-8px' })
-  }))
+  })
 
-  it('should set gutter styles when responsive properly', async(() => {
+  it('should set gutter styles when responsive properly', () => {
     const fixture = TestBed.createComponent(RowGutterResponsiveTest)
     fixture.detectChanges()
 
     const rows = fixture.debugElement.queryAll(By.directive(Row))
     expect(getStyle(rows[0])).toEqual({ 'margin-left': '-12px', 'margin-right': '-12px' })
-  }))
+  })
 
-  it('should set justify classes properly', async(() => {
+  it('should set justify classes properly', () => {
     const fixture = TestBed.createComponent(RowJustifyTest)
     fixture.detectChanges()
 
@@ -64,9 +64,9 @@ describe('Row', () => {
     expect(getClassName(rows[3])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-end`)
     expect(getClassName(rows[4])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-space-between`)
     expect(getClassName(rows[5])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-space-around`)
-  }))
+  })
 
-  it('should set align classes properly', async(() => {
+  it('should set align classes properly', () => {
     const fixture = TestBed.createComponent(RowAlignTest)
     fixture.detectChanges()
 
@@ -75,9 +75,9 @@ describe('Row', () => {
     expect(getClassName(rows[1])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-top`)
     expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-middle`)
     expect(getClassName(rows[3])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-bottom`)
-  }))
+  })
 
-  it('should support attribute selector usage', async(() => {
+  it('should support attribute selector usage', () => {
     const fixture = TestBed.createComponent(RowAttributeSelectorTest)
     fixture.detectChanges()
 
@@ -85,7 +85,7 @@ describe('Row', () => {
     expect(getClassName(rows[0])).toBe(`${rowPrefix}`)
     expect(getClassName(rows[1])).toBe(`${rowPrefix}-flex`)
     expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex`)
-  }))
+  })
 
 })
 

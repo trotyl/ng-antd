@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { TestBed, async } from '@angular/core/testing'
+import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { getClassName } from '../testing/helper'
 import { Icon } from '../icon/icon'
@@ -10,8 +10,8 @@ describe('Button', () => {
   const btnPrefix = 'ant-btn'
   const iconPrefix = 'anticon'
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [ ButtonModule ],
       declarations: [
         ButtonTypeTest,
@@ -23,9 +23,9 @@ describe('Button', () => {
         ButtonErrorIconIconOnlyTest,
       ]
     }).compileComponents()
-  }))
+  })
 
-  it('should set type classes properly', async(() => {
+  it('should set type classes properly', () => {
     const fixture = TestBed.createComponent(ButtonTypeTest)
     fixture.detectChanges()
 
@@ -36,9 +36,9 @@ describe('Button', () => {
     expect(getClassName(buttons[3])).toBe(`${btnPrefix} ${btnPrefix}-dashed`)
     expect(getClassName(buttons[4])).toBe(`${btnPrefix} ${btnPrefix}-danger`)
     expect(getClassName(buttons[5])).toBe(`${btnPrefix} ${btnPrefix}-primary`)
-  }))
+  })
 
-  it('should set size classes properly', async(() => {
+  it('should set size classes properly', () => {
     const fixture = TestBed.createComponent(ButtonSizeTest)
     fixture.detectChanges()
 
@@ -47,9 +47,9 @@ describe('Button', () => {
     expect(getClassName(buttons[1])).toBe(`${btnPrefix}`)
     expect(getClassName(buttons[2])).toBe(`${btnPrefix} ${btnPrefix}-lg`)
     expect(getClassName(buttons[3])).toBe(`${btnPrefix} ${btnPrefix}-sm`)
-  }))
+  })
 
-  it('should set loading classes properly', async(() => {
+  it('should set loading classes properly', () => {
     const fixture = TestBed.createComponent(ButtonLoadingTest)
     fixture.detectChanges()
 
@@ -60,9 +60,9 @@ describe('Button', () => {
     expect(getClassName(buttons[3])).toBe(`${btnPrefix}`)
     expect(getClassName(buttons[4])).toBe(`${btnPrefix} ${btnPrefix}-loading`)
     expect(getClassName(buttons[5])).toBe(`${btnPrefix}`)
-  }))
+  })
 
-  it('should set icon classes properly', async(() => {
+  it('should set icon classes properly', () => {
     const fixture = TestBed.createComponent(ButtonIconTest)
     fixture.detectChanges()
 
@@ -76,9 +76,9 @@ describe('Button', () => {
     expect(getClassName(icons[2])).toBe(`${iconPrefix} ${iconPrefix}-search`)
     expect(getClassName(buttons[3])).toBe(`${btnPrefix} ${btnPrefix}-icon-only`)
     expect(getClassName(icons[3])).toBe(`${iconPrefix} ${iconPrefix}-search`)
-  }))
+  })
 
-  it('should set ghost classes properly', async(() => {
+  it('should set ghost classes properly', () => {
     const fixture = TestBed.createComponent(ButtonGhostTest)
     fixture.detectChanges()
 
@@ -89,17 +89,17 @@ describe('Button', () => {
     expect(getClassName(buttons[3])).toBe(`${btnPrefix}`)
     expect(getClassName(buttons[4])).toBe(`${btnPrefix} ${btnPrefix}-background-ghost`)
     expect(getClassName(buttons[5])).toBe(`${btnPrefix}`)
-  }))
+  })
 
-  it('should report error when set icon and loading', async(() => {
+  it('should report error when set icon and loading', () => {
     const fixture = TestBed.createComponent(ButtonErrorIconLoadingTest)
     expect(() => fixture.detectChanges()).toThrowError(/Antd: button with icon 'search' cannot have loading status/)
-  }))
+  })
 
-  it('should report error when set iconOnly but not icon', async(() => {
+  it('should report error when set iconOnly but not icon', () => {
     const fixture = TestBed.createComponent(ButtonErrorIconIconOnlyTest)
     expect(() => fixture.detectChanges()).toThrowError(/Antd: button without an icon cannot be iconOnly/)
-  }))
+  })
 
 })
 

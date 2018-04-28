@@ -1,18 +1,18 @@
 import { Component, Self } from '@angular/core'
-import { async, TestBed } from '@angular/core/testing'
+import { TestBed } from '@angular/core/testing'
 import { NgClass, NgStyle } from '@angular/common'
 import { getClassName, getStyle } from '../testing/helper'
 import { HostElement } from './host-element'
 
 describe('HostElement', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [
         HostElementTest,
         HostElementNoDirTest,
       ],
     }).compileComponents()
-  }))
+  })
 
   it('should set host classes', () => {
     const fixture = TestBed.createComponent(HostElementTest)
