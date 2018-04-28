@@ -70,6 +70,8 @@
     "no-conditional-assignment": true,
     "no-construct": true,
     "no-debugger": true,
+    "no-default-export": true,
+    "no-duplicate-imports": true,
     "no-duplicate-super": true,
     "no-duplicate-switch-case": true,
     "no-duplicate-variable": [true, "check-parameters"],
@@ -84,6 +86,7 @@
     ],
     "no-misused-new": true,
     "no-non-null-assertion": false,
+    "no-require-imports": true,
     "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-string-throw": true,
@@ -114,6 +117,8 @@
       true,
       "never"
     ],
+    "switch-default": true,
+    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
     "triple-equals": [
       true,
       "allow-null-check"
@@ -135,6 +140,7 @@
       }
     ],
     "unified-signatures": true,
+    "use-default-type-parameter": true,
     "variable-name": false,
     "whitespace": [
       true,

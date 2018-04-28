@@ -1,11 +1,11 @@
 import { Directive, Attribute, ElementRef, Renderer2, AfterViewInit } from '@angular/core'
 
 declare var Prism: {
-  highlightElement(el: any): void
+  highlightElement(el: any): void,
 }
 
 @Directive({
-  selector: '[highlight]'
+  selector: '[highlight]',
 })
 export class HightLight implements AfterViewInit {
   constructor(

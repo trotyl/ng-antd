@@ -41,6 +41,6 @@ const routes: Routes = [
     DEMO_MODULES,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

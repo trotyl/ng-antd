@@ -4,8 +4,8 @@ import { Component, HostBinding, Input } from '@angular/core'
   selector: 'ant-sider, [antSider]',
   templateUrl: './sider.html',
   host: {
-    '[class.ant-layout-sider]': 'true'
-  }
+    '[class.ant-layout-sider]': 'true',
+  },
 })
 export class Sider {
   @Input() @HostBinding('style.width.px') width: number = 200

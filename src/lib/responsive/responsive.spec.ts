@@ -19,7 +19,7 @@ describe('Responsive', () => {
     await TestBed.configureTestingModule({
       imports: [ ResponsiveModule ],
       providers: [
-        { provide: BreakpointObserver, useFactory: () => mockObserver }
+        { provide: BreakpointObserver, useFactory: () => mockObserver },
       ],
     }).compileComponents()
   })

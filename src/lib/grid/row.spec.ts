@@ -22,7 +22,7 @@ describe('Row', () => {
         RowAttributeSelectorTest,
       ],
       providers: [
-        { provide: Responsive, useValue: { resolve: (opt: any, dg: any) => of(opt.md || dg()) } }
+        { provide: Responsive, useValue: { resolve: (opt: any, dg: any) => of(opt.md || dg()) } },
       ],
     }).compileComponents()
   })
@@ -94,21 +94,21 @@ describe('Row', () => {
     <ant-row></ant-row>
     <ant-row [type]="null"></ant-row>
     <ant-row type="flex"></ant-row>
-  `
+  `,
 })
 class RowTypeTest { }
 
 @Component({
   template: `
     <ant-row [gutter]="16"></ant-row>
-  `
+  `,
 })
 class RowGutterTest { }
 
 @Component({
   template: `
     <ant-row [gutter]="16" [gutter.md]="24"></ant-row>
-  `
+  `,
 })
 class RowGutterResponsiveTest { }
 
@@ -120,7 +120,7 @@ class RowGutterResponsiveTest { }
     <ant-row type="flex" justify="end"></ant-row>
     <ant-row type="flex" justify="space-between"></ant-row>
     <ant-row type="flex" justify="space-around"></ant-row>
-  `
+  `,
 })
 class RowJustifyTest { }
 
@@ -130,7 +130,7 @@ class RowJustifyTest { }
     <ant-row type="flex" align="top"></ant-row>
     <ant-row type="flex" align="middle"></ant-row>
     <ant-row type="flex" align="bottom"></ant-row>
-  `
+  `,
 })
 class RowAlignTest { }
 
@@ -139,6 +139,6 @@ class RowAlignTest { }
     <div antRow></div>
     <div antRow type="flex"></div>
     <div antRow="flex"></div>
-  `
+  `,
 })
 class RowAttributeSelectorTest { }
