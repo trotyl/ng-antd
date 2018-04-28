@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from '@angular/core'
+import { ChangeDetectionStrategy, Component, HostListener, Input } from '@angular/core'
 import { RadioGroup } from './radio-group'
 
 @Component({
@@ -8,6 +8,7 @@ import { RadioGroup } from './radio-group'
     '[class.ant-radio-button-wrapper]': `true`,
     '[class.ant-radio-button-wrapper-checked]': `checked`,
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
 export class RadioButton<T> {

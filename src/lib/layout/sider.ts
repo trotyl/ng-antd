@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core'
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core'
 
 @Component({
   selector: 'ant-sider, [antSider]',
@@ -6,6 +6,7 @@ import { Component, HostBinding, Input } from '@angular/core'
   host: {
     '[class.ant-layout-sider]': 'true',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
 export class Sider {
