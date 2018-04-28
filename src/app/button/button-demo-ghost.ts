@@ -4,5 +4,6 @@ import { Component } from '@angular/core'
   selector: 'button-demo-ghost',
   templateUrl: './button-demo-ghost.html',
   styleUrls: [`./button-demo-ghost.css`],
+  preserveWhitespaces: false,
 })
 export class ButtonDemoGhost { }
