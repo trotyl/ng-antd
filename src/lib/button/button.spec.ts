@@ -1,10 +1,10 @@
 import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName } from '../testing/helper'
 import { Icon } from '../icon/icon'
-import { ButtonModule } from './button.module'
+import { getClassName } from '../testing/helper'
 import { Button } from './button'
+import { ButtonModule } from './button.module'
 
 describe('Button', () => {
   const btnPrefix = 'ant-btn'

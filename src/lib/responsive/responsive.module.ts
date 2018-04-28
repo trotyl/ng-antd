@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core'
 import { LayoutModule } from '@angular/cdk/layout'
+import { NgModule } from '@angular/core'
 import { Responsive } from './responsive'
 
 @NgModule({

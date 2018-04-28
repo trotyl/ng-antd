@@ -2,8 +2,8 @@ import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { getClassName } from '../testing/helper'
-import { IconModule } from './icon.module'
 import { Icon } from './icon'
+import { IconModule } from './icon.module'
 
 describe('Icon', () => {
   const iconPrefix = 'anticon'

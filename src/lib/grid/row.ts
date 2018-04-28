@@ -1,11 +1,11 @@
-import { Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
+import { Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
-import {Subject} from 'rxjs/Subject'
+import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
-import { tap, map } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
 import { HostElement } from '../core/host-element'
-import { ResponsiveOption as Rsp, Responsive } from '../responsive/responsive'
+import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
 
 const prefix = 'ant-row'
 

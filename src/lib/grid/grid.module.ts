@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { ResponsiveModule } from '../responsive/responsive.module'
-import { Row } from './row'
 import { Column } from './column'
+import { Row } from './row'
 
 const TYPES = [
   Row,

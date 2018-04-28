@@ -1,7 +1,7 @@
-import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NgClass } from '@angular/common'
-import { getSizeToken } from '../core/lang'
+import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { HostElement } from '../core/host-element'
+import { getSizeToken } from '../core/lang'
 
 const prefix = 'ant-btn-group'
 

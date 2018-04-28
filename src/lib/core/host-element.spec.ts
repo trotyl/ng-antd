@@ -1,6 +1,6 @@
+import { NgClass, NgStyle } from '@angular/common'
 import { Component, Self } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
-import { NgClass, NgStyle } from '@angular/common'
 import { getClassName, getStyle } from '../testing/helper'
 import { HostElement } from './host-element'
 

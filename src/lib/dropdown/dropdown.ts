@@ -1,12 +1,12 @@
-import { isDevMode, ContentChild, Directive, ElementRef, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core'
-import { OriginConnectionPosition, OverlayConnectionPosition, Overlay, OverlayRef } from '@angular/cdk/overlay'
+import { OriginConnectionPosition, Overlay, OverlayConnectionPosition, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
-import { Subscription } from 'rxjs/Subscription'
+import { isDevMode, ContentChild, Directive, ElementRef, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core'
+import { ISubscription } from 'rxjs/Subscription'
 import { fromEvent } from 'rxjs/observable/fromEvent'
 import { merge } from 'rxjs/observable/merge'
+import { delay } from 'rxjs/operators/delay'
 import { filter } from 'rxjs/operators/filter'
 import { map } from 'rxjs/operators/map'
-import { delay } from 'rxjs/operators/delay'
 import { pairwise } from 'rxjs/operators/pairwise'
 import { scan } from 'rxjs/operators/scan'
 import { startWith } from 'rxjs/operators/startWith'
@@ -29,7 +29,7 @@ export class Dropdown implements OnDestroy, OnInit {
   portal: TemplatePortal
   outlet: OverlayRef
 
-  private status$$: Subscription | null = null
+  private status$$: ISubscription | null = null
 
   constructor(
     private element: ElementRef,

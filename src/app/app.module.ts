@@ -1,18 +1,18 @@
-import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
 import { HttpClientModule } from '@angular/common/http'
+import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule, Routes } from '@angular/router'
 import { LayoutModule } from 'ng-antd'
 
-import { ButtonDemos } from './button/button-demos'
-import { ButtonDemoModule } from './button/button-demo.module'
-import { IconDemos } from './icon/icon-demos'
-import { IconDemoModule } from './icon/icon-demo.module'
-import { GridDemos } from './grid/grid-demos'
-import { GridDemoModule } from './grid/grid-demo.module'
-import { LayoutDemos } from './layout/layout-demos'
-import { LayoutDemoModule } from './layout/layout-demo.module'
 import { AppComponent } from './app.component'
+import { ButtonDemoModule } from './button/button-demo.module'
+import { ButtonDemos } from './button/button-demos'
+import { GridDemoModule } from './grid/grid-demo.module'
+import { GridDemos } from './grid/grid-demos'
+import { IconDemoModule } from './icon/icon-demo.module'
+import { IconDemos } from './icon/icon-demos'
+import { LayoutDemoModule } from './layout/layout-demo.module'
+import { LayoutDemos } from './layout/layout-demos'
 
 const DEMO_MODULES = [
   ButtonDemoModule,

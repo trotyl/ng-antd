@@ -1,9 +1,9 @@
-import { TestBed, inject } from '@angular/core/testing'
 import { BreakpointObserver } from '@angular/cdk/layout'
+import { inject, TestBed } from '@angular/core/testing'
 import { empty } from 'rxjs/observable/empty'
 import { of } from 'rxjs/observable/of'
-import { ResponsiveModule } from './responsive.module'
 import { Responsive } from './responsive'
+import { ResponsiveModule } from './responsive.module'
 
 describe('Responsive', () => {
   let mockObserver: BreakpointObserver

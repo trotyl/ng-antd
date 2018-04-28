@@ -2,10 +2,10 @@ import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { of } from 'rxjs/observable/of'
-import { getClassName, getStyle } from '../testing/helper'
 import { Responsive } from '../responsive/responsive'
-import { GridModule } from './grid.module'
+import { getClassName, getStyle } from '../testing/helper'
 import { Column } from './column'
+import { GridModule } from './grid.module'
 
 describe('Column', () => {
   const colPrefix = 'ant-col'

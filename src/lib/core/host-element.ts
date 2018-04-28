@@ -1,5 +1,5 @@
-import { ElementRef, Injectable, Optional, Renderer2, Self } from '@angular/core'
 import { NgClass, NgStyle } from '@angular/common'
+import { ElementRef, Injectable, Optional, Renderer2, Self } from '@angular/core'
 
 @Injectable()
 export class HostElement {
