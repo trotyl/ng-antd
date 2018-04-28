@@ -1,3 +1,4 @@
+/* tslint:disable */
 import { AppPage } from './app.po'
 
 describe('ng-antd App', () => {

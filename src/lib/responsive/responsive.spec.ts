@@ -1,4 +1,4 @@
-import { TestBed, async, inject } from '@angular/core/testing'
+import { TestBed, inject } from '@angular/core/testing'
 import { BreakpointObserver } from '@angular/cdk/layout'
 import { empty } from 'rxjs/observable/empty'
 import { of } from 'rxjs/observable/of'
@@ -15,14 +15,14 @@ describe('Responsive', () => {
     } as any
   })
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [ ResponsiveModule ],
       providers: [
         { provide: BreakpointObserver, useFactory: () => mockObserver }
       ],
     }).compileComponents()
-  }))
+  })
 
   it('should resolve to largest screen', inject([Responsive], (rsp: Responsive) => {
     let res: number
