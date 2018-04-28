@@ -27,6 +27,7 @@ describe('Column', () => {
         ColOrderTest,
         ColOrderResponsiveTest,
         ColAttributeSelectorTest,
+        ColErrorRowTest,
         ColErrorSpanTest,
       ],
       providers: [
@@ -142,6 +143,11 @@ describe('Column', () => {
     expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-1`)
     expect(getClassName(cols[1])).toBe(`${colPrefix} ${colPrefix}-2`)
     expect(getClassName(cols[2])).toBe(`${colPrefix} ${colPrefix}-1`)
+  })
+
+  it('should report error when not inside a row', () => {
+    const fixture = TestBed.createComponent(ColErrorRowTest)
+    expect(() => fixture.detectChanges()).toThrowError(/Antd: column can only be used inside a row/)
   })
 
   it('should report error when span not set', () => {
@@ -272,6 +278,13 @@ class ColOrderResponsiveTest { }
   `,
 })
 class ColAttributeSelectorTest { }
+
+@Component({
+  template: `
+    <ant-col></ant-col>
+  `,
+})
+class ColErrorRowTest { }
 
 @Component({
   template: `
