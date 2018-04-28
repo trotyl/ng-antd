@@ -20,7 +20,7 @@ export class HostElement {
     this.ngClassDir!.ngDoCheck()
   }
 
-  get classes() {
+  get classes(): string | string[] | Set<string> | {[klass: string]: any} {
     return this._classes
   }
 
@@ -31,7 +31,7 @@ export class HostElement {
     this.ngStyleDir!.ngDoCheck()
   }
 
-  get styles() {
+  get styles(): {[key: string]: string} {
     return this._styles
   }
 

@@ -16,7 +16,7 @@ export class HightLight implements AfterViewInit {
     renderer.addClass(element.nativeElement, `language-${lang}`)
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     Prism.highlightElement(this.element.nativeElement)
   }
 }
