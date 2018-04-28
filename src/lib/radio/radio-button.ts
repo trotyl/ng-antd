@@ -12,7 +12,7 @@ import { RadioGroup } from './radio-group'
   preserveWhitespaces: false,
 })
 export class RadioButton<T> implements OnInit {
-  @Input() value: T
+  @Input() value: T | null = null
 
   get checked(): boolean {
     return this.value === this.group.value
