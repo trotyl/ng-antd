@@ -1,71 +1,38 @@
-<h3>Grid</h3>
+<article>
+  <h1>Grid</h1>
 
-<h4>Basic Grid</h4>
-<grid-demo-basic demo></grid-demo-basic>
-<br>
-<source-viewer component="grid" demo="basic"></source-viewer>
-<br>
-<hr>
-
-<h4>Grid Gutter</h4>
-<grid-demo-gutter demo></grid-demo-gutter>
-<br>
-<source-viewer component="grid" demo="gutter"></source-viewer>
-<br>
-<hr>
-
-<h4>Grid Offset</h4>
-<grid-demo-offset demo></grid-demo-offset>
-<br>
-<source-viewer component="grid" demo="offset"></source-viewer>
-<br>
-<hr>
-
-<h4>Grid Sort</h4>
-<grid-demo-sort demo></grid-demo-sort>
-<br>
-<source-viewer component="grid" demo="sort"></source-viewer>
-<br>
-<hr>
-
-<h4>Grid Flex</h4>
-<grid-demo-flex demo></grid-demo-flex>
-<br>
-<source-viewer component="grid" demo="flex"></source-viewer>
-<br>
-<hr>
-
-<h4>Flex Alignment</h4>
-<grid-demo-flex-align demo></grid-demo-flex-align>
-<br>
-<source-viewer component="grid" demo="flex-align"></source-viewer>
-<br>
-<hr>
-
-<h4>Flex Order</h4>
-<grid-demo-flex-order demo></grid-demo-flex-order>
-<br>
-<source-viewer component="grid" demo="flex-order"></source-viewer>
-<br>
-<hr>
-
-<h4>Responsive</h4>
-<grid-demo-responsive demo></grid-demo-responsive>
-<br>
-<source-viewer component="grid" demo="responsive"></source-viewer>
-<br>
-<hr>
-
-<h4>More Responsive</h4>
-<grid-demo-responsive-more demo></grid-demo-responsive-more>
-<br>
-<source-viewer component="grid" demo="responsive-more"></source-viewer>
-<br>
-<hr>
-
-<h4>Playground</h4>
-<grid-demo-playground demo></grid-demo-playground>
-<br>
-<source-viewer component="grid" demo="playground"></source-viewer>
-<br>
-<hr>
+  <ant-row gutter="16">
+    <ant-col class="code-boxes-col-1-1" span="24">
+      <section [demo]="['grid', 'basic']" title="Basic Grid">
+        <grid-demo-basic></grid-demo-basic>
+      </section>
+      <section [demo]="['grid', 'gutter']" title="Grid Gutter">
+        <grid-demo-gutter></grid-demo-gutter>
+      </section>
+      <section [demo]="['grid', 'offset']" title="Grid Offset">
+        <grid-demo-offset></grid-demo-offset>
+      </section>
+      <section [demo]="['grid', 'sort']" title="Grid Sort">
+        <grid-demo-sort></grid-demo-sort>
+      </section>
+      <section [demo]="['grid', 'flex']" title="Grid Flex">
+        <grid-demo-flex></grid-demo-flex>
+      </section>
+      <section [demo]="['grid', 'flex-align']" title="Flex Alignment">
+        <grid-demo-flex-align></grid-demo-flex-align>
+      </section>
+      <section [demo]="['grid', 'flex-order']" title="Flex Order">
+        <grid-demo-flex-order></grid-demo-flex-order>
+      </section>
+      <section [demo]="['grid', 'responsive']" title="Responsive">
+        <grid-demo-responsive></grid-demo-responsive>
+      </section>
+      <section [demo]="['grid', 'responsive-more']" title="More Responsive">
+        <grid-demo-responsive-more></grid-demo-responsive-more>
+      </section>
+      <section [demo]="['grid', 'playground']" title="Playground">
+        <grid-demo-playground></grid-demo-playground>
+      </section>
+    </ant-col>
+  </ant-row>
+</article>

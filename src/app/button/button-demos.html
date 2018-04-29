@@ -1,57 +1,32 @@
-<h3>Button</h3>
+<article>
+  <h1>Button</h1>
 
-<h4>Type</h4>
-<button-demo-basic demo></button-demo-basic>
-<br>
-<source-viewer component="button" demo="basic"></source-viewer>
-<br>
-<hr>
-
-<h4>Size</h4>
-<button-demo-size demo></button-demo-size>
-<br>
-<source-viewer component="button" demo="size"></source-viewer>
-<br>
-<hr>
-
-<h4>Loading</h4>
-<button-demo-loading demo></button-demo-loading>
-<br>
-<source-viewer component="button" demo="loading"></source-viewer>
-<br>
-<hr>
-
-<h4>Button Group</h4>
-<button-demo-button-group demo></button-demo-button-group>
-<br>
-<source-viewer component="button" demo="button-group"></source-viewer>
-<br>
-<hr>
-
-<h4>Icon</h4>
-<button-demo-icon demo></button-demo-icon>
-<br>
-<source-viewer component="button" demo="icon"></source-viewer>
-<br>
-<hr>
-
-<h4>Disabled</h4>
-<button-demo-disabled demo></button-demo-disabled>
-<br>
-<source-viewer component="button" demo="disabled"></source-viewer>
-<br>
-<hr>
-
-<h4>Multiple Buttons</h4>
-<button-demo-multiple demo></button-demo-multiple>
-<br>
-<source-viewer component="button" demo="multiple"></source-viewer>
-<br>
-<hr>
-
-<h4>Ghost Button</h4>
-<button-demo-ghost demo></button-demo-ghost>
-<br>
-<source-viewer component="button" demo="ghost"></source-viewer>
-<br>
-<hr>
+  <ant-row gutter="16">
+    <ant-col class="code-boxes-col-1-1" span="24">
+      <section [demo]="['button', 'basic']" title="Type">
+        <button-demo-basic></button-demo-basic>
+      </section>
+      <section [demo]="['button', 'size']" title="Size">
+        <button-demo-size></button-demo-size>
+      </section>
+      <section [demo]="['button', 'loading']" title="Loading">
+        <button-demo-loading></button-demo-loading>
+      </section>
+      <section [demo]="['button', 'button-group']" title="Button Group">
+        <button-demo-button-group></button-demo-button-group>
+      </section>
+      <section [demo]="['button', 'icon']" title="Icon">
+        <button-demo-icon></button-demo-icon>
+      </section>
+      <section [demo]="['button', 'disabled']" title="Disabled">
+        <button-demo-disabled></button-demo-disabled>
+      </section>
+      <section [demo]="['button', 'multiple']" title="Multiple Buttons">
+        <button-demo-multiple></button-demo-multiple>
+      </section>
+      <section [demo]="['button', 'ghost']" title="Ghost Button">
+        <button-demo-ghost></button-demo-ghost>
+      </section>
+    </ant-col>
+  </ant-row>
+</article>

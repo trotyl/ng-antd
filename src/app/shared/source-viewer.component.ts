@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { Attribute, ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 
 const API_BASE = 'https://raw.githubusercontent.com/trotyl/ng-antd/master/src/app'
@@ -15,19 +15,20 @@ const API_BASE = 'https://raw.githubusercontent.com/trotyl/ng-antd/master/src/ap
   host: { '[style.display]': `'block'` },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SourceViewer {
+export class SourceViewer implements OnInit {
+  @Input() component: string
+  @Input() case: string
+
   html$: Observable<string>
   ts$: Observable<string>
   css$: Observable<string>
 
-  constructor(
-    http: HttpClient,
-    @Attribute('component') component: string,
-    @Attribute('demo') demo: string,
-  ) {
-    const path = `${API_BASE}/${component}/${component}-demo-${demo}`
-    this.html$ = http.get(`${path}.html`, { responseType: 'text' })
-    this.ts$ = http.get(`${path}.ts`, { responseType: 'text' })
-    this.css$ = http.get(`${path}.css`, { responseType: 'text' })
+  constructor(private http: HttpClient) { }
+
+  ngOnInit(): void {
+    const path = `${API_BASE}/${this.component}/${this.component}-demo-${this.case}`
+    this.html$ = this.http.get(`${path}.html`, { responseType: 'text' })
+    this.ts$ = this.http.get(`${path}.ts`, { responseType: 'text' })
+    this.css$ = this.http.get(`${path}.css`, { responseType: 'text' })
   }
 }

@@ -1,5 +1,5 @@
 import { NgModule, Type } from '@angular/core'
-import { LayoutModule } from 'ng-antd'
+import { GridModule, LayoutModule } from 'ng-antd'
 import { SharedModule } from '../shared/shared.module'
 import { LayoutDemoBasic } from './layout-demo-basic'
 import { LayoutDemoCustomTrigger } from './layout-demo-custom-trigger'
@@ -25,6 +25,7 @@ const TYPES: Type<any>[] = [
 ]
 
 const NG_MODULES: Type<any>[] = [
+  GridModule,
   LayoutModule,
 ]
 

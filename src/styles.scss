@@ -1,65 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
-section {
-  margin-bottom: 5px;
+[id^=components-button-demo-] .ant-btn {
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+[id^=components-button-demo-] .ant-btn-group > .ant-btn,
+[id^=components-button-demo-] .ant-btn-group > span > .ant-btn {
+  margin-right: 0;
 }
 
-.ant-col {
-  border: 1px solid skyblue;
-  padding: 10px;
+#components-layout-demo-basic .code-box-demo {
   text-align: center;
 }
-
-button-demos button[antbtn] {
-  margin-right: 5px;
+#components-layout-demo-basic .ant-layout-header,
+#components-layout-demo-basic .ant-layout-footer {
+  background: #7dbcea;
+  color: #fff;
 }
-
-grid-demos .height-100 {
-  height: 100px;
-  line-height: 100px;
+#components-layout-demo-basic .ant-layout-footer {
+  line-height: 1.5;
 }
-
-grid-demos .height-150 {
-  height: 150px;
-  line-height: 150px;
-}
-
-grid-demos .height-80 {
-  height: 80px;
-  line-height: 80px;
-}
-
-grid-demos .height-120 {
-  height: 120px;
+#components-layout-demo-basic .ant-layout-sider {
+  background: #3ba0e9;
+  color: #fff;
   line-height: 120px;
 }
-
-layout-demos .ant-layout-header {
-  border: 1px solid skyblue;
-  min-height: 80px;
-  padding-top: 10px;
-  color: white;
-  text-align: center;
+#components-layout-demo-basic .ant-layout-content {
+  background: rgba(16, 142, 233, 1);
+  color: #fff;
+  min-height: 120px;
+  line-height: 120px;
 }
-
-layout-demos .ant-layout-content {
-  border: 1px solid skyblue;
-  min-height: 80px;
-  padding-top: 30px;
-  text-align: center;
+#components-layout-demo-basic > .code-box-demo > div > .ant-layout {
+  margin-bottom: 48px;
 }
-
-layout-demos .ant-layout-sider {
-  border: 1px solid skyblue;
-  color: white;
-  min-width: 200px;
-  min-height: 80px;
-  padding-top: 30px;
-  text-align: center;
-}
-
-layout-demos .ant-layout-footer {
-  border: 1px solid skyblue;
-  min-height: 80px;
-  padding-top: 30px;
-  text-align: center;
+#components-layout-demo-basic > .code-box-demo > div > .ant-layout:last-child {
+  margin: 0;
 }

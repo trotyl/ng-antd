@@ -1,0 +1,14 @@
+<section class="code-box-demo">
+  <ng-content></ng-content>
+</section>
+<section class="code-box-meta markdown">
+  <div class="code-box-title">
+    <a href="/">{{ title | titlecase }}</a>
+    <a class="edit-button" href="/" target="_blank"><i antIcon="edit"></i></a>
+  </div>
+</section> 
+<section class="highlight-wrapper highlight-wrapper-expand">
+  <div class="highlight" style="padding: 20px;">
+    <source-viewer [component]="demo[0]" [case]="demo[1]"></source-viewer>
+  </div>
+</section>

@@ -1,63 +1,35 @@
-<h3>Layout</h3>
-<h4>Basic Structure</h4>
-<layout-demo-basic demo></layout-demo-basic>
-<br>
-<source-viewer component="layout" demo="basic"></source-viewer>
-<br>
-<hr>
+<article>
+  <h1>Layout</h1>
 
-<h4>Header-Content-Footer</h4>
-<layout-demo-top demo></layout-demo-top>
-<br>
-<source-viewer component="layout" demo="top"></source-viewer>
-<br>
-<hr>
-
-<h4>Header Sider 2</h4>
-<layout-demo-top-side-2 demo></layout-demo-top-side-2>
-<br>
-<source-viewer component="layout" demo="top-side-2"></source-viewer>
-<br>
-<hr>
-
-<h4>Header-Sider</h4>
-<layout-demo-top-side demo></layout-demo-top-side>
-<br>
-<source-viewer component="layout" demo="top-side"></source-viewer>
-<br>
-<hr>
-
-<h4>Sider</h4>
-<layout-demo-side demo></layout-demo-side>
-<br>
-<source-viewer component="layout" demo="side"></source-viewer>
-<br>
-<hr>
-
-<h4>Custom trigger</h4>
-<layout-demo-custom-trigger demo></layout-demo-custom-trigger>
-<br>
-<source-viewer component="layout" demo="custom-trigger"></source-viewer>
-<br>
-<hr>
-
-<h4>Responsive</h4>
-<layout-demo-responsive demo></layout-demo-responsive>
-<br>
-<source-viewer component="layout" demo="responsive"></source-viewer>
-<br>
-<hr>
-
-<h4>Fixed Header</h4>
-<layout-demo-fixed demo></layout-demo-fixed>
-<br>
-<source-viewer component="layout" demo="fixed"></source-viewer>
-<br>
-<hr>
-
-<h4>Fixed Sider</h4>
-<layout-demo-fixed-sider demo></layout-demo-fixed-sider>
-<br>
-<source-viewer component="layout" demo="fixed-sider"></source-viewer>
-<br>
-<hr>
+  <ant-row gutter="16">
+    <ant-col class="code-boxes-col-1-1" span="24">
+      <section [demo]="['layout', 'basic']" title="Basic Structure">
+        <layout-demo-basic></layout-demo-basic>
+      </section>
+      <section [demo]="['layout', 'top']" title="Header-Content-Footer">
+        <layout-demo-top></layout-demo-top>
+      </section>
+      <section [demo]="['layout', 'top-side-2']" title="Header Sider 2">
+        <layout-demo-top-side-2></layout-demo-top-side-2>
+      </section>
+      <section [demo]="['layout', 'top-side']" title="Header-Sider">
+        <layout-demo-top-side></layout-demo-top-side>
+      </section>
+      <section [demo]="['layout', 'side']" title="Sider">
+        <layout-demo-side></layout-demo-side>
+      </section>
+      <section [demo]="['layout', 'custom-trigger']" title="Custom trigger">
+        <layout-demo-custom-trigger></layout-demo-custom-trigger>
+      </section>
+      <section [demo]="['layout', 'responsive']" title="Responsive">
+        <layout-demo-responsive></layout-demo-responsive>
+      </section>
+      <section [demo]="['layout', 'fixed']" title="Fixed Header">
+        <layout-demo-fixed></layout-demo-fixed>
+      </section>
+      <section [demo]="['layout', 'fixed-sider']" title="Fixed Sider">
+        <layout-demo-fixed-sider></layout-demo-fixed-sider>
+      </section>
+    </ant-col>
+  </ant-row>
+</article>
