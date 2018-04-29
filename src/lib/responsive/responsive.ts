@@ -9,9 +9,11 @@ export interface ResponsiveOption<T> {
   md?: T
   lg?: T
   xl?: T
+  xxl?: T
 }
 
 const breakpoints: [keyof(ResponsiveOption<number>), string][] = [
+  ['xxl', '(min-width: 1600px)'],
   ['xl', '(min-width: 1200px)'],
   ['lg', '(min-width: 992px)'],
   ['md', '(min-width: 768px)'],

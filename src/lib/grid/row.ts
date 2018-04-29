@@ -28,6 +28,7 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   @Input('gutter.md') set gutterMd(value: number) { this.rGutter.md = value }
   @Input('gutter.lg') set gutterLg(value: number) { this.rGutter.lg = value }
   @Input('gutter.xl') set gutterXl(value: number) { this.rGutter.xl = value }
+  @Input('gutter.xxl') set gutterXxl(value: number) { this.rGutter.xxl = value }
 
   status$: Observable<void>
   status$$: ISubscription

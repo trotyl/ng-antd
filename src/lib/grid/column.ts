@@ -30,30 +30,35 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   @Input('span.md') set spanMd(value: number) { this.rSpan.md = value }
   @Input('span.lg') set spanLg(value: number) { this.rSpan.lg = value }
   @Input('span.xl') set spanXl(value: number) { this.rSpan.xl = value }
+  @Input('span.xxl') set spanXxl(value: number) { this.rSpan.xxl = value }
 
   @Input('offset.xs') set offsetXs(value: number) { this.rOffset.xs = value }
   @Input('offset.sm') set offsetSm(value: number) { this.rOffset.sm = value }
   @Input('offset.md') set offsetMd(value: number) { this.rOffset.md = value }
   @Input('offset.lg') set offsetLg(value: number) { this.rOffset.lg = value }
   @Input('offset.xl') set offsetXl(value: number) { this.rOffset.xl = value }
+  @Input('offset.xxl') set offsetXxl(value: number) { this.rOffset.xxl = value }
 
   @Input('order.xs') set orderXs(value: number) { this.rOrder.xs = value }
   @Input('order.sm') set orderSm(value: number) { this.rOrder.sm = value }
   @Input('order.md') set orderMd(value: number) { this.rOrder.md = value }
   @Input('order.lg') set orderLg(value: number) { this.rOrder.lg = value }
   @Input('order.xl') set orderXl(value: number) { this.rOrder.xl = value }
+  @Input('order.xxl') set orderXxl(value: number) { this.rOrder.xxl = value }
 
   @Input('pull.xs') set pullXs(value: number) { this.rPull.xs = value }
   @Input('pull.sm') set pullSm(value: number) { this.rPull.sm = value }
   @Input('pull.md') set pullMd(value: number) { this.rPull.md = value }
   @Input('pull.lg') set pullLg(value: number) { this.rPull.lg = value }
   @Input('pull.xl') set pullXl(value: number) { this.rPull.xl = value }
+  @Input('pull.xxl') set pullXxl(value: number) { this.rPull.xxl = value }
 
   @Input('push.xs') set pushXs(value: number) { this.rPush.xs = value }
   @Input('push.sm') set pushSm(value: number) { this.rPush.sm = value }
   @Input('push.md') set pushMd(value: number) { this.rPush.md = value }
   @Input('push.lg') set pushLg(value: number) { this.rPush.lg = value }
   @Input('push.xl') set pushXl(value: number) { this.rPush.xl = value }
+  @Input('push.xxl') set pushXxl(value: number) { this.rPush.xxl = value }
 
   rSpan: Rsp<number> = {}
   rOffset: Rsp<number> = {}
