@@ -1,15 +1,13 @@
-import { NgClass, NgStyle } from '@angular/common'
 import { Component, Self } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { getClassName, getStyle } from '../testing/helper'
-import { HostElement } from './host-element'
+import { HostManager } from './host-manager'
 
-describe('HostElement', () => {
-  beforeEach(async() => {
+describe('HostManager', () => {
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
         HostElementTest,
-        HostElementNoDirTest,
       ],
     }).compileComponents()
   })
@@ -18,13 +16,15 @@ describe('HostElement', () => {
     const fixture = TestBed.createComponent(HostElementTest)
     const component = fixture.componentInstance
 
+    component.host.staticClasses = [ 'static' ]
+
     component.host.classes = {
       'foo': true,
       'bar': false,
     }
 
     fixture.detectChanges()
-    expect(getClassName(fixture.debugElement)).toEqual(`foo`)
+    expect(getClassName(fixture.debugElement)).toEqual(`foo static`)
   })
 
   it('should add host classes', () => {
@@ -41,6 +41,10 @@ describe('HostElement', () => {
     const fixture = TestBed.createComponent(HostElementTest)
     const component = fixture.componentInstance
 
+    component.host.staticStyles = {
+      'height': '20px',
+    }
+
     component.host.styles = {
       'margin': '10px',
       'padding': '5px',
@@ -48,32 +52,17 @@ describe('HostElement', () => {
 
     fixture.detectChanges()
     expect(getStyle(fixture.debugElement)).toEqual({
+      'height': '20px',
       'margin': '10px',
       'padding': '5px',
     })
   })
-
-  it('should throw when no directive available', () => {
-    const fixture = TestBed.createComponent(HostElementNoDirTest)
-    const component = fixture.componentInstance
-
-    expect(() => component.host.classes = {}).toThrowError(/NgClass/)
-    expect(() => component.host.styles = {}).toThrowError(/NgStyle/)
-  })
 })
 
 @Component({
   template: '',
-  providers: [ NgClass, NgStyle, HostElement ],
+  providers: [ HostManager ],
 })
 class HostElementTest {
-  constructor(@Self() public host: HostElement) { }
-}
-
-@Component({
-  template: '',
-  providers: [ HostElement ],
-})
-class HostElementNoDirTest {
-  constructor(@Self() public host: HostElement) { }
+  constructor(@Self() public host: HostManager) { }
 }

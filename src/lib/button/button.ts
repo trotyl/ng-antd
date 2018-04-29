@@ -1,19 +1,18 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { NgClass } from '@angular/common'
-import { isDevMode, ChangeDetectionStrategy, Component, Input, OnChanges, Self, SimpleChanges } from '@angular/core'
-import { HostElement } from '../core/host-element'
+import { isDevMode, ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { getSizeToken } from '../core/lang'
+import { HostManager } from '../host-manager/host-manager'
 
 const prefix = 'ant-btn'
 
 @Component({
   selector: '[antBtn]',
   templateUrl: './button.html',
-  providers: [ NgClass, HostElement ],
+  providers: [ HostManager ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class Button implements OnChanges {
+export class Button implements OnChanges, OnInit {
   @Input() color: 'primary' | 'dashed' | 'danger' | null = null
   @Input() size: 'large' | 'small' | null = null
   @Input() icon: string | null = null
@@ -27,7 +26,7 @@ export class Button implements OnChanges {
     if (value !== '') { this.color = value }
   }
 
-  constructor(@Self() private host: HostElement) { }
+  constructor(@Self() private host: HostManager) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     /* istanbul ignore else */
@@ -35,9 +34,12 @@ export class Button implements OnChanges {
     this.updateHostClasses()
   }
 
+  ngOnInit(): void {
+    this.host.staticClasses = [prefix]
+  }
+
   private updateHostClasses(): void {
     this.host.classes = {
-      [`${prefix}`]: true,
       [`${prefix}-${this.color}`]: !!this.color,
       [`${prefix}-${getSizeToken(this.size)}`]: !!this.size,
       [`${prefix}-circle`]: !!this.shape,

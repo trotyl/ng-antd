@@ -1,10 +1,9 @@
-import { NgClass, NgStyle } from '@angular/common'
 import { isDevMode, Directive, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { merge } from 'rxjs/observable/merge'
 import { tap } from 'rxjs/operators'
-import { HostElement } from '../core/host-element'
+import { HostManager } from '../host-manager/host-manager'
 import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
 import { Row } from './row'
 
@@ -12,7 +11,7 @@ const prefix = 'ant-col'
 
 @Directive({
   selector: 'ant-col, [antCol]',
-  providers: [ NgClass, NgStyle, HostElement ],
+  providers: [ HostManager ],
 })
 export class Column implements OnChanges, OnDestroy, OnInit {
   @Input() span: number = NaN
@@ -74,7 +73,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   private rowStatus$$: ISubscription
 
   constructor(
-    @Self() private host: HostElement,
+    @Self() private host: HostManager,
     private rsp: Responsive,
     @Optional() private row: Row,
   ) { }
@@ -86,6 +85,8 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   ngOnInit(): void {
     /* istanbul ignore else */
     if (isDevMode()) this.checkNoConflits()
+
+    this.host.staticClasses = [prefix]
 
     this.rowStatus$$ = this.row.status$.subscribe(() => this.updateHostStyles())
 
@@ -111,7 +112,6 @@ export class Column implements OnChanges, OnDestroy, OnInit {
 
   private updateHostClasses(): void {
     this.host.classes = {
-      [`${prefix}`]: true,
       [`${prefix}-${this.fSpan}`]: true,
       [`${prefix}-offset-${this.fOffset}`]: this.fOffset > 0,
       [`${prefix}-pull-${this.fPull}`]: this.fPull > 0,
