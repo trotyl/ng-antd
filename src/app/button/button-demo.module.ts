@@ -1,6 +1,6 @@
 import { NgModule, Type } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { ButtonModule, DropdownModule, IconModule, MenuModule, RadioModule } from 'ng-antd'
+import { ButtonModule, DropdownModule, GridModule, IconModule, MenuModule, RadioModule } from 'ng-antd'
 import { SharedModule } from '../shared/shared.module'
 import { ButtonDemoBasic } from './button-demo-basic'
 import { ButtonDemoButtonGroup } from './button-demo-button-group'
@@ -26,6 +26,7 @@ const TYPES: Type<any>[] = [
 const NG_MODULES: Type<any>[] = [
   ButtonModule,
   DropdownModule,
+  GridModule,
   IconModule,
   MenuModule,
   RadioModule,

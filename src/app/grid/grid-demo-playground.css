@@ -1,10 +1,18 @@
-ant-col {
+.ant-col {
+  background: transparent !important;
   border: 0;
 }
 
-ant-col > div {
+.ant-col > div {
   background: #00A0E9;
   height: 120px;
   line-height: 120px;
   font-size: 13px;
+}
+
+pre {
+  background: #f9f9f9;
+  border-radius: 6px;
+  font-size: 13px;
+  padding: 8px 16px;
 }

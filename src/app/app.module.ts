@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule, Routes } from '@angular/router'
-import { LayoutModule } from 'ng-antd'
+import { ButtonModule, GridModule, IconModule, LayoutModule } from 'ng-antd'
 
 import { AppComponent } from './app.component'
 import { ButtonDemoModule } from './button/button-demo.module'
@@ -13,6 +13,13 @@ import { IconDemoModule } from './icon/icon-demo.module'
 import { IconDemos } from './icon/icon-demos'
 import { LayoutDemoModule } from './layout/layout-demo.module'
 import { LayoutDemos } from './layout/layout-demos'
+
+const ANT_MODULES = [
+  ButtonModule,
+  GridModule,
+  IconModule,
+  LayoutModule,
+]
 
 const DEMO_MODULES = [
   ButtonDemoModule,
@@ -37,7 +44,7 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    LayoutModule,
+    ANT_MODULES,
     DEMO_MODULES,
   ],
   providers: [],
