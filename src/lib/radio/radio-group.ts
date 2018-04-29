@@ -1,5 +1,6 @@
 import { forwardRef, Directive } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
+import { noop, OnChangeFn, OnTouchedFn } from '../core/lang'
 
 @Directive({
   selector: 'ant-radio-group',
@@ -13,8 +14,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 export class RadioGroup<T> implements ControlValueAccessor {
   value: T | null = null
 
-  private onChangeFn: ((value: T | null) => void) | null = null
-  private onTouchedFn: (() => void) | null = null
+  private onChangeFn: OnChangeFn<T> = noop
+  private onTouchedFn: OnTouchedFn = noop
 
   writeValue(value: T | null): void {
     this.value = value
@@ -34,11 +35,7 @@ export class RadioGroup<T> implements ControlValueAccessor {
 
   update(value: T | null): void {
     this.value = value
-    if (this.onChangeFn) {
-      this.onChangeFn(value)
-    }
-    if (this.onTouchedFn) {
-      this.onTouchedFn()
-    }
+    this.onChangeFn(value)
+    this.onTouchedFn()
   }
 }
