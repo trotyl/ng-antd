@@ -1,15 +1,14 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { NgClass } from '@angular/common'
-import { isDevMode, Directive, Input, OnChanges, Self, SimpleChanges } from '@angular/core'
-import { HostElement } from '../core/host-element'
+import { isDevMode, Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
+import { HostManager } from '../host-manager/host-manager'
 
 const prefix = 'anticon'
 
 @Directive({
   selector: '[antIcon]',
-  providers: [ NgClass, HostElement ],
+  providers: [ HostManager ],
 })
-export class Icon implements OnChanges {
+export class Icon implements OnChanges, OnInit {
   @Input() type: string
   @Input() spin: boolean = false
 
@@ -18,7 +17,7 @@ export class Icon implements OnChanges {
     if (value !== '') { this.type = value }
   }
 
-  constructor(@Self() private host: HostElement) { }
+  constructor(@Self() private host: HostManager) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     /* istanbul ignore else */
@@ -26,9 +25,12 @@ export class Icon implements OnChanges {
     this.updateHostClasses()
   }
 
+  ngOnInit(): void {
+    this.host.staticClasses = [prefix]
+  }
+
   private updateHostClasses(): void {
     this.host.classes = {
-      [`${prefix}`]: true,
       [`${prefix}-${this.type}`]: !!this.type,
       [`${prefix}-spin`]: boolify(this.spin) || this.type === 'loading',
     }

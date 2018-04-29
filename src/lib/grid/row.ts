@@ -1,17 +1,16 @@
-import { NgClass, NgStyle } from '@angular/common'
 import { Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { map, tap } from 'rxjs/operators'
-import { HostElement } from '../core/host-element'
+import { HostManager } from '../host-manager/host-manager'
 import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
 
 const prefix = 'ant-row'
 
 @Directive({
   selector: 'ant-row, [antRow]',
-  providers: [ NgClass, NgStyle, HostElement ],
+  providers: [ HostManager ],
 })
 export class Row implements OnChanges, OnDestroy, OnInit {
   @Input() align: 'top' | 'middle' | 'bottom' | null = null
@@ -39,7 +38,7 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   private changes$ = new Subject<void>()
 
   constructor(
-    @Self() private host: HostElement,
+    @Self() private host: HostManager,
     private rsp: Responsive,
   ) { }
 
@@ -53,9 +52,7 @@ export class Row implements OnChanges, OnDestroy, OnInit {
     this.status$ = gutter$.pipe(tap(x => this.fGutter = x), map(() => {}))
     this.status$$ = this.status$.subscribe(() => this.updateHostStyles())
 
-    if (!this.host.classes) {
-      this.updateHostClasses()
-    }
+    this.updateHostClasses()
   }
 
   ngOnDestroy(): void {

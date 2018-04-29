@@ -1,13 +1,12 @@
-import { NgClass } from '@angular/common'
 import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
-import { HostElement } from '../core/host-element'
 import { getSizeToken } from '../core/lang'
+import { HostManager } from '../host-manager/host-manager'
 
 const prefix = 'ant-btn-group'
 
 @Directive({
   selector: 'ant-btn-group, [antBtnGroup]',
-  providers: [ NgClass, HostElement ],
+  providers: [ HostManager ],
 })
 export class ButtonGroup implements OnChanges, OnInit {
   @Input() size: 'large' | 'small' | null = null
@@ -17,21 +16,18 @@ export class ButtonGroup implements OnChanges, OnInit {
     if (value !== '') { this.size = value }
   }
 
-  constructor(@Self() private host: HostElement) { }
+  constructor(@Self() private host: HostManager) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.updateHostClasses()
   }
 
   ngOnInit(): void {
-    if (!this.host.classes) {
-      this.updateHostClasses()
-    }
+    this.host.staticClasses = [prefix]
   }
 
   private updateHostClasses(): void {
     this.host.classes = {
-      [`${prefix}`]: true,
       [`${prefix}-${getSizeToken(this.size)}`]: !!this.size,
     }
   }

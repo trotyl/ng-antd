@@ -1,13 +1,11 @@
-import { NgClass, NgStyle } from '@angular/common'
-import { Directive, NgModule, Self } from '@angular/core'
-import { HostElement } from '../core/host-element'
+import { Directive, Injector, NgModule } from '@angular/core'
+import { Element } from './element'
 
 @Directive({
   selector: 'header',
-  providers: [ NgClass, NgStyle, HostElement ],
 })
-export class HeaderElement {
-  constructor(@Self() public host: HostElement) { }
+export class HeaderElement implements Element {
+  constructor(public injector: Injector) { }
 }
 
 @NgModule({
