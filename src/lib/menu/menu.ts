@@ -2,7 +2,7 @@ import { forwardRef, Directive, HostBinding, Input, OnChanges, OnInit, Self, Sim
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { Subject } from 'rxjs/Subject'
 import { HostManager } from '../host-manager/host-manager'
-import { noop, OnChangeFn, OnTouchedFn } from '../utils/lang'
+import { noop, OnChangeFn, OnTouchedFn } from '../util/lang'
 
 const prefix = 'ant-menu'
 
