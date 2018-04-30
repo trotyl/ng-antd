@@ -1,7 +1,7 @@
 import { NgModule, Type } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ButtonModule, DropdownModule, GridModule, IconModule, MenuModule, RadioModule } from 'ng-antd'
-import { SharedModule } from '../shared/shared.module'
+import { SharedModule } from '../shared'
 import { ButtonDemoBasic } from './button-demo-basic'
 import { ButtonDemoButtonGroup } from './button-demo-button-group'
 import { ButtonDemoDisabled } from './button-demo-disabled'

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { NgModule, Type } from '@angular/core'
 import { Demo } from './demo'
 import { HightLight } from './highlight'
-import { SourceViewer } from './source-viewer.component'
+import { SourceViewer } from './source-viewer'
 
 const TYPES: Type<any>[] = [
   SourceViewer,
