@@ -1,6 +1,6 @@
 import { NgModule, Type } from '@angular/core'
 import { GridModule, LayoutModule } from 'ng-antd'
-import { SharedModule } from '../shared/shared.module'
+import { SharedModule } from '../shared'
 import { LayoutDemoBasic } from './layout-demo-basic'
 import { LayoutDemoCustomTrigger } from './layout-demo-custom-trigger'
 import { LayoutDemoFixed } from './layout-demo-fixed'

@@ -5,16 +5,11 @@ import { RouterModule, Routes } from '@angular/router'
 import { ButtonModule, GridModule, IconModule, LayoutModule } from 'ng-antd'
 
 import { AppComponent } from './app.component'
-import { ButtonDemoModule } from './button/button-demo.module'
-import { ButtonDemos } from './button/button-demos'
-import { GridDemoModule } from './grid/grid-demo.module'
-import { GridDemos } from './grid/grid-demos'
-import { IconDemoModule } from './icon/icon-demo.module'
-import { IconDemos } from './icon/icon-demos'
-import { LayoutDemoModule } from './layout/layout-demo.module'
-import { LayoutDemos } from './layout/layout-demos'
-import { MenuDemoModule } from './menu/menu-demo.module'
-import { MenuDemos } from './menu/menu-demos'
+import { ButtonDemos, ButtonDemoModule } from './button'
+import { GridDemos, GridDemoModule } from './grid'
+import { IconDemos, IconDemoModule } from './icon'
+import { LayoutDemos, LayoutDemoModule } from './layout'
+import { MenuDemos, MenuDemoModule } from './menu'
 
 const ANT_MODULES = [
   ButtonModule,
