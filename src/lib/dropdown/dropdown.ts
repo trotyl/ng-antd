@@ -4,13 +4,8 @@ import { isDevMode, ContentChild, Directive, ElementRef, OnDestroy, OnInit, Temp
 import { ISubscription } from 'rxjs/Subscription'
 import { fromEvent } from 'rxjs/observable/fromEvent'
 import { merge } from 'rxjs/observable/merge'
-import { delay } from 'rxjs/operators/delay'
-import { filter } from 'rxjs/operators/filter'
-import { map } from 'rxjs/operators/map'
-import { pairwise } from 'rxjs/operators/pairwise'
-import { scan } from 'rxjs/operators/scan'
-import { startWith } from 'rxjs/operators/startWith'
-import { Overlay as OverlayDirective } from './overlay'
+import { delay, filter, map, pairwise, scan, startWith } from 'rxjs/operators'
+import { Overlay as AntOverlay } from './overlay'
 
 const originPosition: OriginConnectionPosition = { originX: 'start', originY: 'bottom' }
 const overlayPosition: OverlayConnectionPosition = { overlayX: 'start', overlayY: 'top' }
@@ -24,7 +19,7 @@ const panelClass = ['ant-dropdown', 'ant-dropdown-placement-bottomLeft']
   },
 })
 export class Dropdown implements OnDestroy, OnInit {
-  @ContentChild(OverlayDirective, { read: TemplateRef }) content: TemplateRef<void>
+  @ContentChild(AntOverlay, { read: TemplateRef }) content: TemplateRef<void>
 
   portal: TemplatePortal
   outlet: OverlayRef
