@@ -2,18 +2,18 @@ import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { Icon } from '../icon/icon'
-import { getClassName } from '../testing/helper'
+import { assertClass } from '../testing/helper'
 import { Button } from './button'
 import { ButtonModule } from './button.module'
 
 describe('Button', () => {
-  const btnPrefix = 'ant-btn'
-  const iconPrefix = 'anticon'
+  const px = 'ant-btn'
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ ButtonModule ],
       declarations: [
+        ButtonStaticTest,
         ButtonTypeTest,
         ButtonSizeTest,
         ButtonLoadingTest,
@@ -25,17 +25,27 @@ describe('Button', () => {
     }).compileComponents()
   })
 
+  it('should set static classes properly', () => {
+    const fixture = TestBed.createComponent(ButtonStaticTest)
+    fixture.detectChanges()
+
+    const buttons = fixture.debugElement.queryAll(By.directive(Button))
+
+    assertClass(buttons[0], [`${px}`])
+  })
+
   it('should set type classes properly', () => {
     const fixture = TestBed.createComponent(ButtonTypeTest)
     fixture.detectChanges()
 
     const buttons = fixture.debugElement.queryAll(By.directive(Button))
-    expect(getClassName(buttons[0])).toBe(`${btnPrefix}`)
-    expect(getClassName(buttons[1])).toBe(`${btnPrefix}`)
-    expect(getClassName(buttons[2])).toBe(`${btnPrefix} ${btnPrefix}-primary`)
-    expect(getClassName(buttons[3])).toBe(`${btnPrefix} ${btnPrefix}-dashed`)
-    expect(getClassName(buttons[4])).toBe(`${btnPrefix} ${btnPrefix}-danger`)
-    expect(getClassName(buttons[5])).toBe(`${btnPrefix} ${btnPrefix}-primary`)
+
+    assertClass(buttons[0], [], [`${px}-primary`, `${px}-dashed`, `${px}-danger`])
+    assertClass(buttons[1], [], [`${px}-primary`, `${px}-dashed`, `${px}-danger`])
+    assertClass(buttons[2], [`${px}-primary`])
+    assertClass(buttons[3], [`${px}-dashed`])
+    assertClass(buttons[4], [`${px}-danger`])
+    assertClass(buttons[5], [`${px}-primary`])
   })
 
   it('should set size classes properly', () => {
@@ -43,10 +53,11 @@ describe('Button', () => {
     fixture.detectChanges()
 
     const buttons = fixture.debugElement.queryAll(By.directive(Button))
-    expect(getClassName(buttons[0])).toBe(`${btnPrefix}`)
-    expect(getClassName(buttons[1])).toBe(`${btnPrefix}`)
-    expect(getClassName(buttons[2])).toBe(`${btnPrefix} ${btnPrefix}-lg`)
-    expect(getClassName(buttons[3])).toBe(`${btnPrefix} ${btnPrefix}-sm`)
+
+    assertClass(buttons[0], [], [`${px}-lg`, `${px}-sm`])
+    assertClass(buttons[1], [], [`${px}-lg`, `${px}-sm`])
+    assertClass(buttons[2], [`${px}-lg`])
+    assertClass(buttons[3], [`${px}-sm`])
   })
 
   it('should set loading classes properly', () => {
@@ -54,12 +65,13 @@ describe('Button', () => {
     fixture.detectChanges()
 
     const buttons = fixture.debugElement.queryAll(By.directive(Button))
-    expect(getClassName(buttons[0])).toBe(`${btnPrefix}`)
-    expect(getClassName(buttons[1])).toBe(`${btnPrefix} ${btnPrefix}-loading`)
-    expect(getClassName(buttons[2])).toBe(`${btnPrefix} ${btnPrefix}-loading`)
-    expect(getClassName(buttons[3])).toBe(`${btnPrefix}`)
-    expect(getClassName(buttons[4])).toBe(`${btnPrefix} ${btnPrefix}-loading`)
-    expect(getClassName(buttons[5])).toBe(`${btnPrefix}`)
+
+    assertClass(buttons[0], [], [`${px}-loading`])
+    assertClass(buttons[1], [`${px}-loading`])
+    assertClass(buttons[2], [`${px}-loading`])
+    assertClass(buttons[3], [], [`${px}-loading`])
+    assertClass(buttons[4], [`${px}-loading`])
+    assertClass(buttons[5], [], [`${px}-loading`])
   })
 
   it('should set icon classes properly', () => {
@@ -68,14 +80,16 @@ describe('Button', () => {
 
     const buttons = fixture.debugElement.queryAll(By.directive(Button))
     const icons = buttons.map(button => button.query(By.directive(Icon)))
-    expect(getClassName(buttons[0])).toBe(`${btnPrefix}`)
-    expect(icons[0]).toBeNull()
-    expect(getClassName(buttons[1])).toBe(`${btnPrefix}`)
-    expect(getClassName(icons[1])).toBe(`${iconPrefix} ${iconPrefix}-search`)
-    expect(getClassName(buttons[2])).toBe(`${btnPrefix} ${btnPrefix}-circle ${btnPrefix}-icon-only`)
-    expect(getClassName(icons[2])).toBe(`${iconPrefix} ${iconPrefix}-search`)
-    expect(getClassName(buttons[3])).toBe(`${btnPrefix} ${btnPrefix}-icon-only`)
-    expect(getClassName(icons[3])).toBe(`${iconPrefix} ${iconPrefix}-search`)
+    const iconTypes = icons.map(de => de && de.injector.get(Icon))
+
+    assertClass(buttons[0], [], [`${px}-circle`, `${px}-icon-only`])
+    expect(iconTypes[0]).toBeNull()
+    assertClass(buttons[1], [], [`${px}-circle`, `${px}-icon-only`])
+    expect(iconTypes[1].type).toBe(`search`)
+    assertClass(buttons[2], [`${px}-circle`, `${px}-icon-only`])
+    expect(iconTypes[2].type).toBe(`search`)
+    assertClass(buttons[3], [`${px}-icon-only`], [`${px}-circle`])
+    expect(iconTypes[3].type).toBe(`search`)
   })
 
   it('should set ghost classes properly', () => {
@@ -83,12 +97,13 @@ describe('Button', () => {
     fixture.detectChanges()
 
     const buttons = fixture.debugElement.queryAll(By.directive(Button))
-    expect(getClassName(buttons[0])).toBe(`${btnPrefix}`)
-    expect(getClassName(buttons[1])).toBe(`${btnPrefix} ${btnPrefix}-background-ghost`)
-    expect(getClassName(buttons[2])).toBe(`${btnPrefix} ${btnPrefix}-background-ghost`)
-    expect(getClassName(buttons[3])).toBe(`${btnPrefix}`)
-    expect(getClassName(buttons[4])).toBe(`${btnPrefix} ${btnPrefix}-background-ghost`)
-    expect(getClassName(buttons[5])).toBe(`${btnPrefix}`)
+
+    assertClass(buttons[0], [], [`${px}-background-ghost`])
+    assertClass(buttons[1], [`${px}-background-ghost`])
+    assertClass(buttons[2], [`${px}-background-ghost`])
+    assertClass(buttons[3], [], [`${px}-background-ghost`])
+    assertClass(buttons[4], [`${px}-background-ghost`])
+    assertClass(buttons[5], [], [`${px}-background-ghost`])
   })
 
   it('should report error when set icon and loading', () => {
@@ -102,6 +117,13 @@ describe('Button', () => {
   })
 
 })
+
+@Component({
+  template: `
+    <button antBtn>Default</button>
+  `,
+})
+class ButtonStaticTest { }
 
 @Component({
   template: `

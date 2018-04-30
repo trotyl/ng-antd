@@ -1,21 +1,31 @@
 import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName } from '../testing/helper'
+import { assertClass } from '../testing/helper'
 import { ButtonGroup } from './button-group'
 import { ButtonModule } from './button.module'
 
 describe('ButtonGroup', () => {
-  const btnGroupPrefix = 'ant-btn-group'
+  const px = 'ant-btn-group'
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ ButtonModule ],
       declarations: [
+        ButtonGroupStaticTest,
         ButtonGroupSizeTest,
         ButtonGroupAttributeSelectorTest,
       ],
     }).compileComponents()
+  })
+
+  it('should set static classes properly', () => {
+    const fixture = TestBed.createComponent(ButtonGroupStaticTest)
+    fixture.detectChanges()
+
+    const buttons = fixture.debugElement.queryAll(By.directive(ButtonGroup))
+
+    assertClass(buttons[0], [`${px}`])
   })
 
   it('should set size classes properly', () => {
@@ -23,10 +33,11 @@ describe('ButtonGroup', () => {
     fixture.detectChanges()
 
     const buttons = fixture.debugElement.queryAll(By.directive(ButtonGroup))
-    expect(getClassName(buttons[0])).toBe(`${btnGroupPrefix}`)
-    expect(getClassName(buttons[1])).toBe(`${btnGroupPrefix}`)
-    expect(getClassName(buttons[2])).toBe(`${btnGroupPrefix} ${btnGroupPrefix}-lg`)
-    expect(getClassName(buttons[3])).toBe(`${btnGroupPrefix} ${btnGroupPrefix}-sm`)
+
+    assertClass(buttons[0], [], [`${px}-lg`, `${px}-sm`])
+    assertClass(buttons[1], [], [`${px}-lg`, `${px}-sm`])
+    assertClass(buttons[2], [`${px}-lg`])
+    assertClass(buttons[3], [`${px}-sm`])
   })
 
   it('should support attribute selector usage', () => {
@@ -34,12 +45,20 @@ describe('ButtonGroup', () => {
     fixture.detectChanges()
 
     const buttons = fixture.debugElement.queryAll(By.directive(ButtonGroup))
-    expect(getClassName(buttons[0])).toBe(`${btnGroupPrefix}`)
-    expect(getClassName(buttons[1])).toBe(`${btnGroupPrefix} ${btnGroupPrefix}-lg`)
-    expect(getClassName(buttons[2])).toBe(`${btnGroupPrefix} ${btnGroupPrefix}-lg`)
+
+    assertClass(buttons[0], [], [`${px}-lg`, `${px}-sm`])
+    assertClass(buttons[1], [`${px}-lg`])
+    assertClass(buttons[2], [`${px}-lg`])
   })
 
 })
+
+@Component({
+  template: `
+    <ant-btn-group>Default</ant-btn-group>
+  `,
+})
+class ButtonGroupStaticTest { }
 
 @Component({
   template: `

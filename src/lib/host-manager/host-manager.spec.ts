@@ -1,6 +1,6 @@
 import { Component, Self } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
-import { getClassName, getStyle } from '../testing/helper'
+import { assertClass, assertStyle } from '../testing/helper'
 import { HostManager } from './host-manager'
 
 describe('HostManager', () => {
@@ -24,7 +24,8 @@ describe('HostManager', () => {
     }
 
     fixture.detectChanges()
-    expect(getClassName(fixture.debugElement)).toEqual(`foo static`)
+
+    assertClass(fixture.debugElement, [`static`, `foo`])
   })
 
   it('should add host classes', () => {
@@ -34,7 +35,8 @@ describe('HostManager', () => {
     component.host.addClass('baz')
 
     fixture.detectChanges()
-    expect(getClassName(fixture.debugElement)).toEqual(`baz`)
+
+    assertClass(fixture.debugElement, [`baz`])
   })
 
   it('should set host styles', () => {
@@ -51,7 +53,8 @@ describe('HostManager', () => {
     }
 
     fixture.detectChanges()
-    expect(getStyle(fixture.debugElement)).toEqual({
+
+    assertStyle(fixture.debugElement, {
       'height': '20px',
       'margin': '10px',
       'padding': '5px',

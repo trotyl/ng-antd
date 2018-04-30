@@ -3,12 +3,12 @@ import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { of } from 'rxjs/observable/of'
 import { Responsive } from '../responsive/responsive'
-import { getClassName, getStyle } from '../testing/helper'
+import { assertClass, assertStyle } from '../testing/helper'
 import { Column } from './column'
 import { GridModule } from './grid.module'
 
 describe('Column', () => {
-  const colPrefix = 'ant-col'
+  const px = 'ant-col'
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -41,10 +41,11 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-0`)
-    expect(getClassName(cols[1])).toBe(`${colPrefix} ${colPrefix}-1`)
-    expect(getClassName(cols[2])).toBe(`${colPrefix} ${colPrefix}-4`)
-    expect(getClassName(cols[3])).toBe(`${colPrefix} ${colPrefix}-6`)
+
+    assertClass(cols[0], [`${px}-0`])
+    assertClass(cols[1], [`${px}-1`])
+    assertClass(cols[2], [`${px}-4`])
+    assertClass(cols[3], [`${px}-6`])
   })
 
   it('should set span classes when responsive properly', () => {
@@ -52,7 +53,8 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6`)
+
+    assertClass(cols[0], [`${px}-6`])
   })
 
   it('should set gutter styles properly', () => {
@@ -60,7 +62,8 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getStyle(cols[0])).toEqual({ 'padding-left': '8px', 'padding-right': '8px' })
+
+    assertStyle(cols[0], { 'padding-left': '8px', 'padding-right': '8px' })
   })
 
   it('should set gutter styles when responsive properly', () => {
@@ -68,7 +71,8 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getStyle(cols[0])).toEqual({ 'padding-left': '12px', 'padding-right': '12px' })
+
+    assertStyle(cols[0], { 'padding-left': '12px', 'padding-right': '12px' })
   })
 
   it('should set offset classes properly', () => {
@@ -76,7 +80,8 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-offset-4`)
+
+    assertClass(cols[0], [`${px}-offset-4`])
   })
 
   it('should set offset classes when responsive properly', () => {
@@ -84,7 +89,8 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-offset-8`)
+
+    assertClass(cols[0], [`${px}-offset-8`])
   })
 
   it('should set pull classes properly', () => {
@@ -92,7 +98,8 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-pull-4`)
+
+    assertClass(cols[0], [`${px}-pull-4`])
   })
 
   it('should set pull classes when responsive properly', () => {
@@ -100,7 +107,8 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-pull-8`)
+
+    assertClass(cols[0], [`${px}-pull-8`])
   })
 
   it('should set push classes properly', () => {
@@ -108,7 +116,8 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-push-4`)
+
+    assertClass(cols[0], [`${px}-push-4`])
   })
 
   it('should set push classes when responsive properly', () => {
@@ -116,7 +125,8 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-push-8`)
+
+    assertClass(cols[0], [`${px}-push-8`])
   })
 
   it('should set order classes properly', () => {
@@ -124,7 +134,8 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-order-4`)
+
+    assertClass(cols[0], [`${px}-order-4`])
   })
 
   it('should set order classes when responsive properly', () => {
@@ -132,7 +143,8 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-6 ${colPrefix}-order-8`)
+
+    assertClass(cols[0], [`${px}-order-8`])
   })
 
   it('should support attribute selector usage', () => {
@@ -140,9 +152,10 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Column))
-    expect(getClassName(cols[0])).toBe(`${colPrefix} ${colPrefix}-1`)
-    expect(getClassName(cols[1])).toBe(`${colPrefix} ${colPrefix}-2`)
-    expect(getClassName(cols[2])).toBe(`${colPrefix} ${colPrefix}-1`)
+
+    assertClass(cols[0], [`${px}-1`])
+    assertClass(cols[1], [`${px}-2`])
+    assertClass(cols[2], [`${px}-1`])
   })
 
   it('should report error when not inside a row', () => {

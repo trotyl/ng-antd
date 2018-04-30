@@ -1,20 +1,30 @@
 import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName } from '../testing/helper'
+import { assertClass } from '../testing/helper'
 import { Layout } from './layout'
 import { LayoutModule } from './layout.module'
 
 describe('Layout', () => {
-  const layoutPrefix = 'ant-layout'
+  const px = 'ant-layout'
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ LayoutModule ],
       declarations: [
+        LayoutStaticTest,
         LayoutSiderTest,
       ],
     }).compileComponents()
+  })
+
+  it('should set static classes properly', () => {
+    const fixture = TestBed.createComponent(LayoutStaticTest)
+    fixture.detectChanges()
+
+    const icons = fixture.debugElement.queryAll(By.directive(Layout))
+
+    assertClass(icons[0], [`${px}`])
   })
 
   it('should set has-sider classes properly', () => {
@@ -22,11 +32,19 @@ describe('Layout', () => {
     fixture.detectChanges()
 
     const icons = fixture.debugElement.queryAll(By.directive(Layout))
-    expect(getClassName(icons[0])).toBe(`${layoutPrefix}`)
-    expect(getClassName(icons[1])).toBe(`${layoutPrefix} ${layoutPrefix}-has-sider`)
+
+    assertClass(icons[0], [], [`${px}-has-sider`])
+    assertClass(icons[1], [`${px}-has-sider`])
   })
 
 })
+
+@Component({
+  template: `
+    <ant-layout></ant-layout>
+  `,
+})
+class LayoutStaticTest { }
 
 @Component({
   template: `

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getStyle } from '../testing/helper'
+import { assertStyle } from '../testing/helper'
 import { LayoutModule } from './layout.module'
 import { Sider } from './sider'
 
@@ -21,8 +21,9 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Sider))
-    expect(getStyle(cols[0])).toEqual({ 'width': '200px' })
-    expect(getStyle(cols[1])).toEqual({ 'width': '100px' })
+
+    assertStyle(cols[0], { 'width': '200px' })
+    assertStyle(cols[1], { 'width': '100px' })
   })
 
   it('should support attribute selector usage', () => {
@@ -30,9 +31,10 @@ describe('Column', () => {
     fixture.detectChanges()
 
     const cols = fixture.debugElement.queryAll(By.directive(Sider))
-    expect(getStyle(cols[0])).toEqual({ 'width': '200px' })
-    expect(getStyle(cols[1])).toEqual({ 'width': '100px' })
-    expect(getStyle(cols[2])).toEqual({ 'width': '100px' })
+
+    assertStyle(cols[0], { 'width': '200px' })
+    assertStyle(cols[1], { 'width': '100px' })
+    assertStyle(cols[2], { 'width': '100px' })
   })
 
 })
