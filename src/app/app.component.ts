@@ -12,5 +12,6 @@ export class AppComponent {
   items = [
     { type: 'general', components: ['button', 'icon'] },
     { type: 'layout', components: ['grid', 'layout'] },
+    { type: 'navigation', components: ['menu'] },
   ]
 }

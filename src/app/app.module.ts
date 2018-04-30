@@ -13,6 +13,8 @@ import { IconDemoModule } from './icon/icon-demo.module'
 import { IconDemos } from './icon/icon-demos'
 import { LayoutDemoModule } from './layout/layout-demo.module'
 import { LayoutDemos } from './layout/layout-demos'
+import { MenuDemoModule } from './menu/menu-demo.module'
+import { MenuDemos } from './menu/menu-demos'
 
 const ANT_MODULES = [
   ButtonModule,
@@ -26,6 +28,7 @@ const DEMO_MODULES = [
   IconDemoModule,
   GridDemoModule,
   LayoutDemoModule,
+  MenuDemoModule,
 ]
 
 const routes: Routes = [
@@ -33,6 +36,7 @@ const routes: Routes = [
   { path: 'icon', component: IconDemos },
   { path: 'grid', component: GridDemos },
   { path: 'layout', component: LayoutDemos },
+  { path: 'menu', component: MenuDemos },
   { path: '', redirectTo: '/button', pathMatch: 'full' },
 ]
 
