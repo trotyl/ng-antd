@@ -1,18 +1,8 @@
-<ng-container *ngIf="ts$ | async as ts">
-  <ng-container *ngIf="ts.includes('templateUrl')">
-    <details *ngIf="html$ | async as html">
-      <summary>HTML</summary>
-      <pre class="code-block"><code highlight="html">{{ html }}</code></pre>
-    </details>
-  </ng-container>
-  <details>
-    <summary>TS</summary>
-    <pre class="code-block"><code highlight="typescript">{{ ts }}</code></pre>
-  </details>
-  <ng-container *ngIf="ts.includes('styleUrls')">
-    <details *ngIf="css$ | async as css">
-      <summary>CSS</summary>
-      <pre class="code-block"><code highlight="css">{{ css }}</code></pre>
-    </details>
-  </ng-container>
-</ng-container>
+<details *ngIf="html$ | async as html">
+  <summary>HTML</summary>
+  <pre class="code-block"><code highlight="html">{{ html }}</code></pre>
+</details>
+<details *ngIf="ts$ | async as ts">
+  <summary>TS</summary>
+  <pre class="code-block"><code highlight="typescript">{{ ts }}</code></pre>
+</details>
