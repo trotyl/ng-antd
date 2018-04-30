@@ -1,6 +1,6 @@
 import { forwardRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
-import { noop, range, OnChangeFn, OnTouchedFn } from '../core/lang'
+import { noop, range, OnChangeFn, OnTouchedFn } from '../utils/lang'
 
 @Component({
   selector: 'ant-slider, [antSlider]',

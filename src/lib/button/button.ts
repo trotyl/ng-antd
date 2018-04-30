@@ -1,7 +1,7 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { isDevMode, ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
-import { getSizeToken } from '../core/lang'
 import { HostManager } from '../host-manager/host-manager'
+import { getSizeToken } from '../utils/lang'
 
 const prefix = 'ant-btn'
 
