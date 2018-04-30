@@ -146,6 +146,15 @@ jobs:
 
       - run: yarn deploy
 
+  noop:
+    docker:
+      - image: circleci/node:8.9-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      - run: echo noop
+
 workflows:
   version: 2
   pipeline:
@@ -170,3 +179,7 @@ workflows:
           filters:
             branches:
               only: master
+      - noop:
+          filters:
+            branches:
+              only: gh-pages
