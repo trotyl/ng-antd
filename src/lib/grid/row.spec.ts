@@ -3,12 +3,12 @@ import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { of } from 'rxjs/observable/of'
 import { Responsive } from '../responsive/responsive'
-import { getClassName, getStyle } from '../testing/helper'
+import { assertClass, assertStyle } from '../testing/helper'
 import { GridModule } from './grid.module'
 import { Row } from './row'
 
 describe('Row', () => {
-  const rowPrefix = 'ant-row'
+  const px = 'ant-row'
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -32,9 +32,10 @@ describe('Row', () => {
     fixture.detectChanges()
 
     const rows = fixture.debugElement.queryAll(By.directive(Row))
-    expect(getClassName(rows[0])).toBe(`${rowPrefix}`)
-    expect(getClassName(rows[1])).toBe(`${rowPrefix}`)
-    expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex`)
+
+    assertClass(rows[0], [`${px}`])
+    assertClass(rows[1], [`${px}`])
+    assertClass(rows[2], [`${px}-flex`])
   })
 
   it('should set gutter styles properly', () => {
@@ -42,7 +43,8 @@ describe('Row', () => {
     fixture.detectChanges()
 
     const rows = fixture.debugElement.queryAll(By.directive(Row))
-    expect(getStyle(rows[0])).toEqual({ 'margin-left': '-8px', 'margin-right': '-8px' })
+
+    assertStyle(rows[0], { 'margin-left': '-8px', 'margin-right': '-8px' })
   })
 
   it('should set gutter styles when responsive properly', () => {
@@ -50,7 +52,8 @@ describe('Row', () => {
     fixture.detectChanges()
 
     const rows = fixture.debugElement.queryAll(By.directive(Row))
-    expect(getStyle(rows[0])).toEqual({ 'margin-left': '-12px', 'margin-right': '-12px' })
+
+    assertStyle(rows[0], { 'margin-left': '-12px', 'margin-right': '-12px' })
   })
 
   it('should set justify classes properly', () => {
@@ -58,12 +61,13 @@ describe('Row', () => {
     fixture.detectChanges()
 
     const rows = fixture.debugElement.queryAll(By.directive(Row))
-    expect(getClassName(rows[0])).toBe(`${rowPrefix}-flex`)
-    expect(getClassName(rows[1])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-start`)
-    expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-center`)
-    expect(getClassName(rows[3])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-end`)
-    expect(getClassName(rows[4])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-space-between`)
-    expect(getClassName(rows[5])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-space-around`)
+
+    assertClass(rows[0], [], [`${px}-flex-start`, `${px}-flex-center`, `${px}-flex-end`, `${px}-flex-space-between`, `${px}-flex-space-around`])
+    assertClass(rows[1], [`${px}-flex-start`])
+    assertClass(rows[2], [`${px}-flex-center`])
+    assertClass(rows[3], [`${px}-flex-end`])
+    assertClass(rows[4], [`${px}-flex-space-between`])
+    assertClass(rows[5], [`${px}-flex-space-around`])
   })
 
   it('should set align classes properly', () => {
@@ -71,10 +75,11 @@ describe('Row', () => {
     fixture.detectChanges()
 
     const rows = fixture.debugElement.queryAll(By.directive(Row))
-    expect(getClassName(rows[0])).toBe(`${rowPrefix}-flex`)
-    expect(getClassName(rows[1])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-top`)
-    expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-middle`)
-    expect(getClassName(rows[3])).toBe(`${rowPrefix}-flex ${rowPrefix}-flex-bottom`)
+
+    assertClass(rows[0], [], [`${px}-flex-top`, `${px}-flex-middle`, `${px}-flex-bottom`])
+    assertClass(rows[1], [`${px}-flex-top`])
+    assertClass(rows[2], [`${px}-flex-middle`])
+    assertClass(rows[3], [`${px}-flex-bottom`])
   })
 
   it('should support attribute selector usage', () => {
@@ -82,9 +87,10 @@ describe('Row', () => {
     fixture.detectChanges()
 
     const rows = fixture.debugElement.queryAll(By.directive(Row))
-    expect(getClassName(rows[0])).toBe(`${rowPrefix}`)
-    expect(getClassName(rows[1])).toBe(`${rowPrefix}-flex`)
-    expect(getClassName(rows[2])).toBe(`${rowPrefix}-flex`)
+
+    assertClass(rows[0], [], [`${px}-flex`])
+    assertClass(rows[1], [`${px}-flex`])
+    assertClass(rows[2], [`${px}-flex`])
   })
 
 })

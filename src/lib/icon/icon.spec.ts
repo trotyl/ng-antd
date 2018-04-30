@@ -1,17 +1,18 @@
 import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName } from '../testing/helper'
+import { assertClass } from '../testing/helper'
 import { Icon } from './icon'
 import { IconModule } from './icon.module'
 
 describe('Icon', () => {
-  const iconPrefix = 'anticon'
+  const px = 'anticon'
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ IconModule ],
       declarations: [
+        IconStaticTest,
         IconTypeTest,
         IconSpinTest,
         IconErrorTypeTest,
@@ -24,8 +25,9 @@ describe('Icon', () => {
     fixture.detectChanges()
 
     const icons = fixture.debugElement.queryAll(By.directive(Icon))
-    expect(getClassName(icons[0])).toBe(`${iconPrefix} ${iconPrefix}-search`)
-    expect(getClassName(icons[1])).toBe(`${iconPrefix} ${iconPrefix}-search`)
+
+    assertClass(icons[0], [`${px}-search`])
+    assertClass(icons[1], [`${px}-search`])
   })
 
   it('should set spin classes properly', () => {
@@ -33,13 +35,14 @@ describe('Icon', () => {
     fixture.detectChanges()
 
     const icons = fixture.debugElement.queryAll(By.directive(Icon))
-    expect(getClassName(icons[0])).toBe(`${iconPrefix} ${iconPrefix}-search`)
-    expect(getClassName(icons[1])).toBe(`${iconPrefix} ${iconPrefix}-search ${iconPrefix}-spin`)
-    expect(getClassName(icons[2])).toBe(`${iconPrefix} ${iconPrefix}-search ${iconPrefix}-spin`)
-    expect(getClassName(icons[3])).toBe(`${iconPrefix} ${iconPrefix}-search`)
-    expect(getClassName(icons[4])).toBe(`${iconPrefix} ${iconPrefix}-search ${iconPrefix}-spin`)
-    expect(getClassName(icons[5])).toBe(`${iconPrefix} ${iconPrefix}-search`)
-    expect(getClassName(icons[6])).toBe(`${iconPrefix} ${iconPrefix}-loading ${iconPrefix}-spin`)
+
+    assertClass(icons[0], [`${px}-search`])
+    assertClass(icons[1], [`${px}-search`, `${px}-spin`])
+    assertClass(icons[2], [`${px}-search`, `${px}-spin`])
+    assertClass(icons[3], [`${px}-search`])
+    assertClass(icons[4], [`${px}-search`, `${px}-spin`])
+    assertClass(icons[5], [`${px}-search`])
+    assertClass(icons[6], [`${px}-loading`, `${px}-spin`])
   })
 
   it('should report error when type not set', () => {
@@ -48,6 +51,14 @@ describe('Icon', () => {
   })
 
 })
+
+@Component({
+  template: `
+    <i antIcon type="search"></i>
+    <i antIcon="search"></i>
+  `,
+})
+class IconStaticTest { }
 
 @Component({
   template: `

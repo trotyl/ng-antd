@@ -1,21 +1,31 @@
 import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { getClassName } from '../testing/helper'
+import { assertClass } from '../testing/helper'
 import { Menu } from './menu'
 import { MenuModule } from './menu.module'
 
 describe('Menu', () => {
-  const menuPrefix = 'ant-menu'
+  const px = 'ant-menu'
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ MenuModule ],
       declarations: [
+        MenuStaticTest,
         MenuModeTest,
         MenuThemeTest,
       ],
     }).compileComponents()
+  })
+
+  it('should set static classes properly', () => {
+    const fixture = TestBed.createComponent(MenuStaticTest)
+    fixture.detectChanges()
+
+    const menus = fixture.debugElement.queryAll(By.directive(Menu))
+
+    assertClass(menus[0], [`${px}`, `${px}-root`])
   })
 
   it('should set mode classes properly', () => {
@@ -23,9 +33,10 @@ describe('Menu', () => {
     fixture.detectChanges()
 
     const menus = fixture.debugElement.queryAll(By.directive(Menu))
-    expect(getClassName(menus[0])).toBe(`${menuPrefix} ${menuPrefix}-light ${menuPrefix}-root ${menuPrefix}-vertical`)
-    expect(getClassName(menus[1])).toBe(`${menuPrefix} ${menuPrefix}-horizontal ${menuPrefix}-light ${menuPrefix}-root`)
-    expect(getClassName(menus[2])).toBe(`${menuPrefix} ${menuPrefix}-horizontal ${menuPrefix}-light ${menuPrefix}-root`)
+
+    assertClass(menus[0], [`${px}-vertical`])
+    assertClass(menus[1], [`${px}-horizontal`])
+    assertClass(menus[2], [`${px}-horizontal`])
   })
 
   it('should set theme classes properly', () => {
@@ -33,11 +44,19 @@ describe('Menu', () => {
     fixture.detectChanges()
 
     const menus = fixture.debugElement.queryAll(By.directive(Menu))
-    expect(getClassName(menus[0])).toBe(`${menuPrefix} ${menuPrefix}-light ${menuPrefix}-root ${menuPrefix}-vertical`)
-    expect(getClassName(menus[1])).toBe(`${menuPrefix} ${menuPrefix}-dark ${menuPrefix}-root ${menuPrefix}-vertical`)
+
+    assertClass(menus[0], [`${px}-light`])
+    assertClass(menus[1], [`${px}-dark`])
   })
 
 })
+
+@Component({
+  template: `
+    <ul antMenu></ul>
+  `,
+})
+class MenuStaticTest { }
 
 @Component({
   template: `
