@@ -1,6 +1,6 @@
 import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
-import { getSizeToken } from '../core/lang'
 import { HostManager } from '../host-manager/host-manager'
+import { getSizeToken } from '../utils/lang'
 
 const prefix = 'ant-btn-group'
 

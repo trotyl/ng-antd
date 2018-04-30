@@ -1,6 +1,6 @@
 import { forwardRef, Directive } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
-import { noop, OnChangeFn, OnTouchedFn } from '../core/lang'
+import { noop, OnChangeFn, OnTouchedFn } from '../utils/lang'
 
 @Directive({
   selector: 'ant-radio-group',
