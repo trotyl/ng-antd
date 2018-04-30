@@ -17,7 +17,7 @@
     "release": "cd publish && npm publish",
     "integration:cli": "cd integration/angular-cli && npm run integration",
     "gh-build": "ng build --prod --base-href /ng-antd/ --no-progress",
-    "postgh-build": "cp -r .circleci/ dist/.circleci/",
+    "postgh-build": "cp dist/index.html dist/404.html && cp -r .circleci/ dist/.circleci/",
     "deploy": "gh-pages -d dist -t",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
