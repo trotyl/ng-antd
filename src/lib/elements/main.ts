@@ -1,4 +1,4 @@
-import { Directive, Injector, NgModule } from '@angular/core'
+import { Directive, Injector } from '@angular/core'
 import { Element } from './element'
 
 @Directive({
@@ -7,9 +7,3 @@ import { Element } from './element'
 export class MainElement implements Element {
   constructor(public injector: Injector) { }
 }
-
-@NgModule({
-  declarations: [ MainElement ],
-  exports: [ MainElement ],
-})
-export class MainElementModule { }
