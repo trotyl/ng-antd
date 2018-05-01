@@ -50,10 +50,11 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
 
     this.host.staticClasses = [ this.prefix ]
 
-    this.menu.status$.subscribe(() => this.updateHostClasses())
+    this.status$$ = this.menu.status$.subscribe(() => this.updateHostClasses())
   }
 
   ngOnDestroy(): void {
+    /* istanbul ignore else */
     if (this.status$$) this.status$$.unsubscribe()
   }
 
