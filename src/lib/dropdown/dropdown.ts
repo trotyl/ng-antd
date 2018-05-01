@@ -5,6 +5,7 @@ import { ISubscription } from 'rxjs/Subscription'
 import { fromEvent } from 'rxjs/observable/fromEvent'
 import { merge } from 'rxjs/observable/merge'
 import { delay, filter, map, pairwise, scan, startWith } from 'rxjs/operators'
+import { MENU_PREFIX } from '../menu/token'
 import { assertExist } from '../util/debug'
 import { Overlay as AntOverlay } from './overlay'
 
@@ -12,12 +13,19 @@ const originPosition: OriginConnectionPosition = { originX: 'start', originY: 'b
 const overlayPosition: OverlayConnectionPosition = { overlayX: 'start', overlayY: 'top' }
 const panelClass = ['ant-dropdown', 'ant-dropdown-placement-bottomLeft']
 
+export function menuPrefixFactory(): string {
+  return 'ant-dropdown-menu'
+}
+
 @Directive({
   selector: '[antDropdown]',
   host: {
     '[class.ant-dropdown-link]': `true`,
     '[class.ant-dropdown-trigger]': `true`,
   },
+  providers: [
+    { provide: MENU_PREFIX, useFactory: menuPrefixFactory, deps: [] },
+  ],
 })
 export class Dropdown implements AfterContentInit, OnDestroy {
   @ContentChild(AntOverlay, { read: TemplateRef }) content: TemplateRef<void>
