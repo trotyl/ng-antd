@@ -1,10 +1,11 @@
 import { OriginConnectionPosition, Overlay, OverlayConnectionPosition, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
-import { isDevMode, ContentChild, Directive, ElementRef, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core'
+import { isDevMode, AfterContentInit, ContentChild, Directive, ElementRef, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core'
 import { ISubscription } from 'rxjs/Subscription'
 import { fromEvent } from 'rxjs/observable/fromEvent'
 import { merge } from 'rxjs/observable/merge'
 import { delay, filter, map, pairwise, scan, startWith } from 'rxjs/operators'
+import { assertExist } from '../util/debug'
 import { Overlay as AntOverlay } from './overlay'
 
 const originPosition: OriginConnectionPosition = { originX: 'start', originY: 'bottom' }
@@ -18,7 +19,7 @@ const panelClass = ['ant-dropdown', 'ant-dropdown-placement-bottomLeft']
     '[class.ant-dropdown-trigger]': `true`,
   },
 })
-export class Dropdown implements OnDestroy, OnInit {
+export class Dropdown implements AfterContentInit, OnDestroy {
   @ContentChild(AntOverlay, { read: TemplateRef }) content: TemplateRef<void>
 
   portal: TemplatePortal
@@ -36,8 +37,11 @@ export class Dropdown implements OnDestroy, OnInit {
     this.outlet = this.overlay.create({ positionStrategy, scrollStrategy, panelClass })
   }
 
-  ngOnInit(): void {
-    if (isDevMode()) this.checkNoConflits()
+  ngAfterContentInit(): void {
+    /* istanbul ignore else */
+    if (isDevMode()) {
+      /*@__PURE__*/assertExist(this.content, `antDropdown: requires 'overlay'`)
+    }
     this.portal = new TemplatePortal(this.content, this.vcRef)
     this.initTrigger()
   }
@@ -67,11 +71,5 @@ export class Dropdown implements OnDestroy, OnInit {
       if (res) this.portal.attach(this.outlet)
       else this.portal.detach()
     })
-  }
-
-  private checkNoConflits(): void {
-    if (!this.content) {
-      throw new Error(`Antd: no overlay provided to dropdown`)
-    }
   }
 }

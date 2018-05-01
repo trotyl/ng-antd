@@ -108,12 +108,12 @@ describe('Button', () => {
 
   it('should report error when set icon and loading', () => {
     const fixture = TestBed.createComponent(ButtonErrorIconLoadingTest)
-    expect(() => fixture.detectChanges()).toThrowError(/Antd: button with icon 'search' cannot have loading status/)
+    expect(() => fixture.detectChanges()).toThrowError(/antBtn: cannot have both 'icon' and 'loading'/)
   })
 
   it('should report error when set iconOnly but not icon', () => {
     const fixture = TestBed.createComponent(ButtonErrorIconIconOnlyTest)
-    expect(() => fixture.detectChanges()).toThrowError(/Antd: button without an icon cannot be iconOnly/)
+    expect(() => fixture.detectChanges()).toThrowError(/antBtn: 'iconOnly' requires 'icon'/)
   })
 
 })

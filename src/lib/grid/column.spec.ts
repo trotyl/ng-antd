@@ -160,12 +160,12 @@ describe('Column', () => {
 
   it('should report error when not inside a row', () => {
     const fixture = TestBed.createComponent(ColErrorRowTest)
-    expect(() => fixture.detectChanges()).toThrowError(/Antd: column can only be used inside a row/)
+    expect(() => fixture.detectChanges()).toThrowError(/antCol: must under 'antRow'/)
   })
 
   it('should report error when span not set', () => {
     const fixture = TestBed.createComponent(ColErrorSpanTest)
-    expect(() => fixture.detectChanges()).toThrowError(/Antd: the 'span' must be specified in column/)
+    expect(() => fixture.detectChanges()).toThrowError(/antCol: requires 'span'/)
   })
 
 })

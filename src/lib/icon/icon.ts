@@ -1,6 +1,7 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { isDevMode, Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { HostManager } from '../host-manager/host-manager'
+import { assertExist } from '../util/debug'
 
 const prefix = 'anticon'
 
@@ -20,12 +21,15 @@ export class Icon implements OnChanges, OnInit {
   constructor(@Self() private host: HostManager) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    /* istanbul ignore else */
-    if (isDevMode()) this.checkNoConflits()
     this.updateHostClasses()
   }
 
   ngOnInit(): void {
+    /* istanbul ignore else */
+    if (isDevMode()) {
+      /*@__PURE__*/assertExist(this.type, `antIcon: requires 'type'`)
+    }
+
     this.host.staticClasses = [prefix]
   }
 
@@ -33,12 +37,6 @@ export class Icon implements OnChanges, OnInit {
     this.host.classes = {
       [`${prefix}-${this.type}`]: !!this.type,
       [`${prefix}-spin`]: boolify(this.spin) || this.type === 'loading',
-    }
-  }
-
-  private checkNoConflits(): void {
-    if (!this.type) {
-      throw new Error(`Antd: icon must have a type`)
     }
   }
 }
