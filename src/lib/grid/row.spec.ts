@@ -113,7 +113,7 @@ class RowGutterTest { }
 
 @Component({
   template: `
-    <ant-row [gutter]="16" [gutter.md]="24"></ant-row>
+    <ant-row [gutter]="16" [gutter.xs]="32" [gutter.sm]="32" [gutter.md]="24" [gutter.lg]="32" [gutter.xl]="32" [gutter.xxl]="32"></ant-row>
   `,
 })
 class RowGutterResponsiveTest { }
