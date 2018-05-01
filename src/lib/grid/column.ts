@@ -95,7 +95,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
       /*@__PURE__*/assertFalse(this.span < 0 && /*@__PURE__*/length(this.rSpan) === 0, `antCol: requires 'span'`)
     }
 
-    this.host.staticClasses = [prefix]
+    this.host.staticClasses = [ prefix ]
 
     this.rowStatus$$ = this.row.status$.subscribe(() => this.updateHostStyles())
 
