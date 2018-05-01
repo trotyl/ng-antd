@@ -39,7 +39,7 @@ export class Button implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.host.staticClasses = [prefix]
+    this.host.staticClasses = [ prefix ]
   }
 
   private updateHostClasses(): void {

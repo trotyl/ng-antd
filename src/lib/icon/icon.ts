@@ -30,7 +30,7 @@ export class Icon implements OnChanges, OnInit {
       /*@__PURE__*/assertExist(this.type, `antIcon: requires 'type'`)
     }
 
-    this.host.staticClasses = [prefix]
+    this.host.staticClasses = [ prefix ]
   }
 
   private updateHostClasses(): void {
