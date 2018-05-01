@@ -185,7 +185,7 @@ class ColSpanTest { }
 @Component({
   template: `
     <ant-row>
-      <ant-col [span]="4" [span.md]="6"></ant-col>
+      <ant-col [span]="4" [span.xs]="2" [span.sm]="2" [span.md]="6" [span.lg]="2" [span.xl]="2" [span.xxl]="2"></ant-col>
     </ant-row>
   `,
 })
@@ -202,7 +202,7 @@ class ColGutterTest { }
 
 @Component({
   template: `
-    <ant-row [gutter]="16" [gutter.md]="24">
+    <ant-row [gutter]="16" [gutter.xs]="32" [gutter.sm]="32" [gutter.md]="24" [gutter.lg]="32" [gutter.xl]="32" [gutter.xxl]="32">
       <ant-col [span]="6"></ant-col>
     </ant-row>
   `,
@@ -221,7 +221,7 @@ class ColOffsetTest { }
 @Component({
   template: `
     <ant-row>
-      <ant-col [span]="6" [offset]="4" [offset.md]="8"></ant-col>
+      <ant-col [span]="6" [offset]="4" [offset.xs]="2" [offset.sm]="2" [offset.md]="8" [offset.lg]="2" [offset.xl]="2" [offset.xxl]="2"></ant-col>
     </ant-row>
   `,
 })
@@ -239,7 +239,7 @@ class ColPullTest { }
 @Component({
   template: `
     <ant-row>
-      <ant-col [span]="6" [pull]="4" [pull.md]="8"></ant-col>
+      <ant-col [span]="6" [pull]="4" [pull.xs]="2" [pull.sm]="2" [pull.md]="8" [pull.lg]="2" [pull.xl]="2" [pull.xxl]="2"></ant-col>
     </ant-row>
   `,
 })
@@ -257,7 +257,7 @@ class ColPushTest { }
 @Component({
   template: `
     <ant-row>
-      <ant-col [span]="6" [push]="4" [push.md]="8"></ant-col>
+      <ant-col [span]="6" [push]="4" [push.xs]="2" [push.sm]="2" [push.md]="8" [push.lg]="2" [push.xl]="2" [push.xxl]="2"></ant-col>
     </ant-row>
   `,
 })
@@ -275,7 +275,7 @@ class ColOrderTest { }
 @Component({
   template: `
     <ant-row>
-      <ant-col [span]="6" [order]="4" [order.md]="8"></ant-col>
+    <ant-col [span]="6" [order]="4" [order.xs]="2" [order.sm]="2" [order.md]="8" [order.lg]="2" [order.xl]="2" [order.xxl]="2"></ant-col>
     </ant-row>
   `,
 })
