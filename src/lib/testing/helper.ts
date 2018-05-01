@@ -1,4 +1,5 @@
 import { DebugElement } from '@angular/core'
+import { Observable } from 'rxjs/Observable'
 
 declare var expect: any
 declare var jasmine: any
@@ -21,4 +22,10 @@ export function assertClass(el: DebugElement, includes: string[], excludes: stri
 
 export function assertStyle(el: DebugElement, partial: { [style: string]: string | null }): void {
   expect(el.styles).toEqual(jasmine.objectContaining(partial))
+}
+
+export function values<T>(observable: Observable<T>): T[] {
+  const res: T[] = []
+  observable.subscribe(x => res.push(x)).unsubscribe()
+  return res
 }

@@ -6,6 +6,7 @@ import { ISubscription } from 'rxjs/Subscription'
 export type OnChangeFn<T> = (value: T | null) => void
 export type OnTouchedFn = () => void
 
+/* istanbul ignore next */
 export function noop(): void { }
 
 export abstract class Control<T> implements ControlValueAccessor {
