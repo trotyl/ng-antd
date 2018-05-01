@@ -24,11 +24,20 @@ describe('Responsive', () => {
     }).compileComponents()
   })
 
-  it('should resolve to largest screen', inject([Responsive], (rsp: Responsive) => {
+  it('should resolve to largest when matched', inject([Responsive], (rsp: Responsive) => {
     let res: number
     rsp.resolve({ lg: 5, md: 2 }, () => 0, empty()).subscribe(x => res = x)
 
     expect(res!).toBe(5)
+  }))
+
+  it('should resolve to default value when not matched', inject([Responsive], (rsp: Responsive) => {
+    spyOn(mockObserver, 'isMatched').and.returnValue(false)
+
+    let res: number
+    rsp.resolve({ lg: 5, md: 2 }, () => 0, empty()).subscribe(x => res = x)
+
+    expect(res!).toBe(0)
   }))
 
 })
