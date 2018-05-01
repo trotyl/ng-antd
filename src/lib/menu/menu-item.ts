@@ -1,6 +1,7 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { isDevMode, Directive, HostBinding, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, Directive, HostBinding, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { HostManager } from '../host-manager/host-manager'
+import { ControlItem } from '../util/control'
 import { assertExist } from '../util/debug'
 import { Menu } from './menu'
 
@@ -9,14 +10,11 @@ const prefix = 'ant-menu-item'
 @Directive({
   selector: '[antMenuItem]',
   exportAs: 'antMenuItem',
-  host: {
-    '[class.ant-menu-item-selected]': `selected`,
-  },
   providers: [
     HostManager,
   ],
 })
-export class MenuItem implements OnChanges, OnInit {
+export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnInit {
   @Input() value: string
   @Input() disabled: boolean = false
 
@@ -27,14 +25,16 @@ export class MenuItem implements OnChanges, OnInit {
     if (value !== '') { this.value = value }
   }
 
-  get selected(): boolean {
-    return this.value === this.menu.value
-  }
-
   constructor(
     @Self() private host: HostManager,
     @Optional() private menu: Menu,
-  ) { }
+  ) { super() }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['disabled']) {
+      this.updateHostClasses()
+    }
+  }
 
   ngOnInit(): void {
     /* istanbul ignore else */
@@ -43,15 +43,17 @@ export class MenuItem implements OnChanges, OnInit {
     }
 
     this.host.staticClasses = [ prefix ]
-    this.updateHostClasses()
+
+    this.menu.status$.subscribe(() => this.updateHostClasses())
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.updateHostClasses()
+  ngOnDestroy(): void {
+    if (this.status$$) this.status$$.unsubscribe()
   }
 
   private updateHostClasses(): void {
     this.host.classes = {
+      [`${prefix}-selected`]: this.value === this.menu.value,
       // TODO: track mouse hovering
       [`${prefix}-active`]: false,
       [`${prefix}-disabled`]: boolify(this.disabled),

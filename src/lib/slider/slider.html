@@ -5,7 +5,7 @@
         class="ant-slider-dot"
         [class.ant-slider-dot-active]="i <= value"
         [style.left.%]="i / range * 100"
-        (click)="update(i)">
+        (click)="updateByAction(i)">
   </span>
 </div>
 <div role="slider"
