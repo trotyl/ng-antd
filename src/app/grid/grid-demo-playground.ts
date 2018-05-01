@@ -1,9 +1,10 @@
-import { Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 @Component({
   selector: 'grid-demo-playground',
   templateUrl: './grid-demo-playground.html',
   styleUrls: ['./grid-demo-playground.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
 export class GridDemoPlayground {

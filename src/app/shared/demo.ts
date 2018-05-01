@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 @Component({
   selector: '[demo]',
@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core'
     '[class.code-box]': `true`,
     '[class.expand]': `true`,
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Demo {
   @Input() demo: [string, string] = ['', '']
