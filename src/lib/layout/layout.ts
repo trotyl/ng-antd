@@ -1,4 +1,4 @@
-import { AfterContentInit, ContentChildren, Directive, OnDestroy, QueryList } from '@angular/core'
+import { AfterContentInit, ContentChildren, Directive, Inject, OnDestroy, QueryList } from '@angular/core'
 import { ISubscription } from 'rxjs/Subscription'
 import { merge } from 'rxjs/observable/merge'
 import { startWith, tap } from 'rxjs/operators'
@@ -9,8 +9,8 @@ import { HeaderElement } from '../elements/header'
 import { MainElement } from '../elements/main'
 import { HostManagerFactory } from '../host-manager/host-manager'
 import { Sider } from './sider'
+import { LAYOUT_PREFIX } from './token'
 
-const prefix = 'ant-layout'
 
 @Directive({
   selector: 'ant-layout, [antLayout]',
@@ -30,25 +30,28 @@ export class Layout implements AfterContentInit, OnDestroy {
   private marker: WeakSet<Element> = new WeakSet()
   private status$$: ISubscription | null = null
 
-  constructor(private hostFactory: HostManagerFactory) { }
+  constructor(
+    @Inject(LAYOUT_PREFIX) private prefix: string,
+    private hostFactory: HostManagerFactory,
+  ) { }
 
   ngAfterContentInit(): void {
     this.status$$ = merge(
       this.headers.changes.pipe(
         startWith(this.headers),
-        tap(l => this.initElementClasses(l, `${prefix}-header`)),
+        tap(l => this.initElementClasses(l, `${this.prefix}-header`)),
       ),
       this.footers.changes.pipe(
         startWith(this.footers),
-        tap(l => this.initElementClasses(l, `${prefix}-footer`)),
+        tap(l => this.initElementClasses(l, `${this.prefix}-footer`)),
       ),
       this.mains.changes.pipe(
         startWith(this.mains),
-        tap(l => this.initElementClasses(l, `${prefix}-content`)),
+        tap(l => this.initElementClasses(l, `${this.prefix}-content`)),
       ),
       this.asides.changes.pipe(
         startWith(this.asides),
-        tap(l => this.initElementClasses(l, `${prefix}-sider`)),
+        tap(l => this.initElementClasses(l, `${this.prefix}-sider`)),
       ),
     ).subscribe()
   }

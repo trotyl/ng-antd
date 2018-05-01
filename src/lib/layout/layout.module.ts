@@ -9,6 +9,7 @@ import { Footer } from './footer'
 import { Header } from './header'
 import { Layout } from './layout'
 import { Sider } from './sider'
+import { LAYOUT_PREFIX } from './token'
 
 const TYPES = [
   Layout,
@@ -29,5 +30,8 @@ const NG_MODULES = [
   declarations: [ TYPES ],
   imports: [ HostManagerModule ],
   exports: [ TYPES, NG_MODULES ],
+  providers: [
+    { provide: LAYOUT_PREFIX, useValue: 'ant-layout' },
+  ],
 })
 export class LayoutModule { }

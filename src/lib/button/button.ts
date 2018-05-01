@@ -1,10 +1,9 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { isDevMode, ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { HostManager } from '../host-manager/host-manager'
 import { assertFalse } from '../util/debug'
 import { getSizeToken } from '../util/size'
-
-const prefix = 'ant-btn'
+import { BUTTON_PREFIX } from './token'
 
 @Component({
   selector: '[antBtn]',
@@ -27,7 +26,10 @@ export class Button implements OnChanges, OnInit {
     if (value !== '') { this.color = value }
   }
 
-  constructor(@Self() private host: HostManager) { }
+  constructor(
+    @Inject(BUTTON_PREFIX) private prefix: string,
+    @Self() private host: HostManager,
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     /* istanbul ignore else */
@@ -39,17 +41,17 @@ export class Button implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.host.staticClasses = [ prefix ]
+    this.host.staticClasses = [ this.prefix ]
   }
 
   private updateHostClasses(): void {
     this.host.classes = {
-      [`${prefix}-${this.color}`]: !!this.color,
-      [`${prefix}-${getSizeToken(this.size)}`]: !!this.size,
-      [`${prefix}-circle`]: !!this.shape,
-      [`${prefix}-icon-only`]: !!this.shape || boolify(this.iconOnly),
-      [`${prefix}-loading`]: boolify(this.loading),
-      [`${prefix}-background-ghost`]: boolify(this.ghost),
+      [`${this.prefix}-${this.color}`]: !!this.color,
+      [`${this.prefix}-${getSizeToken(this.size)}`]: !!this.size,
+      [`${this.prefix}-circle`]: !!this.shape,
+      [`${this.prefix}-icon-only`]: !!this.shape || boolify(this.iconOnly),
+      [`${this.prefix}-loading`]: boolify(this.loading),
+      [`${this.prefix}-background-ghost`]: boolify(this.ghost),
     }
   }
 }

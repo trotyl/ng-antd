@@ -1,7 +1,6 @@
-import { Component, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
+import { Component, Inject, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { HostManager } from '../host-manager/host-manager'
-
-const prefix = 'ant-menu-submenu'
+import { MENU_PREFIX } from './token'
 
 @Component({
   selector: '[antSubMenu]',
@@ -19,10 +18,17 @@ export class SubMenu implements OnChanges, OnInit {
     if (value !== '') { this.key = value }
   }
 
-  constructor(@Self() private host: HostManager) { }
+  private prefix: string
+
+  constructor(
+    @Self() private host: HostManager,
+    @Inject(MENU_PREFIX) basePrefix: string,
+  ) {
+    this.prefix = `${basePrefix}-submenu`
+  }
 
   ngOnInit(): void {
-    this.host.staticClasses = [ prefix ]
+    this.host.staticClasses = [ this.prefix ]
     this.updateHostClasses()
   }
 
