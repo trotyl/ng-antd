@@ -47,7 +47,7 @@ describe('Icon', () => {
 
   it('should report error when type not set', () => {
     const fixture = TestBed.createComponent(IconErrorTypeTest)
-    expect(() => fixture.detectChanges()).toThrowError(/Antd: icon must have a type/)
+    expect(() => fixture.detectChanges()).toThrowError(/antIcon: requires 'type'/)
   })
 
 })

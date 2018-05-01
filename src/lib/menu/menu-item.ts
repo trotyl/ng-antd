@@ -1,6 +1,7 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { isDevMode, Directive, HostBinding, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { HostManager } from '../host-manager/host-manager'
+import { assertExist } from '../util/debug'
 import { Menu } from './menu'
 
 const prefix = 'ant-menu-item'
@@ -37,7 +38,9 @@ export class MenuItem implements OnChanges, OnInit {
 
   ngOnInit(): void {
     /* istanbul ignore else */
-    if (isDevMode()) this.checkNoConflits()
+    if (isDevMode()) {
+      /*@__PURE__*/assertExist(this.menu, `antMenuItem: must under 'antMenu'`)
+    }
 
     this.host.staticClasses = [ prefix ]
     this.updateHostClasses()
@@ -52,12 +55,6 @@ export class MenuItem implements OnChanges, OnInit {
       // TODO: track mouse hovering
       [`${prefix}-active`]: false,
       [`${prefix}-disabled`]: boolify(this.disabled),
-    }
-  }
-
-  private checkNoConflits(): void {
-    if (!this.menu) {
-      throw new Error(`Antd: MenuItem can only be used inside Menu`)
     }
   }
 }

@@ -5,6 +5,7 @@ import { merge } from 'rxjs/observable/merge'
 import { tap } from 'rxjs/operators'
 import { HostManager } from '../host-manager/host-manager'
 import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
+import { assertExist, assertFalse, length } from '../util/debug'
 import { Row } from './row'
 
 const prefix = 'ant-col'
@@ -14,7 +15,7 @@ const prefix = 'ant-col'
   providers: [ HostManager ],
 })
 export class Column implements OnChanges, OnDestroy, OnInit {
-  @Input() span: number = NaN
+  @Input() span: number = -1
   @Input() offset: number = 0
   @Input() order: number = 0
   @Input() pull: number = 0
@@ -89,7 +90,10 @@ export class Column implements OnChanges, OnDestroy, OnInit {
 
   ngOnInit(): void {
     /* istanbul ignore else */
-    if (isDevMode()) this.checkNoConflits()
+    if (isDevMode()) {
+      /*@__PURE__*/assertExist(this.row, `antCol: must under 'antRow'`)
+      /*@__PURE__*/assertFalse(this.span < 0 && /*@__PURE__*/length(this.rSpan) === 0, `antCol: requires 'span'`)
+    }
 
     this.host.staticClasses = [prefix]
 
@@ -134,16 +138,6 @@ export class Column implements OnChanges, OnDestroy, OnInit {
       }
     } else {
       this.host.styles = { }
-    }
-  }
-
-  private checkNoConflits(): void {
-    if (!this.row) {
-      throw new Error(`Antd: column can only be used inside a row`)
-    }
-
-    if (Number.isNaN(this.span) && Object.keys(this.rSpan).length === 0) {
-      throw new Error(`Antd: the 'span' must be specified in column`)
     }
   }
 }

@@ -1,6 +1,7 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { isDevMode, ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { HostManager } from '../host-manager/host-manager'
+import { assertFalse } from '../util/debug'
 import { getSizeToken } from '../util/lang'
 
 const prefix = 'ant-btn'
@@ -30,7 +31,10 @@ export class Button implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     /* istanbul ignore else */
-    if (isDevMode()) this.checkNoConflicts()
+    if (isDevMode()) {
+      /*@__PURE__*/assertFalse(/*@__PURE__*/boolify(this.loading) && !!this.icon, `antBtn: cannot have both 'icon' and 'loading'`)
+      /*@__PURE__*/assertFalse(/*@__PURE__*/boolify(this.iconOnly) && !this.icon, `antBtn: 'iconOnly' requires 'icon'`)
+    }
     this.updateHostClasses()
   }
 
@@ -46,16 +50,6 @@ export class Button implements OnChanges, OnInit {
       [`${prefix}-icon-only`]: !!this.shape || boolify(this.iconOnly),
       [`${prefix}-loading`]: boolify(this.loading),
       [`${prefix}-background-ghost`]: boolify(this.ghost),
-    }
-  }
-
-  private checkNoConflicts(): void {
-    if (boolify(this.loading) && this.icon) {
-      throw new Error(`Antd: button with icon '${this.icon}' cannot have loading status`)
-    }
-
-    if (boolify(this.iconOnly) && !this.icon) {
-      throw new Error(`Antd: button without an icon cannot be iconOnly`)
     }
   }
 }

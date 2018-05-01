@@ -1,4 +1,5 @@
 import { isDevMode, ChangeDetectionStrategy, Component, HostListener, Input, OnInit, Optional } from '@angular/core'
+import { assertExist } from '../util/debug'
 import { RadioGroup } from './radio-group'
 
 @Component({
@@ -26,12 +27,9 @@ export class RadioButton<T> implements OnInit {
   }
 
   ngOnInit(): void {
-    if (isDevMode()) this.checkNoConflits()
-  }
-
-  private checkNoConflits(): void {
-    if (!this.group) {
-      throw new Error(`Antd: radio button can only be used inside a radio group`)
+    /* istanbul ignore else */
+    if (isDevMode()) {
+      /*@__PURE__*/assertExist(this.group, `antRadioBtn: must under 'antRadioGroup'`)
     }
   }
 }
