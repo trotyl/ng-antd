@@ -1,5 +1,8 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { isDevMode, Directive, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, Directive, ElementRef, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { fromEvent } from 'rxjs/observable/fromEvent'
+import { merge } from 'rxjs/observable/merge'
+import { tap } from 'rxjs/operators'
 import { HostManager } from '../host-manager/host-manager'
 import { ControlItem } from '../util/control'
 import { assertExist } from '../util/debug'
@@ -25,8 +28,10 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   }
 
   private prefix: string
+  private active: boolean = false
 
   constructor(
+    private el: ElementRef,
     @Self() private host: HostManager,
     @Inject(MENU_PREFIX) basePrefix: string,
     @Optional() private menu: Menu,
@@ -50,7 +55,11 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
 
     this.host.staticClasses = [ this.prefix ]
 
-    this.status$$ = this.menu.status$.subscribe(() => this.updateHostClasses())
+    this.status$$ = merge(
+      this.menu.status$,
+      fromEvent(this.el.nativeElement, 'mouseenter').pipe(tap(() => this.active = true)),
+      fromEvent(this.el.nativeElement, 'mouseleave').pipe(tap(() => this.active = false)),
+    ).subscribe(() => this.updateHostClasses())
   }
 
   ngOnDestroy(): void {
@@ -61,8 +70,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   private updateHostClasses(): void {
     this.host.classes = {
       [`${this.prefix}-selected`]: this.value === this.menu.value,
-      // TODO: track mouse hovering
-      [`${this.prefix}-active`]: false,
+      [`${this.prefix}-active`]: this.active,
       [`${this.prefix}-disabled`]: boolify(this.disabled),
     }
   }

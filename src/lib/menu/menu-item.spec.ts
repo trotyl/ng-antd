@@ -29,6 +29,20 @@ describe('MenuItem', () => {
     assertClass(menus[0], [`${px}`])
   })
 
+  it('should set active classes properly', () => {
+    const fixture = TestBed.createComponent(MenuItemStaticTest)
+    fixture.detectChanges()
+
+    const menus = fixture.debugElement.queryAll(By.directive(MenuItem))
+    menus[0].nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
+
+    assertClass(menus[0], [`${px}-active`])
+
+    menus[0].nativeElement.dispatchEvent(new CustomEvent('mouseleave'))
+
+    assertClass(menus[0], [], [`${px}-active`])
+  })
+
   it('should set disabled classes properly', () => {
     const fixture = TestBed.createComponent(MenuItemDisabledTest)
     fixture.detectChanges()
