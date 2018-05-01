@@ -1,9 +1,9 @@
-import { forwardRef, Directive, HostBinding, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
+import { forwardRef, Directive, HostBinding, Inject, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NG_VALUE_ACCESSOR } from '@angular/forms'
 import { HostManager } from '../host-manager/host-manager'
 import { CompositeControl } from '../util/control'
+import { MENU_PREFIX } from './token'
 
-const prefix = 'ant-menu'
 
 @Directive({
   selector: '[antMenu]',
@@ -25,10 +25,13 @@ export class Menu extends CompositeControl<string> implements OnChanges, OnInit 
     if (value !== '') { this.mode = value }
   }
 
-  constructor(@Self() private host: HostManager) { super() }
+  constructor(
+    @Self() private host: HostManager,
+    @Inject(MENU_PREFIX) private prefix: string,
+  ) { super() }
 
   ngOnInit(): void {
-    this.host.staticClasses = [ prefix, `${prefix}-root` ]
+    this.host.staticClasses = [ this.prefix, `${this.prefix}-root` ]
     this.updateHostClasses()
   }
 
@@ -38,8 +41,8 @@ export class Menu extends CompositeControl<string> implements OnChanges, OnInit 
 
   private updateHostClasses(): void {
     this.host.classes = {
-      [`${prefix}-${this.theme}`]: true,
-      [`${prefix}-${this.mode}`]: true,
+      [`${this.prefix}-${this.theme}`]: true,
+      [`${this.prefix}-${this.mode}`]: true,
     }
   }
 }

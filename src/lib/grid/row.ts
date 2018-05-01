@@ -1,12 +1,11 @@
-import { Directive, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
+import { Directive, Inject, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { map, tap } from 'rxjs/operators'
 import { HostManager } from '../host-manager/host-manager'
 import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
-
-const prefix = 'ant-row'
+import { ROW_PREFIX } from './token'
 
 @Directive({
   selector: 'ant-row, [antRow]',
@@ -40,6 +39,7 @@ export class Row implements OnChanges, OnDestroy, OnInit {
 
   constructor(
     @Self() private host: HostManager,
+    @Inject(ROW_PREFIX) private prefix: string,
     private rsp: Responsive,
   ) { }
 
@@ -63,10 +63,10 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   private updateHostClasses(): void {
     const isFlex = this.type === 'flex'
     this.host.classes = {
-      [`${prefix}`]: !isFlex,
-      [`${prefix}-flex`]: isFlex,
-      [`${prefix}-flex-${this.justify}`]: !!this.justify,
-      [`${prefix}-flex-${this.align}`]: !!this.align,
+      [`${this.prefix}`]: !isFlex,
+      [`${this.prefix}-flex`]: isFlex,
+      [`${this.prefix}-flex-${this.justify}`]: !!this.justify,
+      [`${this.prefix}-flex-${this.align}`]: !!this.align,
     }
   }
 

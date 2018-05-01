@@ -1,10 +1,9 @@
-import { isDevMode, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Input, OnDestroy, OnInit, Optional, Self } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, Input, OnDestroy, OnInit, Optional, Self } from '@angular/core'
 import { HostManager } from '../host-manager/host-manager'
 import { ControlItem } from '../util/control'
 import { assertExist } from '../util/debug'
 import { RadioGroup } from './radio-group'
-
-const prefix = 'ant-radio-button-wrapper'
+import { RADIO_BUTTON_PREFIX } from './token'
 
 @Component({
   selector: 'ant-radio-btn, [antRadioBtn]',
@@ -23,6 +22,7 @@ export class RadioButton<T> extends ControlItem implements OnDestroy, OnInit {
   constructor(
     private cdRef: ChangeDetectorRef,
     @Self() private host: HostManager,
+    @Inject(RADIO_BUTTON_PREFIX) private prefix: string,
     @Optional() private group: RadioGroup<T>,
   ) { super() }
 
@@ -37,7 +37,7 @@ export class RadioButton<T> extends ControlItem implements OnDestroy, OnInit {
       /*@__PURE__*/assertExist(this.group, `antRadioBtn: must under 'antRadioGroup'`)
     }
 
-    this.host.staticClasses = [ prefix ]
+    this.host.staticClasses = [ `${this.prefix}-wrapper` ]
 
     this.status$$ = this.group.status$.subscribe(() => {
       this.updateHostClasses()
@@ -51,7 +51,7 @@ export class RadioButton<T> extends ControlItem implements OnDestroy, OnInit {
 
   private updateHostClasses(): void {
     this.host.classes = {
-      [`${prefix}-checked`]: this.checked,
+      [`${this.prefix}-wrapper-checked`]: this.checked,
     }
   }
 }

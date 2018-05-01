@@ -1,4 +1,4 @@
-import { isDevMode, Directive, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, Directive, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { merge } from 'rxjs/observable/merge'
@@ -7,8 +7,7 @@ import { HostManager } from '../host-manager/host-manager'
 import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
 import { assertExist, assertFalse, length } from '../util/debug'
 import { Row } from './row'
-
-const prefix = 'ant-col'
+import { COLUMN_PREFIX } from './token'
 
 @Directive({
   selector: 'ant-col, [antCol]',
@@ -80,6 +79,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
 
   constructor(
     @Self() private host: HostManager,
+    @Inject(COLUMN_PREFIX) private prefix: string,
     private rsp: Responsive,
     @Optional() private row: Row,
   ) { }
@@ -95,7 +95,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
       /*@__PURE__*/assertFalse(this.span < 0 && /*@__PURE__*/length(this.rSpan) === 0, `antCol: requires 'span'`)
     }
 
-    this.host.staticClasses = [ prefix ]
+    this.host.staticClasses = [ this.prefix ]
 
     this.rowStatus$$ = this.row.status$.subscribe(() => this.updateHostStyles())
 
@@ -121,11 +121,11 @@ export class Column implements OnChanges, OnDestroy, OnInit {
 
   private updateHostClasses(): void {
     this.host.classes = {
-      [`${prefix}-${this.fSpan}`]: true,
-      [`${prefix}-offset-${this.fOffset}`]: this.fOffset > 0,
-      [`${prefix}-pull-${this.fPull}`]: this.fPull > 0,
-      [`${prefix}-push-${this.fPush}`]: this.fPush > 0,
-      [`${prefix}-order-${this.fOrder}`]: this.fOrder > 0,
+      [`${this.prefix}-${this.fSpan}`]: true,
+      [`${this.prefix}-offset-${this.fOffset}`]: this.fOffset > 0,
+      [`${this.prefix}-pull-${this.fPull}`]: this.fPull > 0,
+      [`${this.prefix}-push-${this.fPush}`]: this.fPush > 0,
+      [`${this.prefix}-order-${this.fOrder}`]: this.fOrder > 0,
     }
   }
 

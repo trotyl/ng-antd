@@ -1,11 +1,10 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { isDevMode, Directive, HostBinding, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, Directive, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { HostManager } from '../host-manager/host-manager'
 import { ControlItem } from '../util/control'
 import { assertExist } from '../util/debug'
 import { Menu } from './menu'
-
-const prefix = 'ant-menu-item'
+import { MENU_PREFIX } from './token'
 
 @Directive({
   selector: '[antMenuItem]',
@@ -25,10 +24,17 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
     if (value !== '') { this.value = value }
   }
 
+  private prefix: string
+
   constructor(
     @Self() private host: HostManager,
+    @Inject(MENU_PREFIX) basePrefix: string,
     @Optional() private menu: Menu,
-  ) { super() }
+  ) {
+    super()
+
+    this.prefix = `${basePrefix}-item`
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['disabled']) {
@@ -42,7 +48,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
       /*@__PURE__*/assertExist(this.menu, `antMenuItem: must under 'antMenu'`)
     }
 
-    this.host.staticClasses = [ prefix ]
+    this.host.staticClasses = [ this.prefix ]
 
     this.menu.status$.subscribe(() => this.updateHostClasses())
   }
@@ -53,10 +59,10 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
 
   private updateHostClasses(): void {
     this.host.classes = {
-      [`${prefix}-selected`]: this.value === this.menu.value,
+      [`${this.prefix}-selected`]: this.value === this.menu.value,
       // TODO: track mouse hovering
-      [`${prefix}-active`]: false,
-      [`${prefix}-disabled`]: boolify(this.disabled),
+      [`${this.prefix}-active`]: false,
+      [`${this.prefix}-disabled`]: boolify(this.disabled),
     }
   }
 }
