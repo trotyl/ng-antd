@@ -1,6 +1,7 @@
-import { forwardRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
-import { noop, range, OnChangeFn, OnTouchedFn } from '../util/lang'
+import { forwardRef, ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
+import { NG_VALUE_ACCESSOR } from '@angular/forms'
+import { Control } from '../util/control'
+import { range } from '../util/lang'
 
 @Component({
   selector: 'ant-slider, [antSlider]',
@@ -13,14 +14,14 @@ import { noop, range, OnChangeFn, OnTouchedFn } from '../util/lang'
   providers: [
     { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => Slider) },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class Slider implements ControlValueAccessor, OnChanges, OnInit {
+export class Slider extends Control<number> implements OnChanges, OnInit {
   @Input() min: number = 0
   @Input() max: number = 100
   @Input() marks: { [key: number]: string } | null = null
 
-  value: number
   percentage: number
   stepItems: number[]
   range: number
@@ -28,12 +29,10 @@ export class Slider implements ControlValueAccessor, OnChanges, OnInit {
   markMarginLeft: number
   markItems: {label: string, value: number}[]
 
-  private onChangeFn: OnChangeFn<number> = noop
-  private onTouchedFn: OnTouchedFn = noop
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['min'] || changes['max']) {
       this.processStepsChange()
+      this.processValueChange()
     }
     if (changes['marks']) {
       this.processMarksChange()
@@ -43,34 +42,18 @@ export class Slider implements ControlValueAccessor, OnChanges, OnInit {
   ngOnInit(): void {
     if (!this.stepItems) {
       this.processStepsChange()
-    }
-  }
-
-  writeValue(value: number | null): void {
-    if (value != null) {
-      this.value = value
       this.processValueChange()
     }
   }
 
-  registerOnChange(fn: OnChangeFn<number>): void {
-    this.onChangeFn = fn
+  handleUpdate(): void {
+    if (this.value != null) {
+      this.processValueChange()
+    }
   }
 
-  registerOnTouched(fn: OnTouchedFn): void {
-    this.onTouchedFn = fn
-  }
-
-  setDisabledState(isDisabled: boolean): void {
+  handleDisabled(): void {
     throw new Error('Method not implemented.')
-  }
-
-  update(value: number): void {
-    this.value = value
-    this.processValueChange()
-
-    this.onChangeFn(this.value)
-    this.onTouchedFn()
   }
 
   private processStepsChange(): void {
@@ -88,6 +71,6 @@ export class Slider implements ControlValueAccessor, OnChanges, OnInit {
 
   private processValueChange(): void {
     this.range = this.max - this.min
-    this.percentage = this.value / this.range * 100
+    this.percentage = this.value! / this.range * 100
   }
 }

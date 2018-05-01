@@ -1,8 +1,7 @@
 import { forwardRef, Directive, HostBinding, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
-import { Subject } from 'rxjs/Subject'
+import { NG_VALUE_ACCESSOR } from '@angular/forms'
 import { HostManager } from '../host-manager/host-manager'
-import { noop, OnChangeFn, OnTouchedFn } from '../util/lang'
+import { CompositeControl } from '../util/control'
 
 const prefix = 'ant-menu'
 
@@ -14,7 +13,7 @@ const prefix = 'ant-menu'
     { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => Menu) },
   ],
 })
-export class Menu implements ControlValueAccessor, OnChanges, OnInit {
+export class Menu extends CompositeControl<string> implements OnChanges, OnInit {
   @Input() mode: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' = 'vertical'
   @Input() theme: 'light' | 'dark' = 'light'
 
@@ -26,14 +25,7 @@ export class Menu implements ControlValueAccessor, OnChanges, OnInit {
     if (value !== '') { this.mode = value }
   }
 
-  value: string | null = null
-
-  status$: Subject<void>
-
-  private onChangedFn: OnChangeFn<string> = noop
-  private onTouchedFn: OnTouchedFn = noop
-
-  constructor(@Self() private host: HostManager) { }
+  constructor(@Self() private host: HostManager) { super() }
 
   ngOnInit(): void {
     this.host.staticClasses = [ prefix, `${prefix}-root` ]
@@ -42,30 +34,6 @@ export class Menu implements ControlValueAccessor, OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.updateHostClasses()
-  }
-
-  writeValue(value: string | null): void {
-    if (value != null) {
-      this.value = value
-    }
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChangedFn = fn
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouchedFn = fn
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    throw new Error('Method not implemented.')
-  }
-
-  updateByAction(value: string | null): void {
-    this.value = value
-    this.onChangedFn(value)
-    this.onTouchedFn()
   }
 
   private updateHostClasses(): void {
