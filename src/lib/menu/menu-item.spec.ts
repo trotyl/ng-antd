@@ -33,14 +33,14 @@ describe('MenuItem', () => {
     const fixture = TestBed.createComponent(MenuItemStaticTest)
     fixture.detectChanges()
 
-    const menus = fixture.debugElement.queryAll(By.directive(MenuItem))
-    menus[0].nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
+    const menu = fixture.debugElement.query(By.directive(MenuItem))
+    menu.nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
 
-    assertClass(menus[0], [`${px}-active`])
+    assertClass(menu, [`${px}-active`])
 
-    menus[0].nativeElement.dispatchEvent(new CustomEvent('mouseleave'))
+    menu.nativeElement.dispatchEvent(new CustomEvent('mouseleave'))
 
-    assertClass(menus[0], [], [`${px}-active`])
+    assertClass(menu, [], [`${px}-active`])
   })
 
   it('should set disabled classes properly', () => {

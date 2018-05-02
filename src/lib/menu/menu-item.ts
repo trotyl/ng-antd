@@ -1,9 +1,9 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { isDevMode, Directive, ElementRef, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
-import { fromEvent } from 'rxjs/observable/fromEvent'
+import { isDevMode, Directive, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { merge } from 'rxjs/observable/merge'
 import { tap } from 'rxjs/operators'
 import { HostManager } from '../host-manager/host-manager'
+import { Hover } from '../hover/hover'
 import { ControlItem } from '../util/control'
 import { assertExist } from '../util/debug'
 import { Menu } from './menu'
@@ -14,6 +14,7 @@ import { MENU_PREFIX } from './token'
   exportAs: 'antMenuItem',
   providers: [
     HostManager,
+    Hover,
   ],
 })
 export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnInit {
@@ -31,8 +32,8 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   private active: boolean = false
 
   constructor(
-    private el: ElementRef,
     @Self() private host: HostManager,
+    @Self() private hover: Hover,
     @Inject(MENU_PREFIX) basePrefix: string,
     @Optional() private menu: Menu,
   ) {
@@ -57,8 +58,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
 
     this.status$$ = merge(
       this.menu.status$,
-      fromEvent(this.el.nativeElement, 'mouseenter').pipe(tap(() => this.active = true)),
-      fromEvent(this.el.nativeElement, 'mouseleave').pipe(tap(() => this.active = false)),
+      this.hover.changes.pipe(tap(x => this.active = x)),
     ).subscribe(() => this.updateHostClasses())
   }
 
@@ -68,10 +68,11 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   }
 
   private updateHostClasses(): void {
+    const disabled = boolify(this.disabled)
     this.host.classes = {
       [`${this.prefix}-selected`]: this.value === this.menu.value,
-      [`${this.prefix}-active`]: this.active,
-      [`${this.prefix}-disabled`]: boolify(this.disabled),
+      [`${this.prefix}-active`]: this.active && !disabled,
+      [`${this.prefix}-disabled`]: disabled,
     }
   }
 }
