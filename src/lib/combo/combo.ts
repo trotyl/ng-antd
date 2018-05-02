@@ -18,7 +18,6 @@ export class Combo implements OnDestroy {
 
   constructor(
     private element: ElementRef,
-    private vcRef: ViewContainerRef,
     private overlay: Overlay,
   ) { }
 
@@ -29,11 +28,11 @@ export class Combo implements OnDestroy {
     if (this.outlet) this.outlet.dispose()
   }
 
-  init(template: TemplateRef<void>, panelClass?: string[]): void {
+  init(template: TemplateRef<void>, viewContainer: ViewContainerRef, panelClass?: string[]): void {
     const positionStrategy = this.overlay.position().connectedTo(this.element, originPosition, overlayPosition)
     const scrollStrategy = this.overlay.scrollStrategies.reposition()
     this.outlet = this.overlay.create({ positionStrategy, scrollStrategy, panelClass })
-    this.portal = new TemplatePortal(template, this.vcRef)
+    this.portal = new TemplatePortal(template, viewContainer)
 
     this.initListener()
   }
@@ -70,7 +69,6 @@ export class ComboFactory {
   create(injector: Injector): Combo {
     return new Combo(
       injector.get(ElementRef),
-      injector.get(ViewContainerRef),
       injector.get(Overlay),
     )
   }
