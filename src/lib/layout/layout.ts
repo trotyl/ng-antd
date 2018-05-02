@@ -1,69 +1,44 @@
-import { AfterContentInit, ContentChildren, Directive, Inject, OnDestroy, QueryList } from '@angular/core'
-import { ISubscription } from 'rxjs/Subscription'
-import { merge } from 'rxjs/observable/merge'
-import { startWith, tap } from 'rxjs/operators'
-import { AsideElement } from '../elements/aside'
+import { forwardRef, ContentChildren, Directive, Inject, QueryList } from '@angular/core'
 import { Element } from '../elements/element'
-import { FooterElement } from '../elements/footer'
-import { HeaderElement } from '../elements/header'
-import { MainElement } from '../elements/main'
+import { ElementContainer } from '../elements/token'
 import { GovernorFactory } from '../governor/governor'
 import { Sider } from './sider'
 import { LAYOUT_PREFIX } from './token'
-
 
 @Directive({
   selector: 'ant-layout, [antLayout]',
   host: {
     '[class.ant-layout]': `true`,
-    '[class.ant-layout-has-sider]': `siders.length + asides.length > 0`,
+    '[class.ant-layout-has-sider]': `siders.length > 0`,
   },
+  providers: [
+    { provide: ElementContainer, useExisting: forwardRef(() => Layout) },
+  ],
 })
-export class Layout implements AfterContentInit, OnDestroy {
-  @ContentChildren(HeaderElement) headers: QueryList<Element>
-  @ContentChildren(FooterElement) footers: QueryList<Element>
-  @ContentChildren(MainElement) mains: QueryList<Element>
-  @ContentChildren(AsideElement) asides: QueryList<Element>
-
+export class Layout implements ElementContainer {
   @ContentChildren(Sider) siders: QueryList<Sider>
-
-  private marker: WeakSet<Element> = new WeakSet()
-  private status$$: ISubscription | null = null
 
   constructor(
     @Inject(LAYOUT_PREFIX) private prefix: string,
     private governorFactory: GovernorFactory,
   ) { }
 
-  ngAfterContentInit(): void {
-    this.status$$ = merge(
-      this.headers.changes.pipe(
-        startWith(this.headers),
-        tap(l => this.initElementClasses(l, `${this.prefix}-header`)),
-      ),
-      this.footers.changes.pipe(
-        startWith(this.footers),
-        tap(l => this.initElementClasses(l, `${this.prefix}-footer`)),
-      ),
-      this.mains.changes.pipe(
-        startWith(this.mains),
-        tap(l => this.initElementClasses(l, `${this.prefix}-content`)),
-      ),
-      this.asides.changes.pipe(
-        startWith(this.asides),
-        tap(l => this.initElementClasses(l, `${this.prefix}-sider`)),
-      ),
-    ).subscribe()
+  /* istanbul ignore next */
+  register(el: Element): void {
+    switch (el.tag) {
+      case 'header': return this.addClass(el, `${this.prefix}-header`)
+      case 'footer': return this.addClass(el, `${this.prefix}-footer`)
+      case 'main': return this.addClass(el, `${this.prefix}-content`)
+      case 'aside': return this.addClass(el, `${this.prefix}-sider`)
+      default:
+    }
   }
 
-  ngOnDestroy(): void {
-    if (this.status$$) this.status$$.unsubscribe()
-  }
+  /* istanbul ignore next */
+  deregister(el: Element): void { }
 
-  private initElementClasses(list: QueryList<Element>, className: string): void {
-    list.filter(el => !this.marker.has(el)).forEach(el => {
-      this.governorFactory.create(el.injector).addClass(className)
-      this.marker.add(el)
-    })
+  /* istanbul ignore next */
+  private addClass(element: Element, className: string): void {
+    this.governorFactory.create(element.injector).addClass(className)
   }
 }

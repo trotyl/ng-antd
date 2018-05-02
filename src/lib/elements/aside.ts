@@ -1,9 +1,13 @@
-import { Directive, Injector } from '@angular/core'
+import { Directive } from '@angular/core'
 import { Element } from './element'
+import { ElementContainer, NoopElementContainer } from './token'
 
 @Directive({
   selector: 'aside',
+  providers: [
+    { provide: ElementContainer, useExisting: NoopElementContainer },
+  ],
 })
-export class AsideElement implements Element {
-  constructor(public injector: Injector) { }
+export class AsideElement extends Element {
+  tag = 'aside'
 }
