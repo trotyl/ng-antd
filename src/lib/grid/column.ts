@@ -3,7 +3,7 @@ import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { merge } from 'rxjs/observable/merge'
 import { tap } from 'rxjs/operators'
-import { HostManager } from '../host-manager/host-manager'
+import { Governor } from '../governor/governor'
 import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
 import { assertExist, assertFalse, length } from '../util/debug'
 import { Row } from './row'
@@ -11,7 +11,7 @@ import { COLUMN_PREFIX } from './token'
 
 @Directive({
   selector: 'ant-col, [antCol]',
-  providers: [ HostManager ],
+  providers: [ Governor ],
 })
 export class Column implements OnChanges, OnDestroy, OnInit {
   @Input() span: number = -1
@@ -78,7 +78,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   private rowStatus$$: ISubscription
 
   constructor(
-    @Self() private host: HostManager,
+    @Self() private governor: Governor,
     @Inject(COLUMN_PREFIX) private prefix: string,
     private rsp: Responsive,
     @Optional() private row: Row,
@@ -95,7 +95,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
       /*@__PURE__*/assertFalse(this.span < 0 && /*@__PURE__*/length(this.rSpan) === 0, `antCol: requires 'span'`)
     }
 
-    this.host.staticClasses = [ this.prefix ]
+    this.governor.staticClasses = [ this.prefix ]
 
     this.rowStatus$$ = this.row.status$.subscribe(() => this.updateHostStyles())
 
@@ -120,7 +120,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   }
 
   private updateHostClasses(): void {
-    this.host.classes = {
+    this.governor.classes = {
       [`${this.prefix}-${this.fSpan}`]: true,
       [`${this.prefix}-offset-${this.fOffset}`]: this.fOffset > 0,
       [`${this.prefix}-pull-${this.fPull}`]: this.fPull > 0,
@@ -132,12 +132,12 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   private updateHostStyles(): void {
     const padding = this.row.fGutter / 2
     if (padding !== 0) {
-      this.host.styles = {
+      this.governor.styles = {
         'padding-left': `${padding}px`,
         'padding-right': `${padding}px`,
       }
     } else {
-      this.host.styles = { }
+      this.governor.styles = { }
     }
   }
 }

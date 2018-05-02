@@ -1,5 +1,5 @@
 import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
-import { HostManager } from '../host-manager/host-manager'
+import { Governor } from '../governor/governor'
 
 const prefix = 'ant-menu-item-group'
 
@@ -7,7 +7,7 @@ const prefix = 'ant-menu-item-group'
   selector: '[antMenuItemGroup]',
   exportAs: 'antMenuItemGroup',
   providers: [
-    HostManager,
+    Governor,
   ],
 })
 export class ItemGroup implements OnChanges, OnInit {
@@ -18,10 +18,10 @@ export class ItemGroup implements OnChanges, OnInit {
     if (value !== '') { this.key = value }
   }
 
-  constructor(@Self() private host: HostManager) { }
+  constructor(@Self() private governor: Governor) { }
 
   ngOnInit(): void {
-    this.host.staticClasses = [ prefix ]
+    this.governor.staticClasses = [ prefix ]
     this.updateHostClasses()
   }
 
@@ -30,7 +30,7 @@ export class ItemGroup implements OnChanges, OnInit {
   }
 
   private updateHostClasses(): void {
-    this.host.classes = {
+    this.governor.classes = {
 
     }
   }

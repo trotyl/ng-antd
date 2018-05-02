@@ -1,7 +1,7 @@
 import { ElementRef, Injectable, Injector, KeyValueDiffer, KeyValueDiffers, Renderer2 } from '@angular/core'
 
 @Injectable()
-export class HostManager {
+export class Governor {
   private classDiffer: KeyValueDiffer<string, boolean> | null = null
   private styleDiffer: KeyValueDiffer<string, string> | null = null
 
@@ -79,9 +79,9 @@ export class HostManager {
 }
 
 @Injectable()
-export class HostManagerFactory {
-  create(injector: Injector): HostManager {
-    return new HostManager(
+export class GovernorFactory {
+  create(injector: Injector): Governor {
+    return new Governor(
       injector.get(ElementRef),
       injector.get(Renderer2),
       injector.get(KeyValueDiffers),

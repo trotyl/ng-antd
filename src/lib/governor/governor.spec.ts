@@ -1,13 +1,13 @@
 import { Component, Injector, Self } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { assertClass, assertStyle } from '../testing/helper'
-import { HostManager, HostManagerFactory } from './host-manager'
-import { HostManagerModule } from './host-manager.module'
+import { Governor, GovernorFactory } from './governor'
+import { GovernorModule } from './governor.module'
 
-describe('HostManager', () => {
+describe('Governor', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ HostManagerModule ],
+      imports: [ GovernorModule ],
       declarations: [
         HostManagerTest,
         HostManagerFactoryTest,
@@ -15,13 +15,13 @@ describe('HostManager', () => {
     }).compileComponents()
   })
 
-  it('should set host classes', () => {
+  it('should set classes', () => {
     const fixture = TestBed.createComponent(HostManagerTest)
     const component = fixture.componentInstance
 
-    component.host.staticClasses = [ 'static' ]
+    component.governor.staticClasses = [ 'static' ]
 
-    component.host.classes = {
+    component.governor.classes = {
       'foo': true,
       'bar': false,
     }
@@ -29,17 +29,17 @@ describe('HostManager', () => {
     assertClass(fixture.debugElement, [`static`, `foo`], [`bar`])
   })
 
-  it('should change host classes', () => {
+  it('should change classes', () => {
     const fixture = TestBed.createComponent(HostManagerTest)
     const component = fixture.componentInstance
 
-    component.host.classes = {
+    component.governor.classes = {
       'foo': true,
       'bar': true,
       'baz': true,
     }
 
-    component.host.classes = {
+    component.governor.classes = {
       'foo': true,
       'bar': false,
     }
@@ -47,24 +47,24 @@ describe('HostManager', () => {
     assertClass(fixture.debugElement, [`foo`], [`bar`, `baz`])
   })
 
-  it('should add host classes', () => {
+  it('should add classes', () => {
     const fixture = TestBed.createComponent(HostManagerTest)
     const component = fixture.componentInstance
 
-    component.host.addClass('baz')
+    component.governor.addClass('baz')
 
     assertClass(fixture.debugElement, [`baz`])
   })
 
-  it('should set host styles', () => {
+  it('should set styles', () => {
     const fixture = TestBed.createComponent(HostManagerTest)
     const component = fixture.componentInstance
 
-    component.host.staticStyles = {
+    component.governor.staticStyles = {
       'height': '20px',
     }
 
-    component.host.styles = {
+    component.governor.styles = {
       'margin': '10px',
       'padding': '5px',
     }
@@ -76,17 +76,17 @@ describe('HostManager', () => {
     })
   })
 
-  it('should change host styles', () => {
+  it('should change styles', () => {
     const fixture = TestBed.createComponent(HostManagerTest)
     const component = fixture.componentInstance
 
-    component.host.styles = {
+    component.governor.styles = {
       'margin': '10px',
       'padding': '5px',
       'height': '20px',
     }
 
-    component.host.styles = {
+    component.governor.styles = {
       'margin': '20px',
       'padding': null!,
     }
@@ -96,12 +96,12 @@ describe('HostManager', () => {
     })
   })
 
-  it('should dynamic create host manager', () => {
+  it('should dynamic create governor', () => {
     const fixture = TestBed.createComponent(HostManagerFactoryTest)
     const component = fixture.componentInstance
 
-    const host = component.hostFactory.create(component.injector)
-    host.addClass('foo')
+    const governor = component.governorFactory.create(component.injector)
+    governor.addClass('foo')
 
     assertClass(fixture.debugElement, [`foo`])
   })
@@ -110,15 +110,15 @@ describe('HostManager', () => {
 
 @Component({
   template: '',
-  providers: [ HostManager ],
+  providers: [ Governor ],
 })
 class HostManagerTest {
-  constructor(@Self() public host: HostManager) { }
+  constructor(@Self() public governor: Governor) { }
 }
 
 @Component({
   template: '',
 })
 class HostManagerFactoryTest {
-  constructor(public injector: Injector, public hostFactory: HostManagerFactory) { }
+  constructor(public injector: Injector, public governorFactory: GovernorFactory) { }
 }

@@ -3,13 +3,13 @@ import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { map, tap } from 'rxjs/operators'
-import { HostManager } from '../host-manager/host-manager'
+import { Governor } from '../governor/governor'
 import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
 import { ROW_PREFIX } from './token'
 
 @Directive({
   selector: 'ant-row, [antRow]',
-  providers: [ HostManager ],
+  providers: [ Governor ],
 })
 export class Row implements OnChanges, OnDestroy, OnInit {
   @Input() align: 'top' | 'middle' | 'bottom' | null = null
@@ -38,7 +38,7 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   private changes$ = new Subject<void>()
 
   constructor(
-    @Self() private host: HostManager,
+    @Self() private governor: Governor,
     @Inject(ROW_PREFIX) private prefix: string,
     private rsp: Responsive,
   ) { }
@@ -57,12 +57,13 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
+    /* istanbul ignore else */
     if (this.status$$) this.status$$.unsubscribe()
   }
 
   private updateHostClasses(): void {
     const isFlex = this.type === 'flex'
-    this.host.classes = {
+    this.governor.classes = {
       [`${this.prefix}`]: !isFlex,
       [`${this.prefix}-flex`]: isFlex,
       [`${this.prefix}-flex-${this.justify}`]: !!this.justify,
@@ -73,12 +74,12 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   private updateHostStyles(): void {
     const margin = this.fGutter / -2
     if (margin !== 0) {
-      this.host.styles = {
+      this.governor.styles = {
         'margin-left': `${margin}px`,
         'margin-right': `${margin}px`,
       }
     } else {
-      this.host.styles = { }
+      this.governor.styles = { }
     }
   }
 }

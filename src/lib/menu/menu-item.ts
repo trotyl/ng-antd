@@ -2,7 +2,7 @@ import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { isDevMode, Directive, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { merge } from 'rxjs/observable/merge'
 import { tap } from 'rxjs/operators'
-import { HostManager } from '../host-manager/host-manager'
+import { Governor } from '../governor/governor'
 import { Hover } from '../hover/hover'
 import { ControlItem } from '../util/control'
 import { assertExist } from '../util/debug'
@@ -13,7 +13,7 @@ import { MENU_PREFIX } from './token'
   selector: '[antMenuItem]',
   exportAs: 'antMenuItem',
   providers: [
-    HostManager,
+    Governor,
     Hover,
   ],
 })
@@ -32,7 +32,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   private active: boolean = false
 
   constructor(
-    @Self() private host: HostManager,
+    @Self() private governor: Governor,
     @Self() private hover: Hover,
     @Inject(MENU_PREFIX) basePrefix: string,
     @Optional() private menu: Menu,
@@ -54,7 +54,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
       /*@__PURE__*/assertExist(this.menu, `antMenuItem: must under 'antMenu'`)
     }
 
-    this.host.staticClasses = [ this.prefix ]
+    this.governor.staticClasses = [ this.prefix ]
 
     this.status$$ = merge(
       this.menu.status$,
@@ -69,7 +69,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
 
   private updateHostClasses(): void {
     const disabled = boolify(this.disabled)
-    this.host.classes = {
+    this.governor.classes = {
       [`${this.prefix}-selected`]: this.value === this.menu.value,
       [`${this.prefix}-active`]: this.active && !disabled,
       [`${this.prefix}-disabled`]: disabled,
