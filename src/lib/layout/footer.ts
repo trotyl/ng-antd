@@ -1,9 +1,9 @@
 import { Directive } from '@angular/core'
 
 @Directive({
-  selector: 'ant-footer, [antFooter]',
+  selector: 'ant-layout-footer, [antLayoutFooter]',
   host: {
     '[class.ant-layout-footer]': 'true',
   },
 })
-export class Footer { }
+export class LayoutFooter { }

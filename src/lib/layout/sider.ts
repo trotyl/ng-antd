@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core'
 
 @Component({
-  selector: 'ant-sider, [antSider]',
+  selector: 'ant-layout-sider, [antLayoutSider]',
   templateUrl: './sider.html',
   host: {
     '[class.ant-layout-sider]': 'true',
@@ -9,11 +9,11 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class Sider {
+export class LayoutSider {
   @Input() @HostBinding('style.width.px') width: number = 200
 
   @Input()
-  set antSider(value: number | '' | undefined) {
+  set antLayoutSider(value: number | '' | undefined) {
     if (value) { this.width = value }
   }
 }

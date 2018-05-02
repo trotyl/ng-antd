@@ -50,7 +50,7 @@ class LayoutStaticTest { }
   template: `
     <ant-layout></ant-layout>
     <ant-layout>
-      <ant-sider>Sider</ant-sider>
+      <ant-layout-sider>Sider</ant-layout-sider>
     </ant-layout>
   `,
 })

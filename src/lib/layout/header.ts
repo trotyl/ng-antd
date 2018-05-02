@@ -1,9 +1,9 @@
 import { Directive } from '@angular/core'
 
 @Directive({
-  selector: 'ant-header, [antHeader]',
+  selector: 'ant-layout-header, [antLayoutHeader]',
   host: {
     '[class.ant-layout-header]': 'true',
   },
 })
-export class Header { }
+export class LayoutHeader { }
