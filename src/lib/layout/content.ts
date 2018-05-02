@@ -1,9 +1,9 @@
 import { Directive } from '@angular/core'
 
 @Directive({
-  selector: 'ant-content, [antContent]',
+  selector: 'ant-layout-content, [antLayoutContent]',
   host: {
     '[class.ant-layout-content]': 'true',
   },
 })
-export class Content { }
+export class LayoutContent { }

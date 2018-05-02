@@ -2,7 +2,7 @@ import { forwardRef, ContentChildren, Directive, Inject, QueryList } from '@angu
 import { Element } from '../elements/element'
 import { ElementContainer } from '../elements/token'
 import { GovernorFactory } from '../governor/governor'
-import { Sider } from './sider'
+import { LayoutSider } from './sider'
 import { LAYOUT_PREFIX } from './token'
 
 @Directive({
@@ -16,7 +16,7 @@ import { LAYOUT_PREFIX } from './token'
   ],
 })
 export class Layout implements ElementContainer {
-  @ContentChildren(Sider) siders: QueryList<Sider>
+  @ContentChildren(LayoutSider) siders: QueryList<LayoutSider>
 
   constructor(
     @Inject(LAYOUT_PREFIX) private prefix: string,

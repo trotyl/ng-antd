@@ -4,19 +4,19 @@ import { FooterElementModule } from '../elements/footer.module'
 import { HeaderElementModule } from '../elements/header.module'
 import { MainElementModule } from '../elements/main.module'
 import { GovernorModule } from '../governor/governor.module'
-import { Content } from './content'
-import { Footer } from './footer'
-import { Header } from './header'
+import { LayoutContent } from './content'
+import { LayoutFooter } from './footer'
+import { LayoutHeader } from './header'
 import { Layout } from './layout'
-import { Sider } from './sider'
+import { LayoutSider } from './sider'
 import { LAYOUT_PREFIX } from './token'
 
 const TYPES = [
   Layout,
-  Header,
-  Content,
-  Footer,
-  Sider,
+  LayoutHeader,
+  LayoutContent,
+  LayoutFooter,
+  LayoutSider,
 ]
 
 const NG_MODULES = [

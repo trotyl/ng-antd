@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { assertStyle } from '../testing/helper'
 import { LayoutModule } from './layout.module'
-import { Sider } from './sider'
+import { LayoutSider } from './sider'
 
 describe('Column', () => {
   beforeEach(async () => {
@@ -20,7 +20,7 @@ describe('Column', () => {
     const fixture = TestBed.createComponent(SiderWidthTest)
     fixture.detectChanges()
 
-    const cols = fixture.debugElement.queryAll(By.directive(Sider))
+    const cols = fixture.debugElement.queryAll(By.directive(LayoutSider))
 
     assertStyle(cols[0], { 'width': '200px' })
     assertStyle(cols[1], { 'width': '100px' })
@@ -30,7 +30,7 @@ describe('Column', () => {
     const fixture = TestBed.createComponent(SiderAttributeSelectorTest)
     fixture.detectChanges()
 
-    const cols = fixture.debugElement.queryAll(By.directive(Sider))
+    const cols = fixture.debugElement.queryAll(By.directive(LayoutSider))
 
     assertStyle(cols[0], { 'width': '200px' })
     assertStyle(cols[1], { 'width': '100px' })
@@ -42,8 +42,8 @@ describe('Column', () => {
 @Component({
   template: `
     <ant-layout>
-      <ant-sider></ant-sider>
-      <ant-sider [width]="100"></ant-sider>
+      <ant-layout-sider></ant-layout-sider>
+      <ant-layout-sider [width]="100"></ant-layout-sider>
     </ant-layout>
   `,
 })
@@ -52,9 +52,9 @@ class SiderWidthTest { }
 @Component({
   template: `
     <ant-layout>
-      <div antSider></div>
-      <div antSider [width]="100"></div>
-      <div antSider="100"></div>
+      <div antLayoutSider></div>
+      <div antLayoutSider [width]="100"></div>
+      <div antLayoutSider="100"></div>
     </ant-layout>
   `,
 })
