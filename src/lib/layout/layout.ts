@@ -7,7 +7,7 @@ import { Element } from '../elements/element'
 import { FooterElement } from '../elements/footer'
 import { HeaderElement } from '../elements/header'
 import { MainElement } from '../elements/main'
-import { HostManagerFactory } from '../host-manager/host-manager'
+import { GovernorFactory } from '../governor/governor'
 import { Sider } from './sider'
 import { LAYOUT_PREFIX } from './token'
 
@@ -32,7 +32,7 @@ export class Layout implements AfterContentInit, OnDestroy {
 
   constructor(
     @Inject(LAYOUT_PREFIX) private prefix: string,
-    private hostFactory: HostManagerFactory,
+    private governorFactory: GovernorFactory,
   ) { }
 
   ngAfterContentInit(): void {
@@ -62,7 +62,7 @@ export class Layout implements AfterContentInit, OnDestroy {
 
   private initElementClasses(list: QueryList<Element>, className: string): void {
     list.filter(el => !this.marker.has(el)).forEach(el => {
-      this.hostFactory.create(el.injector).addClass(className)
+      this.governorFactory.create(el.injector).addClass(className)
       this.marker.add(el)
     })
   }

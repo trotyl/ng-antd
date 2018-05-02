@@ -1,6 +1,6 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { isDevMode, ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
-import { HostManager } from '../host-manager/host-manager'
+import { Governor } from '../governor/governor'
 import { assertFalse } from '../util/debug'
 import { getSizeToken } from '../util/size'
 import { BUTTON_PREFIX } from './token'
@@ -8,7 +8,7 @@ import { BUTTON_PREFIX } from './token'
 @Component({
   selector: '[antBtn]',
   templateUrl: './button.html',
-  providers: [ HostManager ],
+  providers: [ Governor ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
@@ -28,7 +28,7 @@ export class Button implements OnChanges, OnInit {
 
   constructor(
     @Inject(BUTTON_PREFIX) private prefix: string,
-    @Self() private host: HostManager,
+    @Self() private governor: Governor,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -41,11 +41,11 @@ export class Button implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.host.staticClasses = [ this.prefix ]
+    this.governor.staticClasses = [ this.prefix ]
   }
 
   private updateHostClasses(): void {
-    this.host.classes = {
+    this.governor.classes = {
       [`${this.prefix}-${this.color}`]: !!this.color,
       [`${this.prefix}-${getSizeToken(this.size)}`]: !!this.size,
       [`${this.prefix}-circle`]: !!this.shape,

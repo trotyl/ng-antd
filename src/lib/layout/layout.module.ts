@@ -3,7 +3,7 @@ import { AsideElementModule } from '../elements/aside.module'
 import { FooterElementModule } from '../elements/footer.module'
 import { HeaderElementModule } from '../elements/header.module'
 import { MainElementModule } from '../elements/main.module'
-import { HostManagerModule } from '../host-manager/host-manager.module'
+import { GovernorModule } from '../governor/governor.module'
 import { Content } from './content'
 import { Footer } from './footer'
 import { Header } from './header'
@@ -28,7 +28,7 @@ const NG_MODULES = [
 
 @NgModule({
   declarations: [ TYPES ],
-  imports: [ HostManagerModule ],
+  imports: [ GovernorModule ],
   exports: [ TYPES, NG_MODULES ],
   providers: [
     { provide: LAYOUT_PREFIX, useValue: 'ant-layout' },

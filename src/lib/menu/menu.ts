@@ -1,6 +1,6 @@
 import { forwardRef, Directive, HostBinding, Inject, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
 import { NG_VALUE_ACCESSOR } from '@angular/forms'
-import { HostManager } from '../host-manager/host-manager'
+import { Governor } from '../governor/governor'
 import { CompositeControl } from '../util/control'
 import { MENU_PREFIX } from './token'
 
@@ -9,7 +9,7 @@ import { MENU_PREFIX } from './token'
   selector: '[antMenu]',
   exportAs: 'antMenu',
   providers: [
-    HostManager,
+    Governor,
     { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => Menu) },
   ],
 })
@@ -26,12 +26,12 @@ export class Menu extends CompositeControl<string> implements OnChanges, OnInit 
   }
 
   constructor(
-    @Self() private host: HostManager,
+    @Self() private governor: Governor,
     @Inject(MENU_PREFIX) private prefix: string,
   ) { super() }
 
   ngOnInit(): void {
-    this.host.staticClasses = [ this.prefix, `${this.prefix}-root` ]
+    this.governor.staticClasses = [ this.prefix, `${this.prefix}-root` ]
     this.updateHostClasses()
   }
 
@@ -40,7 +40,7 @@ export class Menu extends CompositeControl<string> implements OnChanges, OnInit 
   }
 
   private updateHostClasses(): void {
-    this.host.classes = {
+    this.governor.classes = {
       [`${this.prefix}-${this.theme}`]: true,
       [`${this.prefix}-${this.mode}`]: true,
     }

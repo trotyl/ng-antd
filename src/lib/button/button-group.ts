@@ -1,11 +1,11 @@
 import { Directive, Inject, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
-import { HostManager } from '../host-manager/host-manager'
+import { Governor } from '../governor/governor'
 import { getSizeToken } from '../util/size'
 import { BUTTON_GROUP_PREFIX } from './token'
 
 @Directive({
   selector: 'ant-btn-group, [antBtnGroup]',
-  providers: [ HostManager ],
+  providers: [ Governor ],
 })
 export class ButtonGroup implements OnChanges, OnInit {
   @Input() size: 'large' | 'small' | null = null
@@ -17,7 +17,7 @@ export class ButtonGroup implements OnChanges, OnInit {
 
   constructor(
     @Inject(BUTTON_GROUP_PREFIX) private prefix: string,
-    @Self() private host: HostManager,
+    @Self() private governor: Governor,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -25,11 +25,11 @@ export class ButtonGroup implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.host.staticClasses = [ this.prefix ]
+    this.governor.staticClasses = [ this.prefix ]
   }
 
   private updateHostClasses(): void {
-    this.host.classes = {
+    this.governor.classes = {
       [`${this.prefix}-${getSizeToken(this.size)}`]: !!this.size,
     }
   }

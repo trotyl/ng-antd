@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
-import { HostManager } from '../host-manager/host-manager'
+import { Governor } from '../governor/governor'
 import { MENU_PREFIX } from './token'
 
 @Component({
@@ -7,7 +7,7 @@ import { MENU_PREFIX } from './token'
   templateUrl: './sub-menu.html',
   exportAs: 'antSubMenu',
   providers: [
-    HostManager,
+    Governor,
   ],
 })
 export class SubMenu implements OnChanges, OnInit {
@@ -21,14 +21,14 @@ export class SubMenu implements OnChanges, OnInit {
   private prefix: string
 
   constructor(
-    @Self() private host: HostManager,
+    @Self() private governor: Governor,
     @Inject(MENU_PREFIX) basePrefix: string,
   ) {
     this.prefix = `${basePrefix}-submenu`
   }
 
   ngOnInit(): void {
-    this.host.staticClasses = [ this.prefix ]
+    this.governor.staticClasses = [ this.prefix ]
     this.updateHostClasses()
   }
 
@@ -37,7 +37,7 @@ export class SubMenu implements OnChanges, OnInit {
   }
 
   private updateHostClasses(): void {
-    this.host.classes = {
+    this.governor.classes = {
 
     }
   }

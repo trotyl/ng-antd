@@ -1,12 +1,12 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { isDevMode, Directive, Inject, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
-import { HostManager } from '../host-manager/host-manager'
+import { Governor } from '../governor/governor'
 import { assertExist } from '../util/debug'
 import { ICON_PREFIX } from './token'
 
 @Directive({
   selector: '[antIcon]',
-  providers: [ HostManager ],
+  providers: [ Governor ],
 })
 export class Icon implements OnChanges, OnInit {
   @Input() type: string
@@ -18,7 +18,7 @@ export class Icon implements OnChanges, OnInit {
   }
 
   constructor(
-    @Self() private host: HostManager,
+    @Self() private governor: Governor,
     @Inject(ICON_PREFIX) private prefix: string,
   ) { }
 
@@ -32,11 +32,11 @@ export class Icon implements OnChanges, OnInit {
       /*@__PURE__*/assertExist(this.type, `antIcon: requires 'type'`)
     }
 
-    this.host.staticClasses = [ this.prefix ]
+    this.governor.staticClasses = [ this.prefix ]
   }
 
   private updateHostClasses(): void {
-    this.host.classes = {
+    this.governor.classes = {
       [`${this.prefix}-${this.type}`]: !!this.type,
       [`${this.prefix}-spin`]: boolify(this.spin) || this.type === 'loading',
     }
