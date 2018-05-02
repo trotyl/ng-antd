@@ -1,5 +1,5 @@
 import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay'
-import { Component, Injector, Self, TemplateRef, ViewChild } from '@angular/core'
+import { Component, Injector, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
 import { async, TestBed } from '@angular/core/testing'
 import { timer } from 'rxjs/observable/timer'
 import { take } from 'rxjs/operators'
@@ -53,7 +53,7 @@ describe('Combo', () => {
     spyOn(overlayRef, 'attach')
     spyOn(overlayRef, 'detach')
 
-    component.combo.init(component.template)
+    component.combo.init(component.template, component.vcRef)
     expect(overlayRef.attach).not.toHaveBeenCalled()
 
     fixture.debugElement.nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
@@ -78,7 +78,7 @@ describe('Combo', () => {
   it('should dispose overlay when destroyed', () => {
     const fixture = TestBed.createComponent(ComboTest)
     const component = fixture.componentInstance
-    component.combo.init(component.template)
+    component.combo.init(component.template, component.vcRef)
 
     spyOn(overlayRef, 'dispose')
 
@@ -107,7 +107,10 @@ describe('Combo', () => {
 class ComboTest {
   @ViewChild('template') template: TemplateRef<void>
 
-  constructor(@Self() public combo: Combo) { }
+  constructor(
+    public vcRef: ViewContainerRef,
+    @Self() public combo: Combo,
+  ) { }
 }
 
 @Component({

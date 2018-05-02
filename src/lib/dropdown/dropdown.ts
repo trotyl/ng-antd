@@ -1,4 +1,4 @@
-import { isDevMode, AfterContentInit, ContentChild, Directive, Self, TemplateRef } from '@angular/core'
+import { isDevMode, AfterContentInit, ContentChild, Directive, Self, TemplateRef, ViewContainerRef } from '@angular/core'
 import { Combo } from '../combo/combo'
 import { MENU_PREFIX } from '../menu/token'
 import { assertExist } from '../util/debug'
@@ -25,6 +25,7 @@ export class Dropdown implements AfterContentInit {
   @ContentChild(Overlay, { read: TemplateRef }) contentOverlay: TemplateRef<void>
 
   constructor(
+    private vcRef: ViewContainerRef,
     @Self() private combo: Combo,
   ) { }
 
@@ -34,6 +35,6 @@ export class Dropdown implements AfterContentInit {
       /*@__PURE__*/assertExist(this.contentOverlay, `antDropdown: requires 'overlay'`)
     }
 
-    this.combo.init(this.contentOverlay, panelClass)
+    this.combo.init(this.contentOverlay, this.vcRef, panelClass)
   }
 }
