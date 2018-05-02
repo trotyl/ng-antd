@@ -3,7 +3,7 @@ import { Element } from './element'
 import { ElementContainer, NoopElementContainer } from './token'
 
 @Directive({
-  selector: 'aside',
+  selector: 'aside:not([antNoEffect])',
   providers: [
     { provide: ElementContainer, useExisting: NoopElementContainer },
   ],
