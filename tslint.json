@@ -7,7 +7,7 @@
     "arrow-return-shorthand": true,
     "await-promise": true,
     "ban": [
-      true,
+      false,
       "async"
     ],
     "ban-comma-operator": true,

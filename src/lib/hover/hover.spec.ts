@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing'
 import { Hover, HoverFactory } from './hover'
 import { HoverModule } from './hover.module'
 
-describe('HostManager', () => {
+describe('Hover', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ HoverModule ],
