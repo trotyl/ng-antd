@@ -14,6 +14,7 @@ import { MENU_PREFIX, TemplateOutlet } from './token'
   preserveWhitespaces: false,
 })
 export class MenuItemGroup implements OnInit {
+  @Input() key: string
   @Input() title: string
 
   @ViewChild('titleTemplate') titleTemplate: TemplateRef<void>
@@ -21,7 +22,7 @@ export class MenuItemGroup implements OnInit {
   @Input()
   set antMenuItemGroup(value: string | '') {
     /* istanbul ignore else */
-    if (value !== '') { this.title = value }
+    if (value !== '') { this.key = value }
   }
 
   titleCls: string[] = []

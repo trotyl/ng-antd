@@ -18,14 +18,14 @@ import { MENU_PREFIX } from './token'
   ],
 })
 export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnInit {
-  @Input() value: string
+  @Input() key: string
   @Input() disabled: boolean = false
 
   @HostBinding('attr.role') @Input() role: string = 'menuitem'
 
   @Input()
   set antMenuItem(value: string | '') {
-    if (value !== '') { this.value = value }
+    if (value !== '') { this.key = value }
   }
 
   private prefix: string
@@ -70,7 +70,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   private updateHostClasses(): void {
     const disabled = boolify(this.disabled)
     this.governor.classes = {
-      [`${this.prefix}-selected`]: this.value === this.menu.value,
+      [`${this.prefix}-selected`]: this.key === this.menu.value,
       [`${this.prefix}-active`]: this.active && !disabled,
       [`${this.prefix}-disabled`]: disabled,
     }
