@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { assertClass } from '../testing/helper'
 import { MenuItemGroup } from './item-group'
+import { MenuItemGroupContainer } from './item-group-container'
 import { MenuModule } from './menu.module'
 
 describe('MenuItemGroup', () => {
@@ -13,6 +14,7 @@ describe('MenuItemGroup', () => {
       imports: [ MenuModule ],
       declarations: [
         MenuStaticTest,
+        MenuTitleTest,
       ],
     }).compileComponents()
   })
@@ -21,18 +23,19 @@ describe('MenuItemGroup', () => {
     const fixture = TestBed.createComponent(MenuStaticTest)
     fixture.detectChanges()
 
-    const menu = fixture.debugElement.query(By.directive(MenuItemGroup))
+    const group = fixture.debugElement.query(By.directive(MenuItemGroup))
 
-    assertClass(menu, [`${px}`])
+    assertClass(group, [`${px}`])
   })
 
   it('should mount title content', () => {
-    const fixture = TestBed.createComponent(MenuStaticTest)
+    const fixture = TestBed.createComponent(MenuTitleTest)
     fixture.detectChanges()
 
-    const title = fixture.debugElement.query(By.css('.ant-menu-item-group-title'))
+    const containers = fixture.debugElement.queryAll(By.directive(MenuItemGroupContainer))
 
-    expect(title.nativeElement.textContent).toContain(`Title`)
+    expect(containers[0].nativeElement.textContent).toContain(`Title`)
+    expect(containers[1].nativeElement.textContent).toContain(`Title`)
   })
 
 })
@@ -40,8 +43,20 @@ describe('MenuItemGroup', () => {
 @Component({
   template: `
     <ul antMenu>
-      <ul *antContent antMenuItemGroup title="Title"></ul>
+      <ul *antContent antMenuItemGroup="foo"></ul>
     </ul>
   `,
 })
 class MenuStaticTest { }
+
+@Component({
+  template: `
+    <ul antMenu>
+      <ul *antContent antMenuItemGroup title="Title"></ul>
+      <ul *antContent antMenuItemGroup>
+        <span>Title</span>
+      </ul>
+    </ul>
+  `,
+})
+class MenuTitleTest { }
