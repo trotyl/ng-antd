@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core'
+import { forwardRef, Component, ViewChild } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { FragmentModule } from './fragment.module'
 import { Header } from './header'
+import { FragmentContainer } from './token'
 
 describe('Header', () => {
 
@@ -32,7 +33,13 @@ describe('Header', () => {
   template: `
     <div *antHeader>Foo</div>
   `,
+  providers: [
+    { provide: FragmentContainer, useExisting: forwardRef(() => HeaderPropertyTest) },
+  ],
 })
-class HeaderPropertyTest {
+class HeaderPropertyTest implements FragmentContainer {
   @ViewChild(Header) header: Header
+
+  register(): void { }
+  deregister(): void { }
 }

@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core'
+import { forwardRef, Component, ViewChild } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { Footer } from './footer'
 import { FragmentModule } from './fragment.module'
+import { FragmentContainer } from './token'
 
 describe('Footer', () => {
 
@@ -32,7 +33,13 @@ describe('Footer', () => {
   template: `
     <div *antFooter>Foo</div>
   `,
+  providers: [
+    { provide: FragmentContainer, useExisting: forwardRef(() => FooterPropertyTest) },
+  ],
 })
-class FooterPropertyTest {
+class FooterPropertyTest implements FragmentContainer {
   @ViewChild(Footer) footer: Footer
+
+  register(): void { }
+  deregister(): void { }
 }

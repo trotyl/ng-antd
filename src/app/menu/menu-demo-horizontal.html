@@ -9,13 +9,15 @@
     <span>
       <i antIcon="setting"></i>Navigation Three - Submenu
     </span>
-    <ul antMenuItemGroup="Item 1">
-      <li antMenuItem="setting:1">Option 1</li>
-      <li antMenuItem="setting:2">Option 2</li>
-    </ul>
-    <ul antMenuItemGroup="Item 2">
-      <li key="setting:3">Option 3</li>
-      <li key="setting:4">Option 4</li>
+    <ul antMenu>
+      <ul *antContent antMenuItemGroup="Item 1">
+        <li antMenuItem="setting:1">Option 1</li>
+        <li antMenuItem="setting:2">Option 2</li>
+      </ul>
+      <ul *antContent antMenuItemGroup="Item 2">
+        <li antMenuItem="setting:3">Option 3</li>
+        <li antMenuItem="setting:4">Option 4</li>
+      </ul>
     </ul>
   </li>
   <li antMenuItem="alipay">
