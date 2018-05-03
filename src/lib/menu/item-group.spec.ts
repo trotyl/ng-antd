@@ -40,7 +40,7 @@ describe('MenuItemGroup', () => {
 @Component({
   template: `
     <ul antMenu>
-      <ul *antContent antMenuItemGroup="Title"></ul>
+      <ul *antContent antMenuItemGroup title="Title"></ul>
     </ul>
   `,
 })

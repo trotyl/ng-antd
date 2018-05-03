@@ -16,13 +16,13 @@ import { MENU_PREFIX } from './token'
   preserveWhitespaces: false,
 })
 export class SubMenu implements OnChanges, OnInit {
-  @Input() value: string
+  @Input() key: string
   @ViewChild('subMenu') template: TemplateRef<void>
 
   @Input()
   set antSubMenu(value: string | '') {
     /* istanbul ignore else */
-    if (value !== '') { this.value = value }
+    if (value !== '') { this.key = value }
   }
 
   popupCls: { [name: string]: boolean } = {}
