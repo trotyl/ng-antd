@@ -15,6 +15,7 @@ describe('Menu', () => {
         MenuStaticTest,
         MenuModeTest,
         MenuThemeTest,
+        MenuContentTest,
       ],
     }).compileComponents()
   })
@@ -23,9 +24,11 @@ describe('Menu', () => {
     const fixture = TestBed.createComponent(MenuStaticTest)
     fixture.detectChanges()
 
-    const menus = fixture.debugElement.queryAll(By.directive(Menu))
+    const menu = fixture.debugElement.query(By.directive(Menu))
+    const menuSub = menu.query(By.directive(Menu))
 
-    assertClass(menus[0], [`${px}`, `${px}-root`])
+    assertClass(menu, [`${px}`, `${px}-root`])
+    assertClass(menuSub, [`${px}`, `${px}-sub`])
   })
 
   it('should set mode classes properly', () => {
@@ -49,11 +52,24 @@ describe('Menu', () => {
     assertClass(menus[1], [`${px}-dark`])
   })
 
+  it('should mount content', () => {
+    const fixture = TestBed.createComponent(MenuContentTest)
+    fixture.detectChanges()
+
+    const menu = fixture.debugElement.query(By.directive(Menu))
+
+    expect(menu.queryAll(By.css('li')).length).toBe(1)
+  })
+
 })
 
 @Component({
   template: `
-    <ul antMenu></ul>
+    <ul antMenu>
+      <li>
+        <ul antMenu></ul>
+      </li>
+    </ul>
   `,
 })
 class MenuStaticTest { }
@@ -74,3 +90,12 @@ class MenuModeTest { }
   `,
 })
 class MenuThemeTest { }
+
+@Component({
+  template: `
+    <ul antMenu>
+      <span *antContent>Foo</span>
+    </ul>
+  `,
+})
+class MenuContentTest { }

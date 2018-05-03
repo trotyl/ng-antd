@@ -1,11 +1,9 @@
-import { Directive, Injector, TemplateRef } from '@angular/core'
+import { Directive } from '@angular/core'
+import { Fragment } from './fragment'
 
 @Directive({
   selector: '[antFooter]',
 })
-export class Footer {
-  constructor(
-    public injector: Injector,
-    public template: TemplateRef<void>,
-  ) { }
+export class Footer extends Fragment {
+  type = 'antFooter'
 }

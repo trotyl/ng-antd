@@ -1,11 +1,9 @@
-import { Directive, Injector, TemplateRef } from '@angular/core'
+import { Directive } from '@angular/core'
+import { Fragment } from './fragment'
 
 @Directive({
   selector: '[antContent]',
 })
-export class Content {
-  constructor(
-    public injector: Injector,
-    public template: TemplateRef<void>,
-  ) { }
+export class Content extends Fragment {
+  type = 'antContent'
 }

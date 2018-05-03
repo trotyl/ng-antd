@@ -1,37 +1,45 @@
-import { Directive, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Inject, Input, OnInit, Self, TemplateRef, ViewChild } from '@angular/core'
 import { Governor } from '../governor/governor'
+import { Menu } from './menu'
+import { MENU_PREFIX, TemplateOutlet } from './token'
 
-const prefix = 'ant-menu-item-group'
-
-@Directive({
+@Component({
   selector: '[antMenuItemGroup]',
+  templateUrl: './item-group.html',
   exportAs: 'antMenuItemGroup',
   providers: [
     Governor,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  preserveWhitespaces: false,
 })
-export class ItemGroup implements OnChanges, OnInit {
-  @Input() key: string
+export class MenuItemGroup implements OnInit {
+  @Input() title: string
+
+  @ViewChild('titleTemplate') titleTemplate: TemplateRef<void>
 
   @Input()
-  set antMenuItem(value: string | '') {
-    if (value !== '') { this.key = value }
+  set antMenuItemGroup(value: string | '') {
+    /* istanbul ignore else */
+    if (value !== '') { this.title = value }
   }
 
-  constructor(@Self() private governor: Governor) { }
+  titleCls: string[] = []
+
+  private prefix: string
+  private container: TemplateOutlet
+
+  constructor(
+    @Self() private governor: Governor,
+    @Inject(MENU_PREFIX) basePrefix: string,
+    menu: Menu,
+  ) {
+    this.prefix = `${basePrefix}-item-group-list`
+    this.container = menu.containers.shift()!
+  }
 
   ngOnInit(): void {
-    this.governor.staticClasses = [ prefix ]
-    this.updateHostClasses()
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.updateHostClasses()
-  }
-
-  private updateHostClasses(): void {
-    this.governor.classes = {
-
-    }
+    this.governor.staticClasses = [ this.prefix ]
+    this.container.mount(this.titleTemplate)
   }
 }

@@ -1,4 +1,8 @@
-<ng-template>
-  <ng-content select="ul, li"></ng-content>
+<ng-template #subMenu>
+  <div [ngClass]="popupCls">
+    <ng-content select="ul"></ng-content>
+  </div>
 </ng-template>
-<ng-content></ng-content>
+<div [ngClass]="titleCls">
+  <ng-content></ng-content>
+</div>

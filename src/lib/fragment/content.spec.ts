@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core'
+import { forwardRef, Component, ViewChild } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { Content } from './content'
 import { FragmentModule } from './fragment.module'
+import { FragmentContainer } from './token'
 
 describe('Content', () => {
 
@@ -32,7 +33,13 @@ describe('Content', () => {
   template: `
     <div *antContent>Foo</div>
   `,
+  providers: [
+    { provide: FragmentContainer, useExisting: forwardRef(() => ContentPropertyTest) },
+  ],
 })
-class ContentPropertyTest {
+class ContentPropertyTest implements FragmentContainer {
   @ViewChild(Content) content: Content
+
+  register(): void { }
+  deregister(): void { }
 }
