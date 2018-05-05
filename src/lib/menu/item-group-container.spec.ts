@@ -14,6 +14,7 @@ describe('MenuItemGroupContainer', () => {
       declarations: [
         MenuItemGroupContainerStaticTest,
         MenuItemGroupContainerMountTest,
+        MenuItemGroupContainerErrorMenuTest,
       ],
     }).compileComponents()
   })
@@ -39,7 +40,13 @@ describe('MenuItemGroupContainer', () => {
     const menu = fixture.debugElement.query(By.directive(MenuItemGroupContainer))
     const titleContainer = menu.query(By.css('div'))
 
-    expect(titleContainer.nativeElement.textContent).toBe(`Title`)
+    expect(titleContainer.nativeElement.textContent).toContain(`Title`)
+  })
+
+  it('should support mount title', () => {
+    const fixture = TestBed.createComponent(MenuItemGroupContainerErrorMenuTest)
+
+    expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroupContainer: must under 'antMenu'/)
   })
 
 })
@@ -48,7 +55,9 @@ describe('MenuItemGroupContainer', () => {
   template: `
     <ul antMenu>
       <li [antMenuItemGroupContainer]="body"></li>
-      <ng-template #body>Body</ng-template>
+      <ng-template #body>
+        <ul antMenuItemGroup></ul>
+      </ng-template>
     </ul>
   `,
 })
@@ -58,7 +67,9 @@ class MenuItemGroupContainerStaticTest { }
   template: `
     <ul antMenu>
       <li [antMenuItemGroupContainer]="body"></li>
-      <ng-template #body>Body</ng-template>
+      <ng-template #body>
+        <ul antMenuItemGroup></ul>
+      </ng-template>
       <ng-template #title>Title</ng-template>
     </ul>
   `,
@@ -67,3 +78,15 @@ class MenuItemGroupContainerMountTest {
   @ViewChild(MenuItemGroupContainer) container: MenuItemGroupContainer
   @ViewChild('title') title: TemplateRef<void>
 }
+
+@Component({
+  template: `
+    <ul>
+      <li [antMenuItemGroupContainer]="body"></li>
+      <ng-template #body>
+        <ul antMenuItemGroup></ul>
+      </ng-template>
+    </ul>
+  `,
+})
+class MenuItemGroupContainerErrorMenuTest { }

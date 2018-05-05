@@ -16,6 +16,7 @@ describe('MenuItem', () => {
         MenuItemStaticTest,
         MenuItemDisabledTest,
         MenuItemSelectedTest,
+        MenuItemErrorMenuTest,
       ],
     }).compileComponents()
   })
@@ -74,6 +75,12 @@ describe('MenuItem', () => {
     assertClass(menus[1], [`${px}-selected`])
   }))
 
+  it('should report error when not under menu', () => {
+    const fixture = TestBed.createComponent(MenuItemErrorMenuTest)
+
+    expect(() => fixture.detectChanges()).toThrowError(/antMenuItem: must under 'antMenu'/)
+  })
+
 })
 
 @Component({
@@ -106,3 +113,10 @@ class MenuItemDisabledTest { }
 class MenuItemSelectedTest {
   selected = 'foo'
 }
+
+@Component({
+  template: `
+    <li antMenuItem="foo" disabled>Item Foo</li>
+  `,
+})
+class MenuItemErrorMenuTest { }

@@ -43,9 +43,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['disabled']) {
-      this.updateHostClasses()
-    }
+    this.updateHostClasses()
   }
 
   ngOnInit(): void {
@@ -68,9 +66,10 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   }
 
   private updateHostClasses(): void {
+    const value = this.menu ? this.menu.value : 'error'
     const disabled = boolify(this.disabled)
     this.governor.classes = {
-      [`${this.prefix}-selected`]: this.key === this.menu.value,
+      [`${this.prefix}-selected`]: this.key === value,
       [`${this.prefix}-active`]: this.active && !disabled,
       [`${this.prefix}-disabled`]: disabled,
     }
