@@ -29,7 +29,7 @@ export class Icon implements OnChanges, OnInit {
   ngOnInit(): void {
     /* istanbul ignore else */
     if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.type, `antIcon: requires 'type'`)
+      /*@__PURE__*/assertExist(this.type, `antIcon: missing 'type' input`)
     }
 
     this.governor.staticClasses = [ this.prefix ]

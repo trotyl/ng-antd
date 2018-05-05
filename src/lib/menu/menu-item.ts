@@ -49,7 +49,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   ngOnInit(): void {
     /* istanbul ignore else */
     if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.menu, `antMenuItem: must under 'antMenu'`)
+      /*@__PURE__*/assertExist(this.menu, `antMenuItem: missing 'antMenu' in scope`)
     }
 
     this.governor.staticClasses = [ this.prefix ]

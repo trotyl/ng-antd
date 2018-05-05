@@ -91,8 +91,8 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   ngOnInit(): void {
     /* istanbul ignore else */
     if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.row, `antCol: must under 'antRow'`)
-      /*@__PURE__*/assertFalse(this.span < 0 && /*@__PURE__*/length(this.rSpan) === 0, `antCol: requires 'span'`)
+      /*@__PURE__*/assertExist(this.row, `antCol: missing 'antRow' in scope`)
+      /*@__PURE__*/assertFalse(this.span < 0 && /*@__PURE__*/length(this.rSpan) === 0, `antCol: missing 'span' input`)
     }
 
     this.governor.staticClasses = [ this.prefix ]
