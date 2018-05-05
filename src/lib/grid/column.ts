@@ -1,4 +1,4 @@
-import { isDevMode, Directive, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, Directive, Host, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { merge } from 'rxjs/observable/merge'
@@ -81,7 +81,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
     @Self() private governor: Governor,
     @Inject(COLUMN_PREFIX) private prefix: string,
     private rsp: Responsive,
-    @Optional() private row: Row,
+    @Optional() @Host() private row: Row,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {

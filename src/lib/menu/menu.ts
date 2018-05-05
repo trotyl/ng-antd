@@ -1,4 +1,4 @@
-import { forwardRef, isDevMode, AfterViewInit, ChangeDetectionStrategy, Component, HostBinding, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, SkipSelf, TemplateRef, ViewChild } from '@angular/core'
+import { forwardRef, isDevMode, AfterViewInit, ChangeDetectionStrategy, Component, Host, HostBinding, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, SkipSelf, TemplateRef, ViewChild } from '@angular/core'
 import { NG_VALUE_ACCESSOR } from '@angular/forms'
 import { Fragment } from '../fragment/fragment'
 import { FragmentContainer } from '../fragment/token'
@@ -39,7 +39,7 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
   constructor(
     @Self() private governor: Governor,
     @Inject(MENU_PREFIX) private prefix: string,
-    @Optional() @SkipSelf() private parent: Menu,
+    @Optional() @Host() @SkipSelf() private parent: Menu,
   ) {
     super()
   }

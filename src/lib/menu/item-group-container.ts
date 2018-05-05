@@ -1,4 +1,4 @@
-import { isDevMode, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnInit, Optional, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, Inject, Input, OnInit, Optional, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
 import { Governor } from '../governor/governor'
 import { assertExist } from '../util/debug'
 import { Menu } from './menu'
@@ -33,7 +33,7 @@ export class MenuItemGroupContainer implements OnInit, TemplateOutlet {
     private cdRef: ChangeDetectorRef,
     @Self() private governor: Governor,
     @Inject(MENU_PREFIX) basePrefix: string,
-    @Optional() private menu: Menu,
+    @Optional() @Host() private menu: Menu,
   ) {
     this.prefix = `${basePrefix}-item-group`
   }

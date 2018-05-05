@@ -1,4 +1,4 @@
-import { isDevMode, ChangeDetectionStrategy, Component, Inject, Input, OnInit, Optional, Self, TemplateRef, ViewChild } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, Component, Host, Inject, Input, OnInit, Optional, Self, TemplateRef, ViewChild } from '@angular/core'
 import { Governor } from '../governor/governor'
 import { assertExist } from '../util/debug'
 import { Menu } from './menu'
@@ -33,7 +33,7 @@ export class MenuItemGroup implements OnInit {
   constructor(
     @Self() private governor: Governor,
     @Inject(MENU_PREFIX) basePrefix: string,
-    @Optional() private menu: Menu,
+    @Optional() @Host() private menu: Menu,
   ) {
     this.prefix = `${basePrefix}-item-group-list`
   }

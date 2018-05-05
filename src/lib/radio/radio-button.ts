@@ -1,4 +1,4 @@
-import { isDevMode, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, Input, OnDestroy, OnInit, Optional, Self } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, HostListener, Inject, Input, OnDestroy, OnInit, Optional, Self } from '@angular/core'
 import { Governor } from '../governor/governor'
 import { ControlItem } from '../util/control'
 import { assertExist } from '../util/debug'
@@ -23,7 +23,7 @@ export class RadioButton<T> extends ControlItem implements OnDestroy, OnInit {
     private cdRef: ChangeDetectorRef,
     @Self() private governor: Governor,
     @Inject(RADIO_BUTTON_PREFIX) private prefix: string,
-    @Optional() private group: RadioGroup<T>,
+    @Optional() @Host() private group: RadioGroup<T>,
   ) { super() }
 
   @HostListener('click')
