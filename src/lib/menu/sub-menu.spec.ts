@@ -14,7 +14,7 @@ describe('SubMenu', () => {
       declarations: [
         SubMenuStaticTest,
         SubMenuPopupTest,
-        SubMenuErrorMenuTest,
+        SubMenuErrorNoMenuTest,
       ],
     }).compileComponents()
   })
@@ -44,7 +44,7 @@ describe('SubMenu', () => {
   })
 
   it('should report error when not inside menu', () => {
-    const fixture = TestBed.createComponent(SubMenuErrorMenuTest)
+    const fixture = TestBed.createComponent(SubMenuErrorNoMenuTest)
 
     expect(() => fixture.detectChanges()).toThrowError(/antSubMenu: must under 'antMenu'/)
   })
@@ -80,4 +80,4 @@ class SubMenuPopupTest {
     </ul>
   `,
 })
-class SubMenuErrorMenuTest { }
+class SubMenuErrorNoMenuTest { }

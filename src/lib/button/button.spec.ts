@@ -19,8 +19,8 @@ describe('Button', () => {
         ButtonLoadingTest,
         ButtonIconTest,
         ButtonGhostTest,
-        ButtonErrorIconLoadingTest,
-        ButtonErrorIconIconOnlyTest,
+        ButtonErrorConflictIconLoadingTest,
+        ButtonErrorConflitIconIconOnlyTest,
       ],
     }).compileComponents()
   })
@@ -107,12 +107,12 @@ describe('Button', () => {
   })
 
   it('should report error when set icon and loading', () => {
-    const fixture = TestBed.createComponent(ButtonErrorIconLoadingTest)
+    const fixture = TestBed.createComponent(ButtonErrorConflictIconLoadingTest)
     expect(() => fixture.detectChanges()).toThrowError(/antBtn: cannot have both 'icon' and 'loading'/)
   })
 
   it('should report error when set iconOnly but not icon', () => {
-    const fixture = TestBed.createComponent(ButtonErrorIconIconOnlyTest)
+    const fixture = TestBed.createComponent(ButtonErrorConflitIconIconOnlyTest)
     expect(() => fixture.detectChanges()).toThrowError(/antBtn: 'iconOnly' requires 'icon'/)
   })
 
@@ -186,11 +186,11 @@ class ButtonGhostTest { }
     <button antBtn icon="search" loading>Searching</button>
   `,
 })
-class ButtonErrorIconLoadingTest { }
+class ButtonErrorConflictIconLoadingTest { }
 
 @Component({
   template: `
     <button antBtn iconOnly>Default</button>
   `,
 })
-class ButtonErrorIconIconOnlyTest { }
+class ButtonErrorConflitIconIconOnlyTest { }

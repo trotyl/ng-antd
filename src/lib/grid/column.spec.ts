@@ -27,8 +27,8 @@ describe('Column', () => {
         ColOrderTest,
         ColOrderResponsiveTest,
         ColAttributeSelectorTest,
-        ColErrorRowTest,
-        ColErrorSpanTest,
+        ColErrorNoRowTest,
+        ColErrorNoSpanTest,
       ],
       providers: [
         { provide: Responsive, useValue: { resolve: (opt: any, dg: any) => of(opt.md || dg()) } },
@@ -159,12 +159,12 @@ describe('Column', () => {
   })
 
   it('should report error when not inside a row', () => {
-    const fixture = TestBed.createComponent(ColErrorRowTest)
+    const fixture = TestBed.createComponent(ColErrorNoRowTest)
     expect(() => fixture.detectChanges()).toThrowError(/antCol: must under 'antRow'/)
   })
 
   it('should report error when span not set', () => {
-    const fixture = TestBed.createComponent(ColErrorSpanTest)
+    const fixture = TestBed.createComponent(ColErrorNoSpanTest)
     expect(() => fixture.detectChanges()).toThrowError(/antCol: requires 'span'/)
   })
 
@@ -297,7 +297,7 @@ class ColAttributeSelectorTest { }
     <ant-col></ant-col>
   `,
 })
-class ColErrorRowTest { }
+class ColErrorNoRowTest { }
 
 @Component({
   template: `
@@ -306,4 +306,4 @@ class ColErrorRowTest { }
     </ant-row>
   `,
 })
-class ColErrorSpanTest { }
+class ColErrorNoSpanTest { }
