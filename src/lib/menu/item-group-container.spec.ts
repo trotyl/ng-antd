@@ -14,7 +14,7 @@ describe('MenuItemGroupContainer', () => {
       declarations: [
         MenuItemGroupContainerStaticTest,
         MenuItemGroupContainerMountTest,
-        MenuItemGroupContainerErrorMenuTest,
+        MenuItemGroupContainerErrorNoMenuTest,
       ],
     }).compileComponents()
   })
@@ -44,7 +44,7 @@ describe('MenuItemGroupContainer', () => {
   })
 
   it('should support mount title', () => {
-    const fixture = TestBed.createComponent(MenuItemGroupContainerErrorMenuTest)
+    const fixture = TestBed.createComponent(MenuItemGroupContainerErrorNoMenuTest)
 
     expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroupContainer: must under 'antMenu'/)
   })
@@ -89,4 +89,4 @@ class MenuItemGroupContainerMountTest {
     </ul>
   `,
 })
-class MenuItemGroupContainerErrorMenuTest { }
+class MenuItemGroupContainerErrorNoMenuTest { }

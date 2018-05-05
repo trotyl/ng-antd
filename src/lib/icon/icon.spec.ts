@@ -15,7 +15,7 @@ describe('Icon', () => {
         IconStaticTest,
         IconTypeTest,
         IconSpinTest,
-        IconErrorTypeTest,
+        IconErrorNoTypeTest,
       ],
     }).compileComponents()
   })
@@ -46,7 +46,7 @@ describe('Icon', () => {
   })
 
   it('should report error when type not set', () => {
-    const fixture = TestBed.createComponent(IconErrorTypeTest)
+    const fixture = TestBed.createComponent(IconErrorNoTypeTest)
     expect(() => fixture.detectChanges()).toThrowError(/antIcon: requires 'type'/)
   })
 
@@ -86,4 +86,4 @@ class IconSpinTest { }
     <i antIcon></i>
   `,
 })
-class IconErrorTypeTest { }
+class IconErrorNoTypeTest { }

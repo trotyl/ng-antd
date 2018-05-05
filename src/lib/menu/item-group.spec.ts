@@ -15,8 +15,8 @@ describe('MenuItemGroup', () => {
       declarations: [
         MenuStaticTest,
         MenuTitleTest,
-        MenuErrorMenuTest,
-        MenuErrorContentTest,
+        MenuErrorNoMenuTest,
+        MenuErrorNoContentTest,
       ],
     }).compileComponents()
   })
@@ -41,13 +41,13 @@ describe('MenuItemGroup', () => {
   })
 
   it('should report error when not under menu', () => {
-    const fixture = TestBed.createComponent(MenuErrorMenuTest)
+    const fixture = TestBed.createComponent(MenuErrorNoMenuTest)
 
     expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroup: must under 'antMenu'/)
   })
 
   it('should report error when not with antContent', () => {
-    const fixture = TestBed.createComponent(MenuErrorContentTest)
+    const fixture = TestBed.createComponent(MenuErrorNoContentTest)
 
     expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroup: must with 'antContent'/)
   })
@@ -80,7 +80,7 @@ class MenuTitleTest { }
     <ul antMenuItemGroup title="Title"></ul>
   `,
 })
-class MenuErrorMenuTest { }
+class MenuErrorNoMenuTest { }
 
 @Component({
   template: `
@@ -89,4 +89,4 @@ class MenuErrorMenuTest { }
     </ul>
   `,
 })
-class MenuErrorContentTest { }
+class MenuErrorNoContentTest { }

@@ -16,7 +16,7 @@ describe('Menu', () => {
         MenuModeTest,
         MenuThemeTest,
         MenuContentTest,
-        MenuErrorGroupTest,
+        MenuErrorNoGroupTest,
       ],
     }).compileComponents()
   })
@@ -63,7 +63,7 @@ describe('Menu', () => {
   })
 
   it('should report error when having content with no group', () => {
-    const fixture = TestBed.createComponent(MenuErrorGroupTest)
+    const fixture = TestBed.createComponent(MenuErrorNoGroupTest)
 
     expect(() => fixture.detectChanges()).toThrowError(/antMenu: unexpected empty 'antContent' with no 'antMenuItemGroup' found/)
   })
@@ -114,4 +114,4 @@ class MenuContentTest { }
     </ul>
   `,
 })
-class MenuErrorGroupTest { }
+class MenuErrorNoGroupTest { }

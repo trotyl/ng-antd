@@ -16,7 +16,7 @@ describe('MenuItem', () => {
         MenuItemStaticTest,
         MenuItemDisabledTest,
         MenuItemSelectedTest,
-        MenuItemErrorMenuTest,
+        MenuItemErrorNoMenuTest,
       ],
     }).compileComponents()
   })
@@ -76,7 +76,7 @@ describe('MenuItem', () => {
   }))
 
   it('should report error when not under menu', () => {
-    const fixture = TestBed.createComponent(MenuItemErrorMenuTest)
+    const fixture = TestBed.createComponent(MenuItemErrorNoMenuTest)
 
     expect(() => fixture.detectChanges()).toThrowError(/antMenuItem: must under 'antMenu'/)
   })
@@ -119,4 +119,4 @@ class MenuItemSelectedTest {
     <li antMenuItem="foo" disabled>Item Foo</li>
   `,
 })
-class MenuItemErrorMenuTest { }
+class MenuItemErrorNoMenuTest { }
