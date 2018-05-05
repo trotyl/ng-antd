@@ -1,5 +1,5 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { isDevMode, Directive, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, Directive, Host, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { merge } from 'rxjs/observable/merge'
 import { tap } from 'rxjs/operators'
 import { Governor } from '../governor/governor'
@@ -35,7 +35,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
     @Self() private governor: Governor,
     @Self() private hover: Hover,
     @Inject(MENU_PREFIX) basePrefix: string,
-    @Optional() private menu: Menu,
+    @Optional() @Host() private menu: Menu,
   ) {
     super()
 

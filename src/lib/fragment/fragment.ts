@@ -1,4 +1,4 @@
-import { Injectable, Injector, OnDestroy, OnInit, SkipSelf, TemplateRef, ViewContainerRef } from '@angular/core'
+import { Host, Injectable, Injector, OnDestroy, OnInit, Optional, TemplateRef, ViewContainerRef } from '@angular/core'
 import { FragmentContainer } from './token'
 
 @Injectable()
@@ -9,15 +9,19 @@ export abstract class Fragment implements OnDestroy, OnInit {
     public injector: Injector,
     public template: TemplateRef<void>,
     public viewContainer: ViewContainerRef,
-    @SkipSelf() private container: FragmentContainer,
+    @Optional() @Host() private container: FragmentContainer,
   ) { }
 
   ngOnInit(): void {
-    this.container.register(this)
+    if (this.container) {
+      this.container.register(this)
+    }
   }
 
   ngOnDestroy(): void {
-    this.container.deregister(this)
+    if (this.container) {
+      this.container.deregister(this)
+    }
     this.viewContainer.clear()
   }
 }

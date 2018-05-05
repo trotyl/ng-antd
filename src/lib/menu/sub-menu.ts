@@ -1,4 +1,4 @@
-import { isDevMode, ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, Component, Host, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
 import { Combo } from '../combo/combo'
 import { Governor } from '../governor/governor'
 import { assertExist } from '../util/debug'
@@ -36,7 +36,7 @@ export class SubMenu implements OnChanges, OnInit {
     @Self() private combo: Combo,
     @Self() private governor: Governor,
     @Inject(MENU_PREFIX) basePrefix: string,
-    @Optional() private menu: Menu,
+    @Optional() @Host() private menu: Menu,
   ) {
     this.prefix = `${basePrefix}-submenu`
     this.titleCls = [ `${this.prefix}-title` ]
