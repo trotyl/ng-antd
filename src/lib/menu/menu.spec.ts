@@ -65,7 +65,7 @@ describe('Menu', () => {
   it('should report error when having content with no group', () => {
     const fixture = TestBed.createComponent(MenuErrorNoGroupTest)
 
-    expect(() => fixture.detectChanges()).toThrowError(/antMenu: unexpected empty 'antContent' with no 'antMenuItemGroup' found/)
+    expect(() => fixture.detectChanges()).toThrowError(/antMenu: unexpected dangling 'antContent' with no 'antMenuItemGroup' found/)
   })
 
 })

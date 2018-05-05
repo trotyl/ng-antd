@@ -41,14 +41,14 @@ export class MenuItemGroup implements OnInit {
   ngOnInit(): void {
     /* istanbul ignore else */
     if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.menu, `antMenuItemGroup: must under 'antMenu'`)
+      /*@__PURE__*/assertExist(this.menu, `antMenuItemGroup: missing 'antMenu' in scope`)
     }
 
     const container = this.menu.containers.shift()
 
     /* istanbul ignore else */
     if (isDevMode()) {
-      /*@__PURE__*/assertExist(container, `antMenuItemGroup: must with 'antContent'`)
+      /*@__PURE__*/assertExist(container, `antMenuItemGroup: missing 'antContent' in scope`)
     }
 
     container!.mount(this.titleTemplate)

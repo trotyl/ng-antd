@@ -56,7 +56,7 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
   ngAfterViewInit(): void {
     /* istanbul ignore else */
     if (isDevMode()) {
-      /*@__PURE__*/assertTrue(this.containers.length === 0, `antMenu: unexpected empty 'antContent' with no 'antMenuItemGroup' found`)
+      /*@__PURE__*/assertTrue(this.containers.length === 0, `antMenu: unexpected dangling 'antContent' with no 'antMenuItemGroup' found`)
     }
   }
 

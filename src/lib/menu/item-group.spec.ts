@@ -43,13 +43,13 @@ describe('MenuItemGroup', () => {
   it('should report error when not under menu', () => {
     const fixture = TestBed.createComponent(MenuErrorNoMenuTest)
 
-    expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroup: must under 'antMenu'/)
+    expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroup: missing 'antMenu' in scope/)
   })
 
   it('should report error when not with antContent', () => {
     const fixture = TestBed.createComponent(MenuErrorNoContentTest)
 
-    expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroup: must with 'antContent'/)
+    expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroup: missing 'antContent' in scope/)
   })
 
 })

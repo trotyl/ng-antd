@@ -30,7 +30,7 @@ export class ButtonGroup implements OnChanges, OnInit {
 
   private updateHostClasses(): void {
     this.governor.classes = {
-      [`${this.prefix}-${getSizeToken(this.size)}`]: !!this.size,
+      [`${this.prefix}-${getSizeToken(this.size, 'antBtnGroup')}`]: !!this.size,
     }
   }
 }

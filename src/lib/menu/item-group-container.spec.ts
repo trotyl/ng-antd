@@ -46,7 +46,7 @@ describe('MenuItemGroupContainer', () => {
   it('should support mount title', () => {
     const fixture = TestBed.createComponent(MenuItemGroupContainerErrorNoMenuTest)
 
-    expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroupContainer: must under 'antMenu'/)
+    expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroupContainer: missing 'antMenu' in scope/)
   })
 
 })

@@ -41,7 +41,7 @@ export class MenuItemGroupContainer implements OnInit, TemplateOutlet {
   ngOnInit(): void {
     /* istanbul ignore else */
     if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.menu, `antMenuItemGroupContainer: must under 'antMenu'`)
+      /*@__PURE__*/assertExist(this.menu, `antMenuItemGroupContainer: missing 'antMenu' in scope`)
     }
 
     this.menu.containers.push(this)

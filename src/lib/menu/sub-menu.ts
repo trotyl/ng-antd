@@ -49,7 +49,7 @@ export class SubMenu implements OnChanges, OnInit {
   ngOnInit(): void {
     /* istanbul ignore else */
     if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.menu, `antSubMenu: must under 'antMenu'`)
+      /*@__PURE__*/assertExist(this.menu, `antSubMenu: missing 'antMenu' in scope`)
     }
 
     this.governor.staticClasses = [ this.prefix ]

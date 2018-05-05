@@ -108,12 +108,12 @@ describe('Button', () => {
 
   it('should report error when set icon and loading', () => {
     const fixture = TestBed.createComponent(ButtonErrorConflictIconLoadingTest)
-    expect(() => fixture.detectChanges()).toThrowError(/antBtn: cannot have both 'icon' and 'loading'/)
+    expect(() => fixture.detectChanges()).toThrowError(/antBtn: unexpected 'loading' input with 'icon' set/)
   })
 
   it('should report error when set iconOnly but not icon', () => {
     const fixture = TestBed.createComponent(ButtonErrorConflitIconIconOnlyTest)
-    expect(() => fixture.detectChanges()).toThrowError(/antBtn: 'iconOnly' requires 'icon'/)
+    expect(() => fixture.detectChanges()).toThrowError(/antBtn: expected 'iconOnly' input without 'icon' set/)
   })
 
 })

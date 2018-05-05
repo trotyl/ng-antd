@@ -34,8 +34,8 @@ export class Button implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     /* istanbul ignore else */
     if (isDevMode()) {
-      /*@__PURE__*/assertFalse(/*@__PURE__*/boolify(this.loading) && !!this.icon, `antBtn: cannot have both 'icon' and 'loading'`)
-      /*@__PURE__*/assertFalse(/*@__PURE__*/boolify(this.iconOnly) && !this.icon, `antBtn: 'iconOnly' requires 'icon'`)
+      /*@__PURE__*/assertFalse(/*@__PURE__*/boolify(this.loading) && !!this.icon, `antBtn: unexpected 'loading' input with 'icon' set`)
+      /*@__PURE__*/assertFalse(/*@__PURE__*/boolify(this.iconOnly) && !this.icon, `antBtn: expected 'iconOnly' input without 'icon' set`)
     }
     this.updateHostClasses()
   }
@@ -47,7 +47,7 @@ export class Button implements OnChanges, OnInit {
   private updateHostClasses(): void {
     this.governor.classes = {
       [`${this.prefix}-${this.color}`]: !!this.color,
-      [`${this.prefix}-${getSizeToken(this.size)}`]: !!this.size,
+      [`${this.prefix}-${getSizeToken(this.size, 'antBtn')}`]: !!this.size,
       [`${this.prefix}-circle`]: !!this.shape,
       [`${this.prefix}-icon-only`]: !!this.shape || boolify(this.iconOnly),
       [`${this.prefix}-loading`]: boolify(this.loading),
