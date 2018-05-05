@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, Self, SimpleChanges, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
 import { Combo } from '../combo/combo'
 import { Governor } from '../governor/governor'
+import { assertExist } from '../util/debug'
 import { Menu } from './menu'
 import { MENU_PREFIX } from './token'
 
@@ -35,31 +36,39 @@ export class SubMenu implements OnChanges, OnInit {
     @Self() private combo: Combo,
     @Self() private governor: Governor,
     @Inject(MENU_PREFIX) basePrefix: string,
-    private menu: Menu,
+    @Optional() private menu: Menu,
   ) {
     this.prefix = `${basePrefix}-submenu`
     this.titleCls = [ `${this.prefix}-title` ]
-  }
-
-  ngOnInit(): void {
-    this.governor.staticClasses = [ this.prefix ]
-    this.updateHostClasses()
-
-    this.combo.init(this.template, this.vcRef)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.updateHostClasses()
   }
 
+  ngOnInit(): void {
+    /* istanbul ignore else */
+    if (isDevMode()) {
+      /*@__PURE__*/assertExist(this.menu, `antSubMenu: must under 'antMenu'`)
+    }
+
+    this.governor.staticClasses = [ this.prefix ]
+    this.updateHostClasses()
+
+    this.combo.init(this.template, this.vcRef)
+  }
+
   private updateHostClasses(): void {
+    const mode = this.menu ? this.menu.mode : 'error'
+    const theme = this.menu ? this.menu.theme : 'error'
+
     this.governor.classes = {
-      [`${this.prefix}-${this.menu.mode}`]: true,
+      [`${this.prefix}-${mode}`]: true,
     }
     this.popupCls = {
       [`${this.prefix}`]: true,
       [`${this.prefix}-popup`]: true,
-      [`${this.prefix}-${this.menu.theme}`]: true,
+      [`${this.prefix}-${theme}`]: true,
       [`${this.prefix}-placement-bottomLeft`]: true,
     }
   }

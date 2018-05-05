@@ -15,6 +15,8 @@ describe('MenuItemGroup', () => {
       declarations: [
         MenuStaticTest,
         MenuTitleTest,
+        MenuErrorMenuTest,
+        MenuErrorContentTest,
       ],
     }).compileComponents()
   })
@@ -36,6 +38,18 @@ describe('MenuItemGroup', () => {
 
     expect(containers[0].nativeElement.textContent).toContain(`Title`)
     expect(containers[1].nativeElement.textContent).toContain(`Title`)
+  })
+
+  it('should report error when not under menu', () => {
+    const fixture = TestBed.createComponent(MenuErrorMenuTest)
+
+    expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroup: must under 'antMenu'/)
+  })
+
+  it('should report error when not with antContent', () => {
+    const fixture = TestBed.createComponent(MenuErrorContentTest)
+
+    expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroup: must with 'antContent'/)
   })
 
 })
@@ -60,3 +74,19 @@ class MenuStaticTest { }
   `,
 })
 class MenuTitleTest { }
+
+@Component({
+  template: `
+    <ul antMenuItemGroup title="Title"></ul>
+  `,
+})
+class MenuErrorMenuTest { }
+
+@Component({
+  template: `
+    <ul antMenu>
+      <ul *ngIf="true" antMenuItemGroup title="Title"></ul>
+    </ul>
+  `,
+})
+class MenuErrorContentTest { }

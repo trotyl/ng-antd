@@ -1,9 +1,10 @@
-import { forwardRef, ChangeDetectionStrategy, Component, HostBinding, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, SkipSelf, TemplateRef, ViewChild } from '@angular/core'
+import { forwardRef, isDevMode, AfterViewInit, ChangeDetectionStrategy, Component, HostBinding, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, SkipSelf, TemplateRef, ViewChild } from '@angular/core'
 import { NG_VALUE_ACCESSOR } from '@angular/forms'
 import { Fragment } from '../fragment/fragment'
 import { FragmentContainer } from '../fragment/token'
 import { Governor } from '../governor/governor'
 import { CompositeControl } from '../util/control'
+import { assertTrue } from '../util/debug'
 import { MENU_PREFIX, TemplateOutlet } from './token'
 
 
@@ -19,7 +20,7 @@ import { MENU_PREFIX, TemplateOutlet } from './token'
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class Menu extends CompositeControl<string> implements FragmentContainer, OnChanges, OnInit {
+export class Menu extends CompositeControl<string> implements AfterViewInit, FragmentContainer, OnChanges, OnInit {
   @Input() mode: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' = 'vertical'
   @Input() theme: 'light' | 'dark' = 'light'
 
@@ -50,6 +51,13 @@ export class Menu extends CompositeControl<string> implements FragmentContainer,
   ngOnInit(): void {
     this.governor.staticClasses = [ this.prefix ]
     this.updateHostClasses()
+  }
+
+  ngAfterViewInit(): void {
+    /* istanbul ignore else */
+    if (isDevMode()) {
+      /*@__PURE__*/assertTrue(this.containers.length === 0, `antMenu: unexpected empty 'antContent' with no 'antMenuItemGroup' found`)
+    }
   }
 
   register(fragment: Fragment): void {

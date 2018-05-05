@@ -16,6 +16,7 @@ describe('Menu', () => {
         MenuModeTest,
         MenuThemeTest,
         MenuContentTest,
+        MenuErrorGroupTest,
       ],
     }).compileComponents()
   })
@@ -61,6 +62,12 @@ describe('Menu', () => {
     expect(menu.queryAll(By.css('li')).length).toBe(1)
   })
 
+  it('should report error when having content with no group', () => {
+    const fixture = TestBed.createComponent(MenuErrorGroupTest)
+
+    expect(() => fixture.detectChanges()).toThrowError(/antMenu: unexpected empty 'antContent' with no 'antMenuItemGroup' found/)
+  })
+
 })
 
 @Component({
@@ -94,8 +101,17 @@ class MenuThemeTest { }
 @Component({
   template: `
     <ul antMenu>
-      <span *antContent>Foo</span>
+      <ul *antContent antMenuItemGroup>Foo</ul>
     </ul>
   `,
 })
 class MenuContentTest { }
+
+@Component({
+  template: `
+    <ul antMenu>
+      <ul *antContent></ul>
+    </ul>
+  `,
+})
+class MenuErrorGroupTest { }

@@ -9,6 +9,11 @@ export function assertFalse(exp: boolean, message: string): void {
 }
 
 /* istanbul ignore next */
+export function assertTrue(exp: boolean, message: string): void {
+  if (!exp) throwError(message)
+}
+
+/* istanbul ignore next */
 export function length(exp: any[] | { [key: string]: any }): number {
   return Array.isArray(exp) ? exp.length : Object.keys(exp).length
 }

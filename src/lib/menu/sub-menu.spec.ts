@@ -14,6 +14,7 @@ describe('SubMenu', () => {
       declarations: [
         SubMenuStaticTest,
         SubMenuPopupTest,
+        SubMenuErrorMenuTest,
       ],
     }).compileComponents()
   })
@@ -37,9 +38,15 @@ describe('SubMenu', () => {
     component.outlet.createEmbeddedView(component.subMenu.template)
     fixture.detectChanges()
 
-    const popup = fixture.debugElement.query(By.css('.ant-menu-submenu'))
+    const popup = fixture.debugElement.query(By.css(`.${px}`))
 
     assertClass(popup, [`${px}-popup`, `${px}-light`])
+  })
+
+  it('should report error when not inside menu', () => {
+    const fixture = TestBed.createComponent(SubMenuErrorMenuTest)
+
+    expect(() => fixture.detectChanges()).toThrowError(/antSubMenu: must under 'antMenu'/)
   })
 
 })
@@ -65,3 +72,12 @@ class SubMenuPopupTest {
   @ViewChild('outlet', { read: ViewContainerRef }) outlet: ViewContainerRef
   @ViewChild(SubMenu) subMenu: SubMenu
 }
+
+@Component({
+  template: `
+    <ul>
+      <li antSubMenu="Title"></li>
+    </ul>
+  `,
+})
+class SubMenuErrorMenuTest { }

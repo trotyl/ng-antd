@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnInit, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnInit, Optional, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
 import { Governor } from '../governor/governor'
+import { assertExist } from '../util/debug'
 import { Menu } from './menu'
 import { MENU_PREFIX, TemplateOutlet } from './token'
 
@@ -32,13 +33,19 @@ export class MenuItemGroupContainer implements OnInit, TemplateOutlet {
     private cdRef: ChangeDetectorRef,
     @Self() private governor: Governor,
     @Inject(MENU_PREFIX) basePrefix: string,
-    menu: Menu,
+    @Optional() private menu: Menu,
   ) {
     this.prefix = `${basePrefix}-item-group`
-    menu.containers.push(this)
   }
 
   ngOnInit(): void {
+    /* istanbul ignore else */
+    if (isDevMode()) {
+      /*@__PURE__*/assertExist(this.menu, `antMenuItemGroupContainer: must under 'antMenu'`)
+    }
+
+    this.menu.containers.push(this)
+
     this.governor.staticClasses = [ this.prefix ]
     this.titleCls = [ `${this.prefix}-title` ]
   }
