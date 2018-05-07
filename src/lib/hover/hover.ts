@@ -1,21 +1,36 @@
-import { ElementRef, Injectable, Injector } from '@angular/core'
+import { AfterViewInit, Directive, ElementRef, Injectable, Injector, OnDestroy } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
+import { Subject } from 'rxjs/Subject'
 import { fromEvent } from 'rxjs/observable/fromEvent'
 import { merge } from 'rxjs/observable/merge'
-import { map } from 'rxjs/operators'
+import { map, share, switchMap, takeUntil } from 'rxjs/operators'
 
-@Injectable()
-export class Hover {
+@Directive({
+  selector: '[antExtHover], [antMenuItem]',
+  exportAs: 'antExtHover',
+})
+export class Hover implements AfterViewInit, OnDestroy {
   changes: Observable<boolean>
 
-  constructor(
-    private el: ElementRef,
-  ) {
-    this.changes = merge(
-      fromEvent(this.el.nativeElement, 'mouseenter').pipe(map(() => true)),
-      fromEvent(this.el.nativeElement, 'mouseleave').pipe(map(() => false)),
+  private afterViewInit$ = new Subject<void>()
+  private onDestroy$ = new Subject<void>()
+
+  constructor(el: ElementRef) {
+    this.changes = this.afterViewInit$.pipe(
+      switchMap(() => merge(
+        fromEvent(el.nativeElement, 'mouseenter').pipe(map(() => true)),
+        fromEvent(el.nativeElement, 'mouseleave').pipe(map(() => false)),
+      )),
+    ).pipe(
+      takeUntil(this.onDestroy$),
+      share(),
     )
+
+    this.changes.subscribe()
   }
+
+  ngAfterViewInit(): void { this.afterViewInit$.next() }
+  ngOnDestroy(): void { this.onDestroy$.next() }
 }
 
 @Injectable()

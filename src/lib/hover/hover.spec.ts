@@ -1,4 +1,4 @@
-import { Component, Injector, Self } from '@angular/core'
+import { Component, ElementRef, Injector, ViewChild } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { Hover, HoverFactory } from './hover'
 import { HoverModule } from './hover.module'
@@ -17,15 +17,16 @@ describe('Hover', () => {
   it('should update hover status', () => {
     const fixture = TestBed.createComponent(HoverTest)
     const component = fixture.componentInstance
+    fixture.detectChanges()
 
     const res: boolean[] = []
     component.hover.changes.subscribe(x => res.push(x))
 
-    fixture.debugElement.nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
+    component.el.nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
 
     expect(res).toEqual([true])
 
-    fixture.debugElement.nativeElement.dispatchEvent(new CustomEvent('mouseleave'))
+    component.el.nativeElement.dispatchEvent(new CustomEvent('mouseleave'))
 
     expect(res).toEqual([true, false])
   })
@@ -37,6 +38,7 @@ describe('Hover', () => {
     const hover = component.hoverFactory.create(component.injector)
     const res: boolean[] = []
     hover.changes.subscribe(x => res.push(x))
+    hover.ngAfterViewInit()
 
     fixture.debugElement.nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
 
@@ -45,16 +47,20 @@ describe('Hover', () => {
     fixture.debugElement.nativeElement.dispatchEvent(new CustomEvent('mouseleave'))
 
     expect(res).toEqual([true, false])
+
+    hover.ngOnDestroy()
   })
 
 })
 
 @Component({
-  template: '',
-  providers: [ Hover ],
+  template: `
+    <div antExtHover></div>
+  `,
 })
 class HoverTest {
-  constructor(@Self() public hover: Hover) { }
+  @ViewChild(Hover) hover: Hover
+  @ViewChild(Hover, { read: ElementRef }) el: ElementRef
 }
 
 @Component({
