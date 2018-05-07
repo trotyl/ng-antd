@@ -1,8 +1,8 @@
 import { OverlayModule } from '@angular/cdk/overlay'
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
+import { ExtensionModule } from '../extension/extension.module'
 import { FragmentModule } from '../fragment/fragment.module'
-import { HoverModule } from '../hover/hover.module'
 import { MenuItemGroup } from './item-group'
 import { MenuItemGroupContainer } from './item-group-container'
 import { Menu } from './menu'
@@ -19,8 +19,8 @@ const TYPES = [
 ]
 
 const NG_MODULES = [
+  ExtensionModule,
   FragmentModule,
-  HoverModule,
 ]
 
 @NgModule({

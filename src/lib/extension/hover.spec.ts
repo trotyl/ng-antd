@@ -1,12 +1,12 @@
 import { Component, ElementRef, Injector, ViewChild } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
+import { ExtensionModule } from './extension.module'
 import { Hover, HoverFactory } from './hover'
-import { HoverModule } from './hover.module'
 
 describe('Hover', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ HoverModule ],
+      imports: [ ExtensionModule ],
       declarations: [
         HoverTest,
         HoverFactoryTest,
