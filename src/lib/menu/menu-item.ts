@@ -14,7 +14,6 @@ import { MENU_PREFIX } from './token'
   exportAs: 'antMenuItem',
   providers: [
     Governor,
-    Hover,
   ],
 })
 export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnInit {
