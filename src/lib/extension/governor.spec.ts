@@ -2,13 +2,13 @@ import { Component, Injector, ViewChild } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { assertClass, assertStyle } from '../testing/helper'
+import { ExtensionModule } from './extension.module'
 import { Governor, GovernorFactory } from './governor'
-import { GovernorModule } from './governor.module'
 
 describe('Governor', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ GovernorModule ],
+      imports: [ ExtensionModule ],
       declarations: [
         HostManagerTest,
         HostManagerFactoryTest,

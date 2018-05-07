@@ -1,6 +1,6 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { isDevMode, ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
-import { Governor } from '../governor/governor'
+import { Governor } from '../extension/governor'
 import { assertFalse } from '../util/debug'
 import { getSizeToken } from '../util/size'
 import { BUTTON_PREFIX } from './token'

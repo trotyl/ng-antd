@@ -1,6 +1,6 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { isDevMode, Directive, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
-import { Governor } from '../governor/governor'
+import { Governor } from '../extension/governor'
 import { assertExist } from '../util/debug'
 import { ICON_PREFIX } from './token'
 

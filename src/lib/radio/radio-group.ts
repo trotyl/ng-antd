@@ -1,6 +1,6 @@
 import { forwardRef, Directive, Inject, OnInit, Optional, Self } from '@angular/core'
 import { NG_VALUE_ACCESSOR } from '@angular/forms'
-import { Governor } from '../governor/governor'
+import { Governor } from '../extension/governor'
 import { CompositeControl } from '../util/control'
 import { RADIO_GROUP_PREFIX } from './token'
 

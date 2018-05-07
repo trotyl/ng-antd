@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { map, tap } from 'rxjs/operators'
-import { Governor } from '../governor/governor'
+import { Governor } from '../extension/governor'
 import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
 import { ROW_PREFIX } from './token'
 

@@ -1,5 +1,5 @@
 import { isDevMode, ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, Inject, Input, OnInit, Optional, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
-import { Governor } from '../governor/governor'
+import { Governor } from '../extension/governor'
 import { assertExist } from '../util/debug'
 import { Menu } from './menu'
 import { MENU_PREFIX, TemplateOutlet } from './token'
