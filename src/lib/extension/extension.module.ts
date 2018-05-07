@@ -1,18 +1,19 @@
 import { OverlayModule } from '@angular/cdk/overlay'
 import { NgModule } from '@angular/core'
-import { GovernorModule } from '../governor/governor.module'
 import { Combo, ComboFactory } from './combo'
+import { Governor, GovernorFactory } from './governor'
 import { Hover, HoverFactory } from './hover'
 
 const TYPES = [
   Hover,
   Combo,
+  Governor,
 ]
 
 @NgModule({
   declarations: [ TYPES ],
-  imports: [ OverlayModule, GovernorModule ],
-  exports: [ TYPES, GovernorModule ],
-  providers: [ HoverFactory, ComboFactory ],
+  imports: [ OverlayModule ],
+  exports: [ TYPES ],
+  providers: [ HoverFactory, ComboFactory, GovernorFactory ],
 })
 export class ExtensionModule { }

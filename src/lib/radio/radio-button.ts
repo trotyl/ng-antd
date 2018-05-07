@@ -1,5 +1,5 @@
 import { isDevMode, ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, HostListener, Inject, Input, OnDestroy, OnInit, Optional, Self } from '@angular/core'
-import { Governor } from '../governor/governor'
+import { Governor } from '../extension/governor'
 import { ControlItem } from '../util/control'
 import { assertExist } from '../util/debug'
 import { RadioGroup } from './radio-group'

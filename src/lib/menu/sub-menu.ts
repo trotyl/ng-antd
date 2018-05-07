@@ -1,6 +1,6 @@
 import { isDevMode, ChangeDetectionStrategy, Component, Host, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild } from '@angular/core'
 import { Combo } from '../extension/combo'
-import { Governor } from '../governor/governor'
+import { Governor } from '../extension/governor'
 import { assertExist } from '../util/debug'
 import { Menu } from './menu'
 import { MENU_PREFIX } from './token'

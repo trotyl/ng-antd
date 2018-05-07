@@ -1,5 +1,5 @@
 import { Directive, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
-import { Governor } from '../governor/governor'
+import { Governor } from '../extension/governor'
 import { getSizeToken } from '../util/size'
 import { BUTTON_GROUP_PREFIX } from './token'
 
