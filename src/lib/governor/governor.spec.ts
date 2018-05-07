@@ -1,5 +1,6 @@
-import { Component, Injector, Self } from '@angular/core'
+import { Component, Injector, ViewChild } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
 import { assertClass, assertStyle } from '../testing/helper'
 import { Governor, GovernorFactory } from './governor'
 import { GovernorModule } from './governor.module'
@@ -19,32 +20,32 @@ describe('Governor', () => {
     const fixture = TestBed.createComponent(HostManagerTest)
     const component = fixture.componentInstance
 
-    component.governor.staticClasses = [ 'static' ]
+    component.governor.configureStaticClasses([ 'static' ])
 
-    component.governor.classes = {
+    component.governor.configureClasses({
       'foo': true,
       'bar': false,
-    }
+    })
 
-    assertClass(fixture.debugElement, [`static`, `foo`], [`bar`])
+    assertClass(fixture.debugElement.query(By.directive(Governor)), [`static`, `foo`], [`bar`])
   })
 
   it('should change classes', () => {
     const fixture = TestBed.createComponent(HostManagerTest)
     const component = fixture.componentInstance
 
-    component.governor.classes = {
+    component.governor.configureClasses({
       'foo': true,
       'bar': true,
       'baz': true,
-    }
+    })
 
-    component.governor.classes = {
+    component.governor.configureClasses({
       'foo': true,
       'bar': false,
-    }
+    })
 
-    assertClass(fixture.debugElement, [`foo`], [`bar`, `baz`])
+    assertClass(fixture.debugElement.query(By.directive(Governor)), [`foo`], [`bar`, `baz`])
   })
 
   it('should add classes', () => {
@@ -53,23 +54,23 @@ describe('Governor', () => {
 
     component.governor.addClass('baz')
 
-    assertClass(fixture.debugElement, [`baz`])
+    assertClass(fixture.debugElement.query(By.directive(Governor)), [`baz`])
   })
 
   it('should set styles', () => {
     const fixture = TestBed.createComponent(HostManagerTest)
     const component = fixture.componentInstance
 
-    component.governor.staticStyles = {
+    component.governor.configureStaticStyles({
       'height': '20px',
-    }
+    })
 
-    component.governor.styles = {
+    component.governor.configureStyles({
       'margin': '10px',
       'padding': '5px',
-    }
+    })
 
-    assertStyle(fixture.debugElement, {
+    assertStyle(fixture.debugElement.query(By.directive(Governor)), {
       'height': '20px',
       'margin': '10px',
       'padding': '5px',
@@ -80,18 +81,18 @@ describe('Governor', () => {
     const fixture = TestBed.createComponent(HostManagerTest)
     const component = fixture.componentInstance
 
-    component.governor.styles = {
+    component.governor.configureStyles({
       'margin': '10px',
       'padding': '5px',
       'height': '20px',
-    }
+    })
 
-    component.governor.styles = {
+    component.governor.configureStyles({
       'margin': '20px',
       'padding': null!,
-    }
+    })
 
-    assertStyle(fixture.debugElement, {
+    assertStyle(fixture.debugElement.query(By.directive(Governor)), {
       'margin': '20px',
     })
   })
@@ -109,11 +110,12 @@ describe('Governor', () => {
 })
 
 @Component({
-  template: '',
-  providers: [ Governor ],
+  template: `
+    <div antExtGovernor></div>
+  `,
 })
 class HostManagerTest {
-  constructor(@Self() public governor: Governor) { }
+  @ViewChild(Governor) governor: Governor
 }
 
 @Component({

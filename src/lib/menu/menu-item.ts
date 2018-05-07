@@ -12,9 +12,6 @@ import { MENU_PREFIX } from './token'
 @Directive({
   selector: '[antMenuItem]',
   exportAs: 'antMenuItem',
-  providers: [
-    Governor,
-  ],
 })
 export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnInit {
   @Input() key: string
@@ -31,9 +28,9 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   private active: boolean = false
 
   constructor(
-    @Self() private governor: Governor,
-    @Self() private hover: Hover,
     @Inject(MENU_PREFIX) basePrefix: string,
+    @Optional() @Self() private governor: Governor,
+    @Optional() @Self() private hover: Hover,
     @Optional() @Host() private menu: Menu,
   ) {
     super()
@@ -51,7 +48,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   }
 
   ngOnInit(): void {
-    this.governor.staticClasses = [ this.prefix ]
+    this.governor.configureStaticClasses([ this.prefix ])
 
     this.status$$ = merge(
       this.menu.status$,
@@ -66,10 +63,10 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
 
   private updateHostClasses(): void {
     const disabled = boolify(this.disabled)
-    this.governor.classes = {
+    this.governor.configureClasses({
       [`${this.prefix}-selected`]: this.key === this.menu.value,
       [`${this.prefix}-active`]: this.active && !disabled,
       [`${this.prefix}-disabled`]: disabled,
-    }
+    })
   }
 }

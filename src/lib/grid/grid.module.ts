@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core'
+import { ExtensionModule } from '../extension/extension.module'
 import { ResponsiveModule } from '../responsive/responsive.module'
 import { Column } from './column'
 import { Row } from './row'
@@ -9,10 +10,17 @@ const TYPES = [
   Column,
 ]
 
+const NG_MODULES = [
+  ExtensionModule,
+]
+
 @NgModule({
   declarations: [ TYPES ],
-  imports: [ ResponsiveModule ],
-  exports: [ TYPES ],
+  imports: [
+    ResponsiveModule,
+    NG_MODULES,
+  ],
+  exports: [ TYPES, NG_MODULES ],
   providers: [
     { provide: COLUMN_PREFIX, useValue: 'ant-col' },
     { provide: ROW_PREFIX, useValue: 'ant-row' },

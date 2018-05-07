@@ -8,9 +8,6 @@ import { MENU_PREFIX, TemplateOutlet } from './token'
   selector: '[antMenuItemGroupContainer]',
   templateUrl: './item-group-container.html',
   exportAs: 'antMenuItemGroupContainer',
-  providers: [
-    Governor,
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
@@ -31,8 +28,8 @@ export class MenuItemGroupContainer implements OnInit, TemplateOutlet {
 
   constructor(
     private cdRef: ChangeDetectorRef,
-    @Self() private governor: Governor,
     @Inject(MENU_PREFIX) basePrefix: string,
+    @Optional() @Self() private governor: Governor,
     @Optional() @Host() private menu: Menu,
   ) {
     /* istanbul ignore else */
@@ -46,7 +43,7 @@ export class MenuItemGroupContainer implements OnInit, TemplateOutlet {
   ngOnInit(): void {
     this.menu.containers.push(this)
 
-    this.governor.staticClasses = [ this.prefix ]
+    this.governor.configureStaticClasses([ this.prefix ])
     this.titleCls = [ `${this.prefix}-title` ]
   }
 

@@ -11,7 +11,6 @@ import { COLUMN_PREFIX } from './token'
 
 @Directive({
   selector: 'ant-col, [antCol]',
-  providers: [ Governor ],
 })
 export class Column implements OnChanges, OnDestroy, OnInit {
   @Input() span: number = -1
@@ -78,9 +77,9 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   private rowStatus$$: ISubscription
 
   constructor(
-    @Self() private governor: Governor,
     @Inject(COLUMN_PREFIX) private prefix: string,
     private rsp: Responsive,
+    @Optional() @Self() private governor: Governor,
     @Optional() @Host() private row: Row,
   ) {
     /* istanbul ignore else */
@@ -99,7 +98,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
       /*@__PURE__*/assertFalse(this.span < 0 && /*@__PURE__*/length(this.rSpan) === 0, `antCol: missing 'span' input`)
     }
 
-    this.governor.staticClasses = [ this.prefix ]
+    this.governor.configureStaticClasses([ this.prefix ])
 
     this.rowStatus$$ = this.row.status$.subscribe(() => this.updateHostStyles())
 
@@ -124,24 +123,24 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   }
 
   private updateHostClasses(): void {
-    this.governor.classes = {
+    this.governor.configureClasses({
       [`${this.prefix}-${this.fSpan}`]: true,
       [`${this.prefix}-offset-${this.fOffset}`]: this.fOffset > 0,
       [`${this.prefix}-pull-${this.fPull}`]: this.fPull > 0,
       [`${this.prefix}-push-${this.fPush}`]: this.fPush > 0,
       [`${this.prefix}-order-${this.fOrder}`]: this.fOrder > 0,
-    }
+    })
   }
 
   private updateHostStyles(): void {
     const padding = this.row.fGutter / 2
     if (padding !== 0) {
-      this.governor.styles = {
+      this.governor.configureStyles({
         'padding-left': `${padding}px`,
         'padding-right': `${padding}px`,
-      }
+      })
     } else {
-      this.governor.styles = { }
+      this.governor.configureStyles({})
     }
   }
 }
