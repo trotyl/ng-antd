@@ -1,9 +1,10 @@
-import { isDevMode, AfterContentInit, ContentChild, Directive, Self, TemplateRef, ViewContainerRef } from '@angular/core'
+import { isDevMode, AfterContentInit, ContentChild, Directive, Optional, Self, TemplateRef } from '@angular/core'
 import { Combo } from '../combo/combo'
 import { MENU_PREFIX } from '../menu/token'
 import { assertExist } from '../util/debug'
 import { Overlay } from './overlay'
 
+/* tslint:disable-next-line */
 const panelClass = ['ant-dropdown', 'ant-dropdown-placement-bottomLeft']
 
 export function menuPrefixFactory(): string {
@@ -17,7 +18,6 @@ export function menuPrefixFactory(): string {
     '[class.ant-dropdown-trigger]': `true`,
   },
   providers: [
-    Combo,
     { provide: MENU_PREFIX, useFactory: menuPrefixFactory, deps: [] },
   ],
 })
@@ -25,8 +25,7 @@ export class Dropdown implements AfterContentInit {
   @ContentChild(Overlay, { read: TemplateRef }) contentOverlay: TemplateRef<void>
 
   constructor(
-    private vcRef: ViewContainerRef,
-    @Self() private combo: Combo,
+    @Optional() @Self() private combo: Combo,
   ) { }
 
   ngAfterContentInit(): void {
@@ -35,6 +34,6 @@ export class Dropdown implements AfterContentInit {
       /*@__PURE__*/assertExist(this.contentOverlay, `antDropdown: requires 'overlay'`)
     }
 
-    this.combo.init(this.contentOverlay, this.vcRef, panelClass)
+    this.combo.configTemplate(this.contentOverlay)
   }
 }

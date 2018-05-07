@@ -1,4 +1,4 @@
-import { isDevMode, ChangeDetectionStrategy, Component, Host, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, Component, Host, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild } from '@angular/core'
 import { Combo } from '../combo/combo'
 import { Governor } from '../governor/governor'
 import { assertExist } from '../util/debug'
@@ -10,7 +10,6 @@ import { MENU_PREFIX } from './token'
   templateUrl: './sub-menu.html',
   exportAs: 'antSubMenu',
   providers: [
-    Combo,
     Governor,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,10 +31,9 @@ export class SubMenu implements OnChanges, OnInit {
   private prefix: string
 
   constructor(
-    private vcRef: ViewContainerRef,
-    @Self() private combo: Combo,
-    @Self() private governor: Governor,
     @Inject(MENU_PREFIX) basePrefix: string,
+    @Optional() @Self() private combo: Combo,
+    @Optional() @Self() private governor: Governor,
     @Optional() @Host() private menu: Menu,
   ) {
     /* istanbul ignore else */
@@ -55,7 +53,7 @@ export class SubMenu implements OnChanges, OnInit {
     this.governor.staticClasses = [ this.prefix ]
     this.updateHostClasses()
 
-    this.combo.init(this.template, this.vcRef)
+    this.combo.configTemplate(this.template)
   }
 
   private updateHostClasses(): void {

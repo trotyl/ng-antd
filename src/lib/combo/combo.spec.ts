@@ -1,10 +1,10 @@
 import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay'
-import { Component, Injector, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
-import { async, TestBed } from '@angular/core/testing'
+import { Component, ElementRef, Injector, TemplateRef, ViewChild } from '@angular/core'
+import { TestBed } from '@angular/core/testing'
 import { timer } from 'rxjs/observable/timer'
 import { take } from 'rxjs/operators'
+import { ExtensionModule } from '../extension/extension.module'
 import { Combo, ComboFactory } from './combo'
-import { ComboModule } from './combo.module'
 
 describe('Combo', () => {
   let position: OverlayPositionBuilder
@@ -33,7 +33,7 @@ describe('Combo', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ ComboModule ],
+      imports: [ ExtensionModule ],
       declarations: [
         ComboTest,
         ComboFactoryTest,
@@ -44,7 +44,7 @@ describe('Combo', () => {
     }).compileComponents()
   })
 
-  it('should update status', async(async () => {
+  it('should update status', async (done: Function) => {
     const fixture = TestBed.createComponent(ComboTest)
     const component = fixture.componentInstance
 
@@ -53,13 +53,13 @@ describe('Combo', () => {
     spyOn(overlayRef, 'attach')
     spyOn(overlayRef, 'detach')
 
-    component.combo.init(component.template, component.vcRef)
+    component.combo.configTemplate(component.template)
     expect(overlayRef.attach).not.toHaveBeenCalled()
 
-    fixture.debugElement.nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
+    component.el.nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
     expect(overlayRef.attach).toHaveBeenCalled()
 
-    fixture.debugElement.nativeElement.dispatchEvent(new CustomEvent('mouseleave'))
+    component.el.nativeElement.dispatchEvent(new CustomEvent('mouseleave'))
     expect(overlayRef.detach).not.toHaveBeenCalled()
 
     overlayElement.dispatchEvent(new CustomEvent('mouseenter'))
@@ -73,12 +73,30 @@ describe('Combo', () => {
 
     await timer(300).pipe(take(1)).toPromise()
     expect(overlayRef.detach).toHaveBeenCalled()
-  }))
+
+    done()
+  })
+
+  it('should detach old template', () => {
+    const fixture = TestBed.createComponent(ComboTest)
+    const component = fixture.componentInstance
+
+    fixture.detectChanges()
+
+    spyOn(overlayRef, 'detach')
+
+    component.combo.configTemplate(component.template)
+    component.el.nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
+
+    component.combo.configTemplate(component.template)
+
+    expect(overlayRef.detach).toHaveBeenCalled()
+  })
 
   it('should dispose overlay when destroyed', () => {
     const fixture = TestBed.createComponent(ComboTest)
     const component = fixture.componentInstance
-    component.combo.init(component.template, component.vcRef)
+    component.combo.configTemplate(component.template)
 
     spyOn(overlayRef, 'dispose')
 
@@ -100,17 +118,14 @@ describe('Combo', () => {
 
 @Component({
   template: `
+    <div antExtCombo></div>
     <ng-template #template></ng-template>
   `,
-  providers: [ Combo ],
 })
 class ComboTest {
+  @ViewChild(Combo) combo: Combo
+  @ViewChild(Combo, { read: ElementRef }) el: ElementRef
   @ViewChild('template') template: TemplateRef<void>
-
-  constructor(
-    public vcRef: ViewContainerRef,
-    @Self() public combo: Combo,
-  ) { }
 }
 
 @Component({
