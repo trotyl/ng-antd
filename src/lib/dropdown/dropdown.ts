@@ -1,5 +1,5 @@
 import { isDevMode, AfterContentInit, ContentChild, Directive, Optional, Self, TemplateRef } from '@angular/core'
-import { Combo } from '../combo/combo'
+import { Combo } from '../extension/combo'
 import { MENU_PREFIX } from '../menu/token'
 import { assertExist } from '../util/debug'
 import { Overlay } from './overlay'

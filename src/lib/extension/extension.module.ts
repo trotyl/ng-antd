@@ -1,6 +1,6 @@
 import { OverlayModule } from '@angular/cdk/overlay'
 import { NgModule } from '@angular/core'
-import { Combo, ComboFactory } from '../combo/combo'
+import { Combo, ComboFactory } from './combo'
 import { Hover, HoverFactory } from './hover'
 
 const TYPES = [

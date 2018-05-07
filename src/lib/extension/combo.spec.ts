@@ -3,8 +3,8 @@ import { Component, ElementRef, Injector, TemplateRef, ViewChild } from '@angula
 import { TestBed } from '@angular/core/testing'
 import { timer } from 'rxjs/observable/timer'
 import { take } from 'rxjs/operators'
-import { ExtensionModule } from '../extension/extension.module'
 import { Combo, ComboFactory } from './combo'
+import { ExtensionModule } from './extension.module'
 
 describe('Combo', () => {
   let position: OverlayPositionBuilder
