@@ -18,8 +18,8 @@ export class Hover implements AfterViewInit, OnDestroy {
   constructor(el: ElementRef) {
     this.changes = this.afterViewInit$.pipe(
       switchMap(() => merge(
-        fromEvent(el.nativeElement, 'mouseenter').pipe(map(() => true)),
-        fromEvent(el.nativeElement, 'mouseleave').pipe(map(() => false)),
+        fromEvent<void>(el.nativeElement, 'mouseenter').pipe(map(() => true)),
+        fromEvent<void>(el.nativeElement, 'mouseleave').pipe(map(() => false)),
       )),
     ).pipe(
       takeUntil(this.onDestroy$),

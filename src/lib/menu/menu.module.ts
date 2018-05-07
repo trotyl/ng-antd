@@ -1,4 +1,3 @@
-import { OverlayModule } from '@angular/cdk/overlay'
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { ExtensionModule } from '../extension/extension.module'
@@ -27,7 +26,6 @@ const NG_MODULES = [
   declarations: [ TYPES ],
   imports: [
     CommonModule,
-    OverlayModule,
     NG_MODULES,
   ],
   exports: [ TYPES, NG_MODULES ],
