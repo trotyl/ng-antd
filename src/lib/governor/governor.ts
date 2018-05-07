@@ -1,6 +1,22 @@
-import { ElementRef, Injectable, Injector, KeyValueDiffer, KeyValueDiffers, Renderer2 } from '@angular/core'
+import { Directive, ElementRef, Injectable, Injector, KeyValueDiffer, KeyValueDiffers, Renderer2 } from '@angular/core'
 
-@Injectable()
+@Directive({
+  selector: `
+    [antExtGovernor],
+    ant-btn-group, [antBtnGroup],
+    [antBtn],
+    ant-col, [antCol],
+    ant-row, [antRow],
+    [antIcon],
+    [antMenuItemGroupContainer],
+    [antMenuItemGroup],
+    [antMenuItem],
+    [antMenu],
+    [antSubMenu],
+    ant-radio-btn, [antRadioBtn],
+    ant-radio-group,
+  `,
+})
 export class Governor {
   private classDiffer: KeyValueDiffer<string, boolean> | null = null
   private styleDiffer: KeyValueDiffer<string, string> | null = null
@@ -11,11 +27,11 @@ export class Governor {
     private differs: KeyValueDiffers,
   ) { }
 
-  set staticClasses(list: string[]) {
+  configureStaticClasses(list: string[]): void {
     list.forEach(className => this.addClass(className))
   }
 
-  set classes(obj: { [name: string]: boolean }) {
+  configureClasses(obj: { [name: string]: boolean }): void {
     if (!this.classDiffer) this.classDiffer = this.differs.find(obj).create()
 
     const changes = this.classDiffer.diff(obj)
@@ -30,11 +46,11 @@ export class Governor {
     }
   }
 
-  set staticStyles(obj: { [key: string]: string }) {
+  configureStaticStyles(obj: { [key: string]: string }): void {
     Object.keys(obj).forEach(key => this.setStyle(key, obj[key]))
   }
 
-  set styles(obj: { [key: string]: string }) {
+  configureStyles(obj: { [key: string]: string }): void {
     if (!this.styleDiffer) this.styleDiffer = this.differs.find(obj).create()
 
     const changes = this.styleDiffer.diff(obj)

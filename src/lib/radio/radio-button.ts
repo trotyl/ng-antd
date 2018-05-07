@@ -8,7 +8,6 @@ import { RADIO_BUTTON_PREFIX } from './token'
 @Component({
   selector: 'ant-radio-btn, [antRadioBtn]',
   templateUrl: './radio-button.html',
-  providers: [ Governor ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
@@ -21,8 +20,8 @@ export class RadioButton<T> extends ControlItem implements OnDestroy, OnInit {
 
   constructor(
     private cdRef: ChangeDetectorRef,
-    @Self() private governor: Governor,
     @Inject(RADIO_BUTTON_PREFIX) private prefix: string,
+    @Optional() @Self() private governor: Governor,
     @Optional() @Host() private group: RadioGroup<T>,
   ) { super() }
 
@@ -37,7 +36,7 @@ export class RadioButton<T> extends ControlItem implements OnDestroy, OnInit {
       /*@__PURE__*/assertExist(this.group, `antRadioBtn: must under 'antRadioGroup'`)
     }
 
-    this.governor.staticClasses = [ `${this.prefix}-wrapper` ]
+    this.governor.configureStaticClasses([ `${this.prefix}-wrapper` ])
 
     this.status$$ = this.group.status$.subscribe(() => {
       this.updateHostClasses()
@@ -50,8 +49,8 @@ export class RadioButton<T> extends ControlItem implements OnDestroy, OnInit {
   }
 
   private updateHostClasses(): void {
-    this.governor.classes = {
+    this.governor.configureClasses({
       [`${this.prefix}-wrapper-checked`]: this.checked,
-    }
+    })
   }
 }

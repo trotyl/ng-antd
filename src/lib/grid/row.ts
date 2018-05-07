@@ -1,4 +1,4 @@
-import { Directive, Inject, Input, OnChanges, OnDestroy, OnInit, Self, SimpleChanges } from '@angular/core'
+import { Directive, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
@@ -9,7 +9,6 @@ import { ROW_PREFIX } from './token'
 
 @Directive({
   selector: 'ant-row, [antRow]',
-  providers: [ Governor ],
 })
 export class Row implements OnChanges, OnDestroy, OnInit {
   @Input() align: 'top' | 'middle' | 'bottom' | null = null
@@ -38,9 +37,9 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   private changes$ = new Subject<void>()
 
   constructor(
-    @Self() private governor: Governor,
     @Inject(ROW_PREFIX) private prefix: string,
     private rsp: Responsive,
+    @Optional() @Self() private governor: Governor,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -63,23 +62,23 @@ export class Row implements OnChanges, OnDestroy, OnInit {
 
   private updateHostClasses(): void {
     const isFlex = this.type === 'flex'
-    this.governor.classes = {
+    this.governor.configureClasses({
       [`${this.prefix}`]: !isFlex,
       [`${this.prefix}-flex`]: isFlex,
       [`${this.prefix}-flex-${this.justify}`]: !!this.justify,
       [`${this.prefix}-flex-${this.align}`]: !!this.align,
-    }
+    })
   }
 
   private updateHostStyles(): void {
     const margin = this.fGutter / -2
     if (margin !== 0) {
-      this.governor.styles = {
+      this.governor.configureStyles({
         'margin-left': `${margin}px`,
         'margin-right': `${margin}px`,
-      }
+      })
     } else {
-      this.governor.styles = { }
+      this.governor.configureStyles({})
     }
   }
 }

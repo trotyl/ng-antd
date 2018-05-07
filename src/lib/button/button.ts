@@ -1,5 +1,5 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { isDevMode, ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, Self, SimpleChanges } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { Governor } from '../governor/governor'
 import { assertFalse } from '../util/debug'
 import { getSizeToken } from '../util/size'
@@ -8,7 +8,6 @@ import { BUTTON_PREFIX } from './token'
 @Component({
   selector: '[antBtn]',
   templateUrl: './button.html',
-  providers: [ Governor ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
@@ -28,7 +27,7 @@ export class Button implements OnChanges, OnInit {
 
   constructor(
     @Inject(BUTTON_PREFIX) private prefix: string,
-    @Self() private governor: Governor,
+    @Optional() @Self() private governor: Governor,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -41,17 +40,17 @@ export class Button implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.governor.staticClasses = [ this.prefix ]
+    this.governor.configureStaticClasses([ this.prefix ])
   }
 
   private updateHostClasses(): void {
-    this.governor.classes = {
+    this.governor.configureClasses({
       [`${this.prefix}-${this.color}`]: !!this.color,
       [`${this.prefix}-${getSizeToken(this.size, 'antBtn')}`]: !!this.size,
       [`${this.prefix}-circle`]: !!this.shape,
       [`${this.prefix}-icon-only`]: !!this.shape || boolify(this.iconOnly),
       [`${this.prefix}-loading`]: boolify(this.loading),
       [`${this.prefix}-background-ghost`]: boolify(this.ghost),
-    }
+    })
   }
 }

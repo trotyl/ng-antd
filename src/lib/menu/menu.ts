@@ -13,7 +13,6 @@ import { MENU_PREFIX, TemplateOutlet } from './token'
   templateUrl: './menu.html',
   exportAs: 'antMenu',
   providers: [
-    Governor,
     { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => Menu) },
     { provide: FragmentContainer, useExisting: forwardRef(() => Menu) },
   ],
@@ -37,8 +36,8 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
   containers: TemplateOutlet[] = []
 
   constructor(
-    @Self() private governor: Governor,
     @Inject(MENU_PREFIX) private prefix: string,
+    @Optional() @Self() private governor: Governor,
     @Optional() @Host() @SkipSelf() private parent: Menu,
   ) {
     super()
@@ -49,7 +48,7 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
   }
 
   ngOnInit(): void {
-    this.governor.staticClasses = [ this.prefix ]
+    this.governor.configureStaticClasses([ this.prefix ])
     this.updateHostClasses()
   }
 
@@ -70,10 +69,10 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
   deregister(fragment: Fragment): void { }
 
   private updateHostClasses(): void {
-    this.governor.classes = {
+    this.governor.configureClasses({
       [`${this.prefix}-${this.theme}`]: !this.parent,
       [`${this.prefix}-${this.mode}`]: true,
       [`${this.prefix}-${this.parent ? 'sub' : 'root'}`]: true,
-    }
+    })
   }
 }

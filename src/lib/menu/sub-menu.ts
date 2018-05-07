@@ -9,9 +9,6 @@ import { MENU_PREFIX } from './token'
   selector: '[antSubMenu]',
   templateUrl: './sub-menu.html',
   exportAs: 'antSubMenu',
-  providers: [
-    Governor,
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
@@ -50,16 +47,16 @@ export class SubMenu implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.governor.staticClasses = [ this.prefix ]
+    this.governor.configureStaticClasses([ this.prefix ])
     this.updateHostClasses()
 
     this.combo.configTemplate(this.template)
   }
 
   private updateHostClasses(): void {
-    this.governor.classes = {
+    this.governor.configureClasses({
       [`${this.prefix}-${this.menu.mode}`]: true,
-    }
+    })
     this.popupCls = {
       [`${this.prefix}`]: true,
       [`${this.prefix}-popup`]: true,

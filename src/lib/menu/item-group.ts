@@ -8,9 +8,6 @@ import { MENU_PREFIX } from './token'
   selector: '[antMenuItemGroup]',
   templateUrl: './item-group.html',
   exportAs: 'antMenuItemGroup',
-  providers: [
-    Governor,
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
@@ -31,8 +28,8 @@ export class MenuItemGroup implements OnInit {
   private prefix: string
 
   constructor(
-    @Self() private governor: Governor,
     @Inject(MENU_PREFIX) basePrefix: string,
+    @Optional() @Self() private governor: Governor,
     @Optional() @Host() private menu: Menu,
   ) {
     /* istanbul ignore else */
@@ -52,6 +49,6 @@ export class MenuItemGroup implements OnInit {
     }
 
     container!.mount(this.titleTemplate)
-    this.governor.staticClasses = [ this.prefix ]
+    this.governor.configureStaticClasses([ this.prefix ])
   }
 }
