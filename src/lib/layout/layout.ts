@@ -1,6 +1,6 @@
 import { forwardRef, ContentChildren, Directive, Inject, QueryList } from '@angular/core'
-import { Element } from '../elements/element'
-import { ElementContainer } from '../elements/token'
+import { Element } from '../element/element'
+import { ElementContainer } from '../element/token'
 import { GovernorFactory } from '../governor/governor'
 import { LayoutSider } from './sider'
 import { LAYOUT_PREFIX } from './token'
