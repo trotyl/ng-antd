@@ -159,8 +159,7 @@ describe('Column', () => {
   })
 
   it('should report error when not inside a row', () => {
-    const fixture = TestBed.createComponent(ColErrorNoRowTest)
-    expect(() => fixture.detectChanges()).toThrowError(/antCol: missing 'antRow' in scope/)
+    expect(() => TestBed.createComponent(ColErrorNoRowTest)).toThrowError(/antCol: missing 'antRow' in scope/)
   })
 
   it('should report error when span not set', () => {

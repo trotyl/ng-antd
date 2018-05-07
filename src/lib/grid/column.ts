@@ -82,7 +82,12 @@ export class Column implements OnChanges, OnDestroy, OnInit {
     @Inject(COLUMN_PREFIX) private prefix: string,
     private rsp: Responsive,
     @Optional() @Host() private row: Row,
-  ) { }
+  ) {
+    /* istanbul ignore else */
+    if (isDevMode()) {
+      /*@__PURE__*/assertExist(this.row, `antCol: missing 'antRow' in scope`)
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.changes$.next()
@@ -91,7 +96,6 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   ngOnInit(): void {
     /* istanbul ignore else */
     if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.row, `antCol: missing 'antRow' in scope`)
       /*@__PURE__*/assertFalse(this.span < 0 && /*@__PURE__*/length(this.rSpan) === 0, `antCol: missing 'span' input`)
     }
 

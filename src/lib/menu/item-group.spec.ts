@@ -41,9 +41,7 @@ describe('MenuItemGroup', () => {
   })
 
   it('should report error when not under menu', () => {
-    const fixture = TestBed.createComponent(MenuErrorNoMenuTest)
-
-    expect(() => fixture.detectChanges()).toThrowError(/antMenuItemGroup: missing 'antMenu' in scope/)
+    expect(() => TestBed.createComponent(MenuErrorNoMenuTest)).toThrowError(/antMenuItemGroup: missing 'antMenu' in scope/)
   })
 
   it('should report error when not with antContent', () => {

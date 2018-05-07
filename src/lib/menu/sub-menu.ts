@@ -38,6 +38,11 @@ export class SubMenu implements OnChanges, OnInit {
     @Inject(MENU_PREFIX) basePrefix: string,
     @Optional() @Host() private menu: Menu,
   ) {
+    /* istanbul ignore else */
+    if (isDevMode()) {
+      /*@__PURE__*/assertExist(this.menu, `antSubMenu: missing 'antMenu' in scope`)
+    }
+
     this.prefix = `${basePrefix}-submenu`
     this.titleCls = [ `${this.prefix}-title` ]
   }
@@ -47,11 +52,6 @@ export class SubMenu implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.menu, `antSubMenu: missing 'antMenu' in scope`)
-    }
-
     this.governor.staticClasses = [ this.prefix ]
     this.updateHostClasses()
 
@@ -59,16 +59,13 @@ export class SubMenu implements OnChanges, OnInit {
   }
 
   private updateHostClasses(): void {
-    const mode = this.menu ? this.menu.mode : 'error'
-    const theme = this.menu ? this.menu.theme : 'error'
-
     this.governor.classes = {
-      [`${this.prefix}-${mode}`]: true,
+      [`${this.prefix}-${this.menu.mode}`]: true,
     }
     this.popupCls = {
       [`${this.prefix}`]: true,
       [`${this.prefix}-popup`]: true,
-      [`${this.prefix}-${theme}`]: true,
+      [`${this.prefix}-${this.menu.theme}`]: true,
       [`${this.prefix}-placement-bottomLeft`]: true,
     }
   }

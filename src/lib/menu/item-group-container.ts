@@ -35,15 +35,15 @@ export class MenuItemGroupContainer implements OnInit, TemplateOutlet {
     @Inject(MENU_PREFIX) basePrefix: string,
     @Optional() @Host() private menu: Menu,
   ) {
-    this.prefix = `${basePrefix}-item-group`
-  }
-
-  ngOnInit(): void {
     /* istanbul ignore else */
     if (isDevMode()) {
       /*@__PURE__*/assertExist(this.menu, `antMenuItemGroupContainer: missing 'antMenu' in scope`)
     }
 
+    this.prefix = `${basePrefix}-item-group`
+  }
+
+  ngOnInit(): void {
     this.menu.containers.push(this)
 
     this.governor.staticClasses = [ this.prefix ]
