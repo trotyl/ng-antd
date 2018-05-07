@@ -10,4 +10,4 @@ const TYPES = [
   providers: [ HoverFactory ],
   exports: [ TYPES ],
 })
-export class HoverModule { }
+export class ExtensionModule { }
