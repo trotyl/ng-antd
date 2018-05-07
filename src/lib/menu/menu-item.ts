@@ -39,6 +39,11 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   ) {
     super()
 
+    /* istanbul ignore else */
+    if (isDevMode()) {
+      /*@__PURE__*/assertExist(this.menu, `antMenuItem: missing 'antMenu' in scope`)
+    }
+
     this.prefix = `${basePrefix}-item`
   }
 
@@ -47,11 +52,6 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   }
 
   ngOnInit(): void {
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.menu, `antMenuItem: missing 'antMenu' in scope`)
-    }
-
     this.governor.staticClasses = [ this.prefix ]
 
     this.status$$ = merge(
@@ -66,10 +66,9 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   }
 
   private updateHostClasses(): void {
-    const value = this.menu ? this.menu.value : 'error'
     const disabled = boolify(this.disabled)
     this.governor.classes = {
-      [`${this.prefix}-selected`]: this.key === value,
+      [`${this.prefix}-selected`]: this.key === this.menu.value,
       [`${this.prefix}-active`]: this.active && !disabled,
       [`${this.prefix}-disabled`]: disabled,
     }

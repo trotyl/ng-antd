@@ -76,9 +76,7 @@ describe('MenuItem', () => {
   }))
 
   it('should report error when not under menu', () => {
-    const fixture = TestBed.createComponent(MenuItemErrorNoMenuTest)
-
-    expect(() => fixture.detectChanges()).toThrowError(/antMenuItem: missing 'antMenu' in scope/)
+    expect(() => TestBed.createComponent(MenuItemErrorNoMenuTest)).toThrowError(/antMenuItem: missing 'antMenu' in scope/)
   })
 
 })
