@@ -1,8 +1,15 @@
-<ng-template #subMenu>
+<div [ngClass]="titleCls" [ngStyle]="titleStyles" (click)="toggle()">
+  {{ title }}
+  <ng-content></ng-content>
+  <i *ngIf="inline" [ngClass]="arrowCls"></i>
+</div>
+
+<ng-template #menuSub [ngIf]="inline && opened">
+  <ng-content select="ul"></ng-content>
+</ng-template>
+
+<ng-template #popUp>
   <div [ngClass]="popupCls">
-    <ng-content select="ul"></ng-content>
+    <ng-container *ngTemplateOutlet="menuSub"></ng-container>
   </div>
 </ng-template>
-<div [ngClass]="titleCls">
-  <ng-content></ng-content>
-</div>
