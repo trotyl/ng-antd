@@ -48,7 +48,28 @@ export abstract class Control<T> implements ControlValueAccessor {
 }
 
 export abstract class CompositeControl<T> extends Control<T> {
-  status$: Subject<void> = new Subject()
+  parentComposite?: CompositeControl<T>
+  compositeValue: T
+  compositeStatus$: Subject<void> = new Subject()
+
+  set value(value: T) {
+    /* istanbul ignore next */
+    if (this.parentComposite) {
+      this.parentComposite.value = value
+    } else {
+      this.compositeValue = value
+    }
+  }
+
+  get value(): T {
+    /* istanbul ignore next */
+    return this.parentComposite ? this.parentComposite.value : this.compositeValue
+  }
+
+  get status$(): Subject<void> {
+    /* istanbul ignore next */
+    return this.parentComposite ? this.parentComposite.status$ : this.compositeStatus$
+  }
 
   handleUpdate(self: boolean): void {
     this.status$.next()
