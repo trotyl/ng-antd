@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms'
 import { Governor } from '../extension/governor'
 import { Fragment } from '../fragment/fragment'
 import { FragmentContainer } from '../fragment/token'
-import { CompositeControl } from '../util/control'
+import { KeyedCompositeControl } from '../util/control'
 import { assertEqual } from '../util/debug'
 import { MENU_PREFIX, TemplateOutlet } from './token'
 
@@ -18,7 +18,7 @@ import { MENU_PREFIX, TemplateOutlet } from './token'
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class Menu extends CompositeControl<string> implements AfterViewInit, FragmentContainer, OnChanges, OnInit {
+export class Menu extends KeyedCompositeControl<string, boolean> implements AfterViewInit, FragmentContainer, OnChanges, OnInit {
   @Input() mode: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' = 'vertical'
   @Input() theme: 'light' | 'dark' = 'light'
 
@@ -34,6 +34,10 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
 
   level: number
   containers: TemplateOutlet[] = []
+
+  get parentComposite(): Menu {
+    return this.parent
+  }
 
   constructor(
     @Inject(MENU_PREFIX) private prefix: string,
@@ -74,9 +78,18 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
 
   deregister(fragment: Fragment): void { }
 
-  /* istanbul ignore next */
-  open(key: string): void {
-    //TODO: perform some actions
+  open(...keys: string[]): void {
+    for (const key of keys) {
+      this.pendingKeyedChanges.set(key, true)
+      this.flushKey(key)
+    }
+  }
+
+  close(...keys: string[]): void {
+    for (const key of keys) {
+      this.pendingKeyedChanges.set(key, false)
+      this.flushKey(key)
+    }
   }
 
   private updateHostClasses(): void {
