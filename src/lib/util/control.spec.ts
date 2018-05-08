@@ -1,6 +1,6 @@
 import { ReplaySubject } from 'rxjs/ReplaySubject'
 import { values } from '../testing/helper'
-import { CompositeControl, Control } from './control'
+import { CompositeControl, Control, KeyedCompositeControl } from './control'
 
 describe('Control', () => {
   let control: ControlTest
@@ -74,9 +74,35 @@ describe('CompositeControl', () => {
 
 })
 
+describe('KeyedCompositeControl', () => {
+  let control: KeyedCompositeControlTest
+
+  beforeEach(() => {
+    control = new KeyedCompositeControlTest()
+  })
+
+  it('should observe parent key', () => {
+    const subControl = new KeyedCompositeControlTest()
+    subControl.parentComposite = control
+
+    let res = false
+    subControl.observeKey('test').subscribe(x => res = x)
+
+    control.pendingKeyedChanges.set('test', true)
+    control.flushKey('test')
+    subControl.flushKey('test')
+
+    expect(res).toBe(true)
+  })
+})
+
 class ControlTest extends Control<number> {
   handleUpdate(self: boolean): void { }
   handleDisabled(): void { }
 }
 
 class CompositeControlTest extends CompositeControl<number> { }
+
+class KeyedCompositeControlTest extends KeyedCompositeControl<string, boolean> {
+  parentComposite?: KeyedCompositeControlTest = undefined
+}

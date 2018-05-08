@@ -1,5 +1,8 @@
 import { OnDestroy } from '@angular/core'
 import { ControlValueAccessor } from '@angular/forms'
+import { Observable } from 'rxjs/Observable'
+import { Observer } from 'rxjs/Observer'
+import { ReplaySubject } from 'rxjs/ReplaySubject'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 
@@ -60,4 +63,28 @@ export abstract class ControlItem implements OnDestroy {
   status$$: ISubscription
 
   abstract ngOnDestroy(): void
+}
+
+export abstract class KeyedCompositeControl<K, V, T = K> extends CompositeControl<T> {
+  abstract parentComposite?: KeyedCompositeControl<K, V, T>
+  pendingKeyedChanges = new Map<K, V>()
+  keyedObservers = new Map<K, Observer<V>>()
+
+  observeKey(key: K): Observable<V> {
+    if (this.parentComposite) {
+      this.parentComposite.observeKey(key).subscribe(value => this.pendingKeyedChanges.set(key, value))
+    }
+    const observer = new ReplaySubject<V>(1)
+    this.keyedObservers.set(key, observer)
+    this.flushKey(key)
+    return observer as any
+  }
+
+  flushKey(key: K): void {
+    const observer = this.keyedObservers.get(key)
+    if (observer && this.pendingKeyedChanges.has(key)) {
+      observer.next(this.pendingKeyedChanges.get(key)!)
+      this.pendingKeyedChanges.delete(key)
+    }
+  }
 }

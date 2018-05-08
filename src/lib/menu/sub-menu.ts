@@ -1,6 +1,9 @@
-import { isDevMode, ChangeDetectionStrategy, Component, Host, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild } from '@angular/core'
+import { isDevMode, ChangeDetectionStrategy, Component, Host, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild } from '@angular/core'
+import { Subject } from 'rxjs/Subject'
+import { takeUntil } from 'rxjs/operators'
 import { Combo } from '../extension/combo'
 import { Governor } from '../extension/governor'
+import { KeyedCompositeControl } from '../util/control'
 import { assertExist } from '../util/debug'
 import { Menu } from './menu'
 import { MENU_PREFIX } from './token'
@@ -12,7 +15,7 @@ import { MENU_PREFIX } from './token'
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class SubMenu implements OnChanges, OnInit {
+export class SubMenu extends KeyedCompositeControl<string, boolean> implements OnChanges, OnDestroy, OnInit {
   @Input() key: string
   @Input() title: string
 
@@ -31,7 +34,12 @@ export class SubMenu implements OnChanges, OnInit {
   titleStyles: { [name: string]: string } = {}
   arrowCls: string[] = []
 
+  get parentComposite(): Menu {
+    return this.menu
+  }
+
   private prefix: string
+  private onDestroy$: Subject<void> = new Subject()
 
   constructor(
     @Inject(MENU_PREFIX) basePrefix: string,
@@ -39,6 +47,8 @@ export class SubMenu implements OnChanges, OnInit {
     @Optional() @Self() private governor: Governor,
     @Optional() @Host() private menu: Menu,
   ) {
+    super()
+
     /* istanbul ignore else */
     if (isDevMode()) {
       /*@__PURE__*/assertExist(this.menu, `antSubMenu: missing 'antMenu' in scope`)
@@ -64,7 +74,15 @@ export class SubMenu implements OnChanges, OnInit {
     } else {
       this.combo.configTemplate(this.popUpTemplate)
     }
+
+    if (this.key) {
+      this.menu.observeKey(this.key)
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(res => this.opened = res)
+    }
   }
+
+  ngOnDestroy(): void { this.onDestroy$.next() }
 
   toggle(): void {
     this.opened = !this.opened

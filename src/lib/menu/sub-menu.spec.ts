@@ -2,6 +2,7 @@ import { Component, ViewChild, ViewContainerRef } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { assertClass, assertStyle } from '../testing/helper'
+import { Menu } from './menu'
 import { MenuModule } from './menu.module'
 import { SubMenu } from './sub-menu'
 
@@ -74,6 +75,21 @@ describe('SubMenu', () => {
 
     expect(subMenus[0].nativeElement.textContent).toContain(`Foo`)
     expect(subMenus[1].nativeElement.textContent).toContain(`Bar`)
+  })
+
+  it('should open by menu properly', () => {
+    const fixture = TestBed.createComponent(SubMenuInlineTest)
+    fixture.detectChanges()
+
+    const menu = fixture.debugElement.query(By.directive(Menu))
+    const menuInstance = menu.injector.get(Menu) as Menu
+    const subMenu = fixture.debugElement.query(By.directive(SubMenu))
+    const subMenuInstance = subMenu.injector.get(SubMenu) as SubMenu
+
+    expect(subMenuInstance.parentComposite).toBe(menuInstance)
+
+    menuInstance.open('Key1')
+    expect(subMenuInstance.opened).toBe(true)
   })
 
   it('should report error when not inside menu', () => {

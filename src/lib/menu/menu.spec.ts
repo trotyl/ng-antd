@@ -62,6 +62,23 @@ describe('Menu', () => {
     expect(menu.queryAll(By.css('li')).length).toBe(1)
   })
 
+  it('should observe open and close changes', () => {
+    const fixture = TestBed.createComponent(MenuStaticTest)
+    fixture.detectChanges()
+
+    const menu = fixture.debugElement.query(By.directive(Menu))
+    const instance = menu.injector.get(Menu) as Menu
+
+    instance.open('test')
+
+    let res = false
+    instance.observeKey('test').subscribe(x => res = x)
+    expect(res).toBe(true)
+
+    instance.close('test')
+    expect(res).toBe(false)
+  })
+
   it('should report error when having content with no group', () => {
     const fixture = TestBed.createComponent(MenuErrorNoGroupTest)
 
