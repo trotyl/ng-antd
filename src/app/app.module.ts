@@ -1,8 +1,9 @@
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
+import { FormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule, Routes } from '@angular/router'
-import { ButtonModule, GridModule, IconModule, LayoutModule } from 'ng-antd'
+import { ButtonModule, GridModule, IconModule, LayoutModule, MenuModule } from 'ng-antd'
 
 import { AppComponent } from './app.component'
 import { ButtonDemos, ButtonDemoModule } from './button'
@@ -16,6 +17,7 @@ const ANT_MODULES = [
   GridModule,
   IconModule,
   LayoutModule,
+  MenuModule,
 ]
 
 const DEMO_MODULES = [
@@ -41,6 +43,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
     ANT_MODULES,
