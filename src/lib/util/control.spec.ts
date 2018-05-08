@@ -57,7 +57,7 @@ describe('CompositeControl', () => {
   })
 
   it('should emit status change on update', () => {
-    control.status$ = new ReplaySubject() as any
+    control.compositeStatus$ = new ReplaySubject() as any
 
     control.writeValue(42)
 
@@ -65,7 +65,7 @@ describe('CompositeControl', () => {
   })
 
   it('should emit status change on disabled', () => {
-    control.status$ = new ReplaySubject() as any
+    control.compositeStatus$ = new ReplaySubject() as any
 
     control.setDisabledState(true)
 
@@ -101,7 +101,9 @@ class ControlTest extends Control<number> {
   handleDisabled(): void { }
 }
 
-class CompositeControlTest extends CompositeControl<number> { }
+class CompositeControlTest extends CompositeControl<number> {
+  parentComposite = undefined
+}
 
 class KeyedCompositeControlTest extends KeyedCompositeControl<string, boolean> {
   parentComposite?: KeyedCompositeControlTest = undefined
