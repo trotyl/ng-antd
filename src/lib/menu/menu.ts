@@ -4,9 +4,8 @@ import { Governor } from '../extension/governor'
 import { Fragment } from '../fragment/fragment'
 import { FragmentContainer } from '../fragment/token'
 import { CompositeControl } from '../util/control'
-import { assertTrue } from '../util/debug'
+import { assertEqual } from '../util/debug'
 import { MENU_PREFIX, TemplateOutlet } from './token'
-
 
 @Component({
   selector: '[antMenu]',
@@ -33,6 +32,7 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
     if (value !== '') { this.mode = value }
   }
 
+  level: number
   containers: TemplateOutlet[] = []
 
   constructor(
@@ -41,6 +41,8 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
     @Optional() @Host() @SkipSelf() private parent: Menu,
   ) {
     super()
+
+    this.level = parent ? parent.level + 1 : 1
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -48,6 +50,10 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
   }
 
   ngOnInit(): void {
+    if (this.parent) {
+      this.mode = resolveMode(this.parent.mode)
+    }
+
     this.governor.configureStaticClasses([ this.prefix ])
     this.updateHostClasses()
   }
@@ -55,7 +61,7 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
   ngAfterViewInit(): void {
     /* istanbul ignore else */
     if (isDevMode()) {
-      /*@__PURE__*/assertTrue(this.containers.length === 0, `antMenu: unexpected dangling 'antContent' with no 'antMenuItemGroup' found`)
+      /*@__PURE__*/assertEqual(this.containers.length, 0, `antMenu: unexpected dangling 'antContent' with no 'antMenuItemGroup' found`)
     }
   }
 
@@ -68,11 +74,26 @@ export class Menu extends CompositeControl<string> implements AfterViewInit, Fra
 
   deregister(fragment: Fragment): void { }
 
+  /* istanbul ignore next */
+  open(key: string): void {
+    //TODO: perform some actions
+  }
+
   private updateHostClasses(): void {
     this.governor.configureClasses({
       [`${this.prefix}-${this.theme}`]: !this.parent,
       [`${this.prefix}-${this.mode}`]: true,
       [`${this.prefix}-${this.parent ? 'sub' : 'root'}`]: true,
     })
+  }
+}
+
+/* istanbul ignore next */
+function resolveMode(parentMode: string): 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' {
+  switch (parentMode) {
+    case 'inline':
+      return 'inline'
+    default:
+      return 'vertical'
   }
 }

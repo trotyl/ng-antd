@@ -1,4 +1,9 @@
 /* istanbul ignore next */
+export function assertEqual<T>(actual: T, expected: T, message: string): void {
+  if (actual !== expected) throwError(message)
+}
+
+/* istanbul ignore next */
 export function assertExist(exp: any, message: string): void {
   if (exp == null) throwError(message)
 }

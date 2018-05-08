@@ -1,0 +1,37 @@
+<ul antMenu="inline" style="width: 256px;" [(ngModel)]="selected">
+  <li antSubMenu="sub1">
+    <span><i antIcon="mail"></i><span>Navigation One</span></span>
+    <ul antMenu>
+      <ul *antContent antMenuItemGroup="g1" title="Item 1">
+        <li antMenuItem="1">Option 1</li>
+        <li antMenuItem="2">Option 2</li>
+      </ul>
+      <ul *antContent antMenuItemGroup="g2" title="Item 2">
+        <li antMenuItem="3">Option 3</li>
+        <li antMenuItem="4">Option 4</li>
+      </ul>
+    </ul>
+  </li>
+  <li antSubMenu="sub2">
+    <span><i antIcon="appstore"></i><span>Navigation Two</span></span>
+    <ul antMenu>
+      <li antMenuItem="5">Option 5</li>
+      <li antMenuItem="6">Option 6</li>
+      <li antSubMenu="sub3" title="Submenu">
+        <ul antMenu>
+          <li antMenuItem="7">Option 7</li>
+          <li antMenuItem="8">Option 8</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li antSubMenu="sub4">
+    <span><i antIcon="setting"></i><span>Navigation Three</span></span>
+    <ul antMenu>
+      <li antMenuItem="9">Option 9</li>
+      <li antMenuItem="10">Option 10</li>
+      <li antMenuItem="11">Option 11</li>
+      <li antMenuItem="12">Option 12</li>
+    </ul>
+  </li>
+</ul>

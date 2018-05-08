@@ -50,6 +50,12 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   ngOnInit(): void {
     this.governor.configureStaticClasses([ this.prefix ])
 
+    if (this.menu.mode === 'inline') {
+      this.governor.configureStyles({
+        'padding-left': `${24 * this.menu.level}px`,
+      })
+    }
+
     this.status$$ = merge(
       this.menu.status$,
       this.hover.changes.pipe(tap(x => this.active = x)),

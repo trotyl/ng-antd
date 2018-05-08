@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import { fakeAsync, tick, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
-import { assertClass } from '../testing/helper'
+import { assertClass, assertStyle } from '../testing/helper'
 import { MenuItem } from './menu-item'
 import { MenuModule } from './menu.module'
 
@@ -14,6 +14,7 @@ describe('MenuItem', () => {
       imports: [ FormsModule, MenuModule ],
       declarations: [
         MenuItemStaticTest,
+        MenuItemIndentTest,
         MenuItemDisabledTest,
         MenuItemSelectedTest,
         MenuItemErrorNoMenuTest,
@@ -25,33 +26,42 @@ describe('MenuItem', () => {
     const fixture = TestBed.createComponent(MenuItemStaticTest)
     fixture.detectChanges()
 
-    const menus = fixture.debugElement.queryAll(By.directive(MenuItem))
+    const menuItems = fixture.debugElement.queryAll(By.directive(MenuItem))
 
-    assertClass(menus[0], [`${px}`])
+    assertClass(menuItems[0], [`${px}`])
   })
 
   it('should set active classes properly', () => {
     const fixture = TestBed.createComponent(MenuItemStaticTest)
     fixture.detectChanges()
 
-    const menu = fixture.debugElement.query(By.directive(MenuItem))
-    menu.nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
+    const menuItem = fixture.debugElement.query(By.directive(MenuItem))
+    menuItem.nativeElement.dispatchEvent(new CustomEvent('mouseenter'))
 
-    assertClass(menu, [`${px}-active`])
+    assertClass(menuItem, [`${px}-active`])
 
-    menu.nativeElement.dispatchEvent(new CustomEvent('mouseleave'))
+    menuItem.nativeElement.dispatchEvent(new CustomEvent('mouseleave'))
 
-    assertClass(menu, [], [`${px}-active`])
+    assertClass(menuItem, [], [`${px}-active`])
+  })
+
+  it('should set indent styles properly', () => {
+    const fixture = TestBed.createComponent(MenuItemIndentTest)
+    fixture.detectChanges()
+
+    const menuItem = fixture.debugElement.query(By.directive(MenuItem))
+
+    assertStyle(menuItem, { 'padding-left': '24px' })
   })
 
   it('should set disabled classes properly', () => {
     const fixture = TestBed.createComponent(MenuItemDisabledTest)
     fixture.detectChanges()
 
-    const menus = fixture.debugElement.queryAll(By.directive(MenuItem))
+    const menuItems = fixture.debugElement.queryAll(By.directive(MenuItem))
 
-    assertClass(menus[0], [], [`${px}-disabled`])
-    assertClass(menus[1], [`${px}-disabled`])
+    assertClass(menuItems[0], [], [`${px}-disabled`])
+    assertClass(menuItems[1], [`${px}-disabled`])
   })
 
   it('should set selected classes properly', fakeAsync(() => {
@@ -61,18 +71,18 @@ describe('MenuItem', () => {
     fixture.detectChanges()
     tick()
 
-    const menus = fixture.debugElement.queryAll(By.directive(MenuItem))
+    const menuItems = fixture.debugElement.queryAll(By.directive(MenuItem))
 
-    assertClass(menus[0], [`${px}-selected`])
-    assertClass(menus[1], [], [`${px}-selected`])
+    assertClass(menuItems[0], [`${px}-selected`])
+    assertClass(menuItems[1], [], [`${px}-selected`])
 
     component.selected = 'bar'
 
     fixture.detectChanges()
     tick()
 
-    assertClass(menus[0], [], [`${px}-selected`])
-    assertClass(menus[1], [`${px}-selected`])
+    assertClass(menuItems[0], [], [`${px}-selected`])
+    assertClass(menuItems[1], [`${px}-selected`])
   }))
 
   it('should report error when not under menu', () => {
@@ -89,6 +99,15 @@ describe('MenuItem', () => {
   `,
 })
 class MenuItemStaticTest { }
+
+@Component({
+  template: `
+    <ul antMenu="inline">
+      <li antMenuItem>Item</li>
+    </ul>
+  `,
+})
+class MenuItemIndentTest { }
 
 @Component({
   template: `

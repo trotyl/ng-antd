@@ -14,7 +14,9 @@ import { MENU_PREFIX } from './token'
 })
 export class SubMenu implements OnChanges, OnInit {
   @Input() key: string
-  @ViewChild('subMenu') template: TemplateRef<void>
+  @Input() title: string
+
+  @ViewChild('popUp') popUpTemplate: TemplateRef<void>
 
   @Input()
   set antSubMenu(value: string | '') {
@@ -22,8 +24,12 @@ export class SubMenu implements OnChanges, OnInit {
     if (value !== '') { this.key = value }
   }
 
+  inline = false
+  opened = false
   popupCls: { [name: string]: boolean } = {}
   titleCls: string[] = []
+  titleStyles: { [name: string]: string } = {}
+  arrowCls: string[] = []
 
   private prefix: string
 
@@ -40,6 +46,7 @@ export class SubMenu implements OnChanges, OnInit {
 
     this.prefix = `${basePrefix}-submenu`
     this.titleCls = [ `${this.prefix}-title` ]
+    this.arrowCls = [ `${this.prefix}-arrow` ]
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -47,15 +54,27 @@ export class SubMenu implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
+    this.inline = this.menu.mode === 'inline'
+
     this.governor.configureStaticClasses([ this.prefix ])
     this.updateHostClasses()
 
-    this.combo.configTemplate(this.template)
+    if (this.inline) {
+      this.titleStyles = { 'padding-left': `${24 * this.menu.level}px` }
+    } else {
+      this.combo.configTemplate(this.popUpTemplate)
+    }
+  }
+
+  toggle(): void {
+    this.opened = !this.opened
+    this.updateHostClasses()
   }
 
   private updateHostClasses(): void {
     this.governor.configureClasses({
       [`${this.prefix}-${this.menu.mode}`]: true,
+      [`${this.prefix}-open`]: this.inline && this.opened,
     })
     this.popupCls = {
       [`${this.prefix}`]: true,
