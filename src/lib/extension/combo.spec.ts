@@ -1,7 +1,7 @@
 import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay'
 import { Component, ElementRef, Injector, TemplateRef, ViewChild } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
-import { timer } from 'rxjs/observable/timer'
+import { timer } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { Combo, ComboFactory } from './combo'
 import { ExtensionModule } from './extension.module'

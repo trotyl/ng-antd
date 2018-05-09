@@ -1,10 +1,6 @@
 import { OnDestroy } from '@angular/core'
 import { ControlValueAccessor } from '@angular/forms'
-import { Observable } from 'rxjs/Observable'
-import { Observer } from 'rxjs/Observer'
-import { ReplaySubject } from 'rxjs/ReplaySubject'
-import { Subject } from 'rxjs/Subject'
-import { ISubscription } from 'rxjs/Subscription'
+import { Observable, Observer, ReplaySubject, Subject, Subscription } from 'rxjs'
 
 export type OnChangeFn<T> = (value: T | null) => void
 export type OnTouchedFn = () => void
@@ -81,7 +77,7 @@ export abstract class CompositeControl<T> extends Control<T> {
 }
 
 export abstract class ControlItem implements OnDestroy {
-  status$$: ISubscription
+  status$$: Subscription
 
   abstract ngOnDestroy(): void
 }

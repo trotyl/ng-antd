@@ -1,8 +1,5 @@
 import { AfterViewInit, Directive, ElementRef, Injectable, Injector, OnDestroy } from '@angular/core'
-import { Observable } from 'rxjs/Observable'
-import { Subject } from 'rxjs/Subject'
-import { fromEvent } from 'rxjs/observable/fromEvent'
-import { merge } from 'rxjs/observable/merge'
+import { fromEvent, merge, Observable, Subject } from 'rxjs'
 import { map, share, switchMap, takeUntil } from 'rxjs/operators'
 
 @Directive({

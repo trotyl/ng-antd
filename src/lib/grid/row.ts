@@ -1,7 +1,5 @@
 import { Directive, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
-import { Observable } from 'rxjs/Observable'
-import { Subject } from 'rxjs/Subject'
-import { ISubscription } from 'rxjs/Subscription'
+import { Observable, Subject, Subscription } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
@@ -29,7 +27,7 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   @Input('gutter.xxl') set gutterXxl(value: number) { this.rGutter.xxl = value }
 
   status$: Observable<void>
-  status$$: ISubscription
+  status$$: Subscription
 
   rGutter: Rsp<number> = {}
   fGutter: number = 0

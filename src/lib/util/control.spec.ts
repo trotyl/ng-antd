@@ -1,4 +1,4 @@
-import { ReplaySubject } from 'rxjs/ReplaySubject'
+import { ReplaySubject } from 'rxjs'
 import { values } from '../testing/helper'
 import { CompositeControl, Control, KeyedCompositeControl } from './control'
 

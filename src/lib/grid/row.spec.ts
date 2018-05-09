@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { of } from 'rxjs/observable/of'
+import { of } from 'rxjs'
 import { Responsive } from '../responsive/responsive'
 import { assertClass, assertStyle } from '../testing/helper'
 import { GridModule } from './grid.module'

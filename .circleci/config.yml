@@ -28,24 +28,25 @@ jobs:
       - run: |
           yarn generate
           yarn add file:./publish
+          yarn theme
           yarn build:es5
           yarn build:es2015
 
       - run: |
           gzip -k publish/bundles/ng-antd.umd.min.js
-          gzip -k dist/main.bundle.js
-          gzip -k dist2015/main.bundle.js
+          gzip -k dist/main.js
+          gzip -k dist2015/main.js
 
       - store_artifacts:
           path: ./publish/bundles/ng-antd.umd.min.js.gz
           destination: ng-antd.umd.min.js.gz
 
       - store_artifacts:
-          path: ./dist/main.bundle.js.gz
+          path: ./dist/main.js.gz
           destination: docs-main-es5.bundle.js.gz
 
       - store_artifacts:
-          path: ./dist2015/main.bundle.js.gz
+          path: ./dist2015/main.js.gz
           destination: docs-main-es2015.bundle.js.gz
 
   test:
