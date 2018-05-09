@@ -9,7 +9,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --output-hashing none --no-progress",
+    "build": "yarn build:es5",
+    "build:es5": "ng build --prod --output-hashing none --no-progress",
+    "prebuild:es2015": "sed -i -e 's/\"target\": \"es5\"/\"target\": \"es2015\"/g' tsconfig.json",
+    "build:es2015": "ng build --prod --output-hashing none --no-progress --output-path dist2015",
     "test": "ng test --single-run --no-progress --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e",
