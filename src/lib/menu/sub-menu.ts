@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Host, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild } from '@angular/core'
-import { Subject } from 'rxjs/Subject'
+import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { Combo } from '../extension/combo'
 import { Governor } from '../extension/governor'

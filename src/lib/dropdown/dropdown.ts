@@ -29,7 +29,7 @@ export class Dropdown implements AfterContentInit {
   ) { }
 
   ngAfterContentInit(): void {
-    /*@__PURE__*/assert(`antDropdown: requires 'overlay'`, this.contentOverlay != null)
+    /*@__PURE__*/assert(`antDropdown: requires 'overlay'`, this.contentOverlay == null)
 
     this.combo.configTemplate(this.contentOverlay)
   }

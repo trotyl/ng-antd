@@ -1,7 +1,5 @@
 import { Directive, Host, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
-import { Subject } from 'rxjs/Subject'
-import { ISubscription } from 'rxjs/Subscription'
-import { merge } from 'rxjs/observable/merge'
+import { merge, Subject, Subscription } from 'rxjs'
 import { tap } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
@@ -73,8 +71,8 @@ export class Column implements OnChanges, OnDestroy, OnInit {
 
   private changes$ = new Subject<void>()
 
-  private status$$: ISubscription
-  private rowStatus$$: ISubscription
+  private status$$: Subscription
+  private rowStatus$$: Subscription
 
   constructor(
     @Inject(COLUMN_PREFIX) private prefix: string,

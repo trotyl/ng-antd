@@ -1,6 +1,6 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { Directive, Host, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
-import { merge } from 'rxjs/observable/merge'
+import { merge } from 'rxjs'
 import { tap } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { Hover } from '../extension/hover'

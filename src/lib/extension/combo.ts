@@ -1,11 +1,7 @@
 import { OriginConnectionPosition, Overlay, OverlayConnectionPosition } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { AfterViewInit, Directive, ElementRef, Injectable, Injector, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core'
-import { BehaviorSubject } from 'rxjs/BehaviorSubject'
-import { Subject } from 'rxjs/Subject'
-import { combineLatest } from 'rxjs/observable/combineLatest'
-import { fromEvent } from 'rxjs/observable/fromEvent'
-import { merge } from 'rxjs/observable/merge'
+import { combineLatest, fromEvent, merge, BehaviorSubject, Subject } from 'rxjs'
 import { delay, filter, map, pairwise, scan, share, startWith, switchMap, takeUntil, tap } from 'rxjs/operators'
 
 const originPos: OriginConnectionPosition = { originX: 'start', originY: 'bottom' }
@@ -31,9 +27,9 @@ export class Combo implements AfterViewInit, OnDestroy {
 
     const toggle$ = merge(
       fromEvent<void>(el.nativeElement, 'mouseenter').pipe(map(() => 1)),
-      fromEvent<void>(el.nativeElement, 'mouseleave').pipe(map(() => -1), delay(200)),
+      fromEvent<void>(el.nativeElement, 'mouseleave').pipe(delay(200), map(() => -1)),
       fromEvent<void>(outlet.overlayElement, 'mouseenter').pipe(map(() => 1)),
-      fromEvent<void>(outlet.overlayElement, 'mouseleave').pipe(map(() => -1), delay(200)),
+      fromEvent<void>(outlet.overlayElement, 'mouseleave').pipe(delay(200), map(() => -1)),
     ).pipe(
       scan((s, x) => s + x, 0),
       startWith(0),
