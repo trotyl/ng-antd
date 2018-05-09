@@ -1,7 +1,7 @@
-import { isDevMode, ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, HostListener, Inject, Input, OnDestroy, OnInit, Optional, Self } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, HostListener, Inject, Input, OnDestroy, OnInit, Optional, Self } from '@angular/core'
 import { Governor } from '../extension/governor'
 import { ControlItem } from '../util/control'
-import { assertExist } from '../util/debug'
+import { assert } from '../util/debug'
 import { RadioGroup } from './radio-group'
 import { RADIO_BUTTON_PREFIX } from './token'
 
@@ -23,7 +23,11 @@ export class RadioButton<T> extends ControlItem implements OnDestroy, OnInit {
     @Inject(RADIO_BUTTON_PREFIX) private prefix: string,
     @Optional() @Self() private governor: Governor,
     @Optional() @Host() private group: RadioGroup<T>,
-  ) { super() }
+  ) {
+    super()
+
+    /*@__PURE__*/assert(`antRadioBtn: missing 'antRadioGroup' in scope`, !group)
+  }
 
   @HostListener('click')
   onClick(): void {
@@ -31,11 +35,6 @@ export class RadioButton<T> extends ControlItem implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.group, `antRadioBtn: must under 'antRadioGroup'`)
-    }
-
     this.governor.configureStaticClasses([ `${this.prefix}-wrapper` ])
 
     this.status$$ = this.group.status$.subscribe(() => {

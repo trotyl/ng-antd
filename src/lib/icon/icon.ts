@@ -1,7 +1,7 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { isDevMode, Directive, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { Directive, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { Governor } from '../extension/governor'
-import { assertExist } from '../util/debug'
+import { assert } from '../util/debug'
 import { ICON_PREFIX } from './token'
 
 @Directive({
@@ -26,10 +26,7 @@ export class Icon implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.type, `antIcon: missing 'type' input`)
-    }
+    /*@__PURE__*/assert(`antIcon: missing 'type' input`, !this.type)
 
     this.governor.configureStaticClasses([ this.prefix ])
   }

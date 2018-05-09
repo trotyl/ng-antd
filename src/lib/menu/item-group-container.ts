@@ -1,6 +1,6 @@
-import { isDevMode, ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, Inject, Input, OnInit, Optional, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, Inject, Input, OnInit, Optional, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
 import { Governor } from '../extension/governor'
-import { assertExist } from '../util/debug'
+import { assert } from '../util/debug'
 import { Menu } from './menu'
 import { MENU_PREFIX, TemplateOutlet } from './token'
 
@@ -32,10 +32,7 @@ export class MenuItemGroupContainer implements OnInit, TemplateOutlet {
     @Optional() @Self() private governor: Governor,
     @Optional() @Host() private menu: Menu,
   ) {
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.menu, `antMenuItemGroupContainer: missing 'antMenu' in scope`)
-    }
+    /*@__PURE__*/assert(`antMenuItemGroupContainer: missing 'antMenu' in scope`, !menu)
 
     this.prefix = `${basePrefix}-item-group`
   }

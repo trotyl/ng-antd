@@ -2,10 +2,12 @@
 
 # compiled output
 /dist
+/dist2015
 /tmp
 /out-tsc
 /publish
 publish.tgz
+tsconfig.json-e
 
 # dependencies
 /node_modules

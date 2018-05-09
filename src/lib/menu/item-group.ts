@@ -1,6 +1,6 @@
-import { isDevMode, ChangeDetectionStrategy, Component, Host, Inject, Input, OnInit, Optional, Self, TemplateRef, ViewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Host, Inject, Input, OnInit, Optional, Self, TemplateRef, ViewChild } from '@angular/core'
 import { Governor } from '../extension/governor'
-import { assertExist } from '../util/debug'
+import { assert } from '../util/debug'
 import { Menu } from './menu'
 import { MENU_PREFIX } from './token'
 
@@ -32,10 +32,7 @@ export class MenuItemGroup implements OnInit {
     @Optional() @Self() private governor: Governor,
     @Optional() @Host() private menu: Menu,
   ) {
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.menu, `antMenuItemGroup: missing 'antMenu' in scope`)
-    }
+    /*@__PURE__*/assert(`antMenuItemGroup: missing 'antMenu' in scope`, !menu)
 
     this.prefix = `${basePrefix}-item-group-list`
   }
@@ -43,10 +40,7 @@ export class MenuItemGroup implements OnInit {
   ngOnInit(): void {
     const container = this.menu.containers.shift()
 
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertExist(container, `antMenuItemGroup: missing 'antContent' in scope`)
-    }
+    /*@__PURE__*/assert(`antMenuItemGroup: missing 'antContent' in scope`, !container)
 
     container!.mount(this.titleTemplate)
     this.governor.configureStaticClasses([ this.prefix ])
