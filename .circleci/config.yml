@@ -28,11 +28,13 @@ jobs:
       - run: |
           yarn generate
           yarn add file:./publish
-          yarn build
+          yarn build:es5
+          yarn build:es2015
 
       - run: |
           gzip -k publish/bundles/ng-antd.umd.min.js
           gzip -k dist/main.bundle.js
+          gzip -k dist2015/main.bundle.js
 
       - store_artifacts:
           path: ./publish/bundles/ng-antd.umd.min.js.gz
@@ -40,7 +42,11 @@ jobs:
 
       - store_artifacts:
           path: ./dist/main.bundle.js.gz
-          destination: main.bundle.js.gz
+          destination: docs-main-es5.bundle.js.gz
+
+      - store_artifacts:
+          path: ./dist2015/main.bundle.js.gz
+          destination: docs-main-es2015.bundle.js.gz
 
   test:
     docker:
