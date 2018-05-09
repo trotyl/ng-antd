@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout'
 import { inject, TestBed } from '@angular/core/testing'
-import { empty, of } from 'rxjs'
+import { of, EMPTY } from 'rxjs'
 import { Responsive } from './responsive'
 import { ResponsiveModule } from './responsive.module'
 
@@ -25,7 +25,7 @@ describe('Responsive', () => {
 
   it('should resolve to largest when matched', inject([Responsive], (rsp: Responsive) => {
     let res: number
-    rsp.resolve({ lg: 5, md: 2 }, () => 0, empty()).subscribe(x => res = x)
+    rsp.resolve({ lg: 5, md: 2 }, () => 0, EMPTY).subscribe(x => res = x)
 
     expect(res!).toBe(5)
   }))
@@ -34,7 +34,7 @@ describe('Responsive', () => {
     spyOn(mockObserver, 'isMatched').and.returnValue(false)
 
     let res: number
-    rsp.resolve({ lg: 5, md: 2 }, () => 0, empty()).subscribe(x => res = x)
+    rsp.resolve({ lg: 5, md: 2 }, () => 0, EMPTY).subscribe(x => res = x)
 
     expect(res!).toBe(0)
   }))

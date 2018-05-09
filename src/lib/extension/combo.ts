@@ -49,7 +49,6 @@ export class Combo implements AfterViewInit, OnDestroy {
     const action$ = combineLatest(
       portal$,
       toggle$,
-      (p, t) => [p, t] as [TemplatePortal<void> | null, boolean],
     ).pipe(
       filter(([p, t]) => p != null),
       tap(([p, t]) => {
