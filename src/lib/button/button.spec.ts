@@ -113,7 +113,7 @@ describe('Button', () => {
 
   it('should report error when set iconOnly but not icon', () => {
     const fixture = TestBed.createComponent(ButtonErrorConflitIconIconOnlyTest)
-    expect(() => fixture.detectChanges()).toThrowError(/antBtn: expected 'iconOnly' input without 'icon' set/)
+    expect(() => fixture.detectChanges()).toThrowError(/antBtn: unexpected 'iconOnly' input without 'icon' set/)
   })
 
 })

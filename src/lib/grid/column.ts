@@ -1,11 +1,11 @@
-import { isDevMode, Directive, Host, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { Directive, Host, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
 import { ISubscription } from 'rxjs/Subscription'
 import { merge } from 'rxjs/observable/merge'
 import { tap } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { Responsive, ResponsiveOption as Rsp } from '../responsive/responsive'
-import { assertExist, assertFalse, length } from '../util/debug'
+import { assert, empty } from '../util/debug'
 import { Row } from './row'
 import { COLUMN_PREFIX } from './token'
 
@@ -82,10 +82,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
     @Optional() @Self() private governor: Governor,
     @Optional() @Host() private row: Row,
   ) {
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.row, `antCol: missing 'antRow' in scope`)
-    }
+    /*@__PURE__*/assert(`antCol: missing 'antRow' in scope`, !row)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -93,10 +90,7 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertFalse(this.span < 0 && /*@__PURE__*/length(this.rSpan) === 0, `antCol: missing 'span' input`)
-    }
+    /*@__PURE__*/assert(`antCol: missing 'span' input`, this.span < 0, /*@__PURE__*/empty(this.rSpan))
 
     this.governor.configureStaticClasses([ this.prefix ])
 

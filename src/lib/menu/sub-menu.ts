@@ -1,10 +1,10 @@
-import { isDevMode, ChangeDetectionStrategy, Component, Host, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Host, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
 import { takeUntil } from 'rxjs/operators'
 import { Combo } from '../extension/combo'
 import { Governor } from '../extension/governor'
 import { KeyedCompositeControl } from '../util/control'
-import { assertExist } from '../util/debug'
+import { assert } from '../util/debug'
 import { Menu } from './menu'
 import { MENU_PREFIX } from './token'
 
@@ -49,10 +49,7 @@ export class SubMenu extends KeyedCompositeControl<string, boolean> implements O
   ) {
     super()
 
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.menu, `antSubMenu: missing 'antMenu' in scope`)
-    }
+    /*@__PURE__*/assert(`antSubMenu: missing 'antMenu' in scope`, !menu)
 
     this.prefix = `${basePrefix}-submenu`
     this.titleCls = [ `${this.prefix}-title` ]

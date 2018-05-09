@@ -1,11 +1,11 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { isDevMode, Directive, Host, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { Directive, Host, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { merge } from 'rxjs/observable/merge'
 import { tap } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { Hover } from '../extension/hover'
 import { ControlItem } from '../util/control'
-import { assertExist } from '../util/debug'
+import { assert } from '../util/debug'
 import { Menu } from './menu'
 import { MENU_PREFIX } from './token'
 
@@ -35,10 +35,7 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   ) {
     super()
 
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.menu, `antMenuItem: missing 'antMenu' in scope`)
-    }
+    /*@__PURE__*/assert(`antMenuItem: missing 'antMenu' in scope`, !menu)
 
     this.prefix = `${basePrefix}-item`
   }

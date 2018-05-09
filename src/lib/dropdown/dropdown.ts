@@ -1,7 +1,7 @@
-import { isDevMode, AfterContentInit, ContentChild, Directive, Optional, Self, TemplateRef } from '@angular/core'
+import { AfterContentInit, ContentChild, Directive, Optional, Self, TemplateRef } from '@angular/core'
 import { Combo } from '../extension/combo'
 import { MENU_PREFIX } from '../menu/token'
-import { assertExist } from '../util/debug'
+import { assert } from '../util/debug'
 import { Overlay } from './overlay'
 
 /* tslint:disable-next-line */
@@ -29,10 +29,7 @@ export class Dropdown implements AfterContentInit {
   ) { }
 
   ngAfterContentInit(): void {
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertExist(this.contentOverlay, `antDropdown: requires 'overlay'`)
-    }
+    /*@__PURE__*/assert(`antDropdown: requires 'overlay'`, this.contentOverlay != null)
 
     this.combo.configTemplate(this.contentOverlay)
   }

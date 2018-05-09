@@ -1,26 +1,25 @@
+import { isDevMode } from '@angular/core'
+
 /* istanbul ignore next */
-export function assertEqual<T>(actual: T, expected: T, message: string): void {
-  if (actual !== expected) throwError(message)
+export function assert(message: string, ...rules: boolean[]): void {
+  if (/*@__PURE__*/isDevMode() && /*@__PURE__*/rules.every(_ => _)) {
+    /*@__PURE__*/throwError(message)
+  }
 }
 
 /* istanbul ignore next */
-export function assertExist(exp: any, message: string): void {
-  if (exp == null) throwError(message)
-}
-
-/* istanbul ignore next */
-export function assertFalse(exp: boolean, message: string): void {
-  if (exp) throwError(message)
-}
-
-/* istanbul ignore next */
-export function assertTrue(exp: boolean, message: string): void {
-  if (!exp) throwError(message)
+export function empty(exp: any[] | { [key: string]: any }): boolean {
+  return /*@__PURE__*/length(exp) === 0
 }
 
 /* istanbul ignore next */
 export function length(exp: any[] | { [key: string]: any }): number {
   return Array.isArray(exp) ? exp.length : Object.keys(exp).length
+}
+
+/* istanbul ignore next */
+export function notEmpty(exp: any[] | { [key: string]: any }): boolean {
+  return !empty(exp)
 }
 
 /* istanbul ignore next */

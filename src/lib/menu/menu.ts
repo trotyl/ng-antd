@@ -1,10 +1,10 @@
-import { forwardRef, isDevMode, AfterViewInit, ChangeDetectionStrategy, Component, Host, HostBinding, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, SkipSelf, TemplateRef, ViewChild } from '@angular/core'
+import { forwardRef, AfterViewInit, ChangeDetectionStrategy, Component, Host, HostBinding, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, SkipSelf, TemplateRef, ViewChild } from '@angular/core'
 import { NG_VALUE_ACCESSOR } from '@angular/forms'
 import { Governor } from '../extension/governor'
 import { Fragment } from '../fragment/fragment'
 import { FragmentContainer } from '../fragment/token'
 import { KeyedCompositeControl } from '../util/control'
-import { assertEqual } from '../util/debug'
+import { assert, notEmpty } from '../util/debug'
 import { MENU_PREFIX, TemplateOutlet } from './token'
 
 @Component({
@@ -63,10 +63,7 @@ export class Menu extends KeyedCompositeControl<string, boolean> implements Afte
   }
 
   ngAfterViewInit(): void {
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertEqual(this.containers.length, 0, `antMenu: unexpected dangling 'antContent' with no 'antMenuItemGroup' found`)
-    }
+    /*@__PURE__*/assert(`antMenu: unexpected dangling 'antContent' with no 'antMenuItemGroup' found`, notEmpty(this.containers))
   }
 
   register(fragment: Fragment): void {

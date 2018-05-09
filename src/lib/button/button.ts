@@ -1,7 +1,7 @@
 import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { isDevMode, ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { Governor } from '../extension/governor'
-import { assertFalse } from '../util/debug'
+import { assert } from '../util/debug'
 import { getSizeToken } from '../util/size'
 import { BUTTON_PREFIX } from './token'
 
@@ -31,11 +31,9 @@ export class Button implements OnChanges, OnInit {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    /* istanbul ignore else */
-    if (isDevMode()) {
-      /*@__PURE__*/assertFalse(/*@__PURE__*/boolify(this.loading) && !!this.icon, `antBtn: unexpected 'loading' input with 'icon' set`)
-      /*@__PURE__*/assertFalse(/*@__PURE__*/boolify(this.iconOnly) && !this.icon, `antBtn: expected 'iconOnly' input without 'icon' set`)
-    }
+    /*@__PURE__*/assert(`antBtn: unexpected 'loading' input with 'icon' set`, /*@__PURE__*/boolify(this.loading), this.icon != null)
+    /*@__PURE__*/assert(`antBtn: unexpected 'iconOnly' input without 'icon' set`, /*@__PURE__*/boolify(this.iconOnly), this.icon == null)
+
     this.updateHostClasses()
   }
 
