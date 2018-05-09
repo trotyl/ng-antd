@@ -1,7 +1,7 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout'
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
-import { distinctUntilChanged, map, merge, startWith } from 'rxjs/operators'
+import { merge, Observable } from 'rxjs'
+import { distinctUntilChanged, map, startWith } from 'rxjs/operators'
 
 export interface ResponsiveOption<T> {
   xs?: T
@@ -31,8 +31,7 @@ export class Responsive {
 
   resolve<T>(option: ResponsiveOption<T>, defaultGetter: () => T, notifier: Observable<void>): Observable<T> {
     const find = () => breakpoints.find(([bp, qr]) => (bp in option) && this.observer.isMatched(qr))
-    return this.observe$.pipe(
-      merge(notifier),
+    return merge(this.observe$, notifier).pipe(
       map(find),
       startWith(find()),
       map(res => res ? res[0] : null),
