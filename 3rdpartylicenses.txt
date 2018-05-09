@@ -75,11 +75,11 @@ MIT
 MIT
 MIT
 
-@angular/router@5.2.10
+@angular/platform-browser@5.2.10
 MIT
 MIT
 
-@angular/platform-browser@5.2.10
+@angular/router@5.2.10
 MIT
 MIT
 
