@@ -1,5 +1,4 @@
-<i *ngIf="loading" antIcon="loading"></i>
-<i *ngIf="icon" [antIcon]="icon"></i>
-<span>
+<i *ngIf="icon$ | async as iconType" [antIcon]="iconType"></i>
+<span *ngIf="hasContent$ | async">
   <ng-content></ng-content>
 </span>
