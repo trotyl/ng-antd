@@ -1,9 +1,13 @@
-import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { coerceBooleanProperty } from '@angular/cdk/coercion'
+import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnDestroy, Optional, Self, SimpleChanges } from '@angular/core'
+/* tslint:disable-next-line:no-unused-variable */
+import { Observable, Subject } from 'rxjs'
+import { map, takeUntil } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { assert } from '../util/debug'
-import { getSizeToken } from '../util/size'
+import { extractInputs, updateClass } from '../util/reactive'
 import { BUTTON_PREFIX } from './token'
+import { toButtonSize } from './util'
 
 @Component({
   selector: '[antBtn]',
@@ -11,44 +15,63 @@ import { BUTTON_PREFIX } from './token'
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class Button implements OnChanges, OnInit {
-  @Input() color: 'primary' | 'dashed' | 'danger' | null = null
-  @Input() size: 'large' | 'small' | null = null
-  @Input() icon: string | null = null
-  @Input() shape: 'circle' | null = null
-  @Input() loading: boolean = false
-  @Input() ghost: boolean = false
-  @Input() iconOnly: boolean = false
+export class Button implements OnChanges, OnDestroy {
+  @Input() antBtn: 'primary' | 'dashed' | 'danger' | '' | null
+  @Input() color: 'primary' | 'dashed' | 'danger' | null
+  @Input() size: 'large' | 'small' | null
+  @Input() icon: string | null
+  @Input() shape: 'circle' | null
+  @Input() loading: boolean
+  @Input() ghost: boolean
+  @Input() iconOnly: boolean
 
-  @Input()
-  set antBtn(value: 'primary' | 'dashed' | 'danger' | '' | null) {
-    if (value !== '') { this.color = value }
-  }
+  onChanges$ = new Subject<SimpleChanges>()
+  onDestroy$ = new Subject<void>()
+
+  input$ = this.onChanges$.pipe(
+    extractInputs({
+      antBtn: null as string | null,
+      color: null as string | null,
+      size: null as string | null,
+      icon: null as string | null,
+      shape: null as string | null,
+      loading: false, ghost: false, iconOnly: false,
+    }),
+  )
+
+  icon$ = this.input$.pipe(map(({ icon, loading }) => icon || (loading ? 'loading' : null)))
+  hasContent$ = this.input$.pipe(map(({ iconOnly, shape }) => !iconOnly && shape !== 'circle'))
 
   constructor(
-    @Inject(BUTTON_PREFIX) private prefix: string,
-    @Optional() @Self() private governor: Governor,
-  ) { }
+    @Inject(BUTTON_PREFIX) prefix: string,
+    @Optional() @Self() governor: Governor,
+  ) {
+    governor.configureStaticClasses([ prefix ])
 
-  ngOnChanges(changes: SimpleChanges): void {
-    /*@__PURE__*/assert(`antBtn: unexpected 'loading' input with 'icon' set`, /*@__PURE__*/boolify(this.loading), this.icon != null)
-    /*@__PURE__*/assert(`antBtn: unexpected 'iconOnly' input without 'icon' set`, /*@__PURE__*/boolify(this.iconOnly), this.icon == null)
+    const className$ = this.input$.pipe(
+      map(({ antBtn, color, size, shape, loading, ghost, iconOnly }) => ({
+        [`${prefix}-${color || antBtn || 'colornoop'}`]: !!(color || antBtn),
+        [`${prefix}-${toButtonSize(size)}`]: !!size,
+        [`${prefix}-circle`]: shape === 'circle',
+        [`${prefix}-icon-only`]: iconOnly || shape === 'circle',
+        [`${prefix}-loading`]: loading,
+        [`${prefix}-background-ghost`]: ghost,
+      })),
+      updateClass(governor),
+    )
 
-    this.updateHostClasses()
+    const status$ = className$.pipe(
+      takeUntil(this.onDestroy$),
+    )
+
+    status$.subscribe()
   }
 
-  ngOnInit(): void {
-    this.governor.configureStaticClasses([ this.prefix ])
-  }
+  ngOnChanges(changes: SimpleChanges): void { /*@__PURE__*/checkInputs(this); this.onChanges$.next(changes) }
+  ngOnDestroy(): void { this.onDestroy$.next() }
+}
 
-  private updateHostClasses(): void {
-    this.governor.configureClasses({
-      [`${this.prefix}-${this.color}`]: !!this.color,
-      [`${this.prefix}-${getSizeToken(this.size, 'antBtn')}`]: !!this.size,
-      [`${this.prefix}-circle`]: !!this.shape,
-      [`${this.prefix}-icon-only`]: !!this.shape || boolify(this.iconOnly),
-      [`${this.prefix}-loading`]: boolify(this.loading),
-      [`${this.prefix}-background-ghost`]: boolify(this.ghost),
-    })
-  }
+function checkInputs(ctx: Button): void {
+  assert(`antBtn: unexpected 'loading' input with 'icon' set`, coerceBooleanProperty(ctx.loading), ctx.icon != null)
+  assert(`antBtn: unexpected 'iconOnly' input without 'icon' set`, coerceBooleanProperty(ctx.iconOnly), ctx.icon == null)
 }
