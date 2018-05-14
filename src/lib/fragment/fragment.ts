@@ -1,27 +1,29 @@
 import { Host, Injectable, Injector, OnDestroy, OnInit, Optional, TemplateRef, ViewContainerRef } from '@angular/core'
+import { Subject } from 'rxjs'
+import { takeUntil, tap } from 'rxjs/operators'
 import { FragmentContainer } from './token'
 
 @Injectable()
 export abstract class Fragment implements OnDestroy, OnInit {
   abstract type: string
 
+  onInit$ = new Subject<void>()
+  onDestroy$ = new Subject<void>()
+
   constructor(
     public injector: Injector,
     public template: TemplateRef<void>,
     public viewContainer: ViewContainerRef,
-    @Optional() @Host() private container: FragmentContainer,
-  ) { }
+    @Optional() @Host() container: FragmentContainer,
+  ) {
+    const status$ = this.onInit$.pipe(
+      tap(() => { if (container) container.register(this) }),
+      takeUntil(this.onDestroy$.pipe(tap(() => { if (container) container.deregister(this) }))),
+    )
 
-  ngOnInit(): void {
-    if (this.container) {
-      this.container.register(this)
-    }
+    status$.subscribe()
   }
 
-  ngOnDestroy(): void {
-    if (this.container) {
-      this.container.deregister(this)
-    }
-    this.viewContainer.clear()
-  }
+  ngOnInit(): void { this.onInit$.next() }
+  ngOnDestroy(): void { this.onDestroy$.next() }
 }
