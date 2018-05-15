@@ -22,7 +22,7 @@ describe('Row', () => {
         RowAttributeSelectorTest,
       ],
       providers: [
-        { provide: Responsive, useValue: { resolve: (opt: any, dg: any) => of(opt.md || dg()) } },
+        { provide: Responsive, useValue: { resolve: (opt: any) => of(opt.md || opt.default) } },
       ],
     }).compileComponents()
   })

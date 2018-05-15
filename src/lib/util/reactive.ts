@@ -13,7 +13,7 @@ function coerceProperty(value: any, defaultValue: any): any {
     case 'boolean':
       return coerceBooleanProperty(value)
     default:
-      return value || null
+      return value != null && value !== '' ? value : null
   }
 }
 
@@ -43,6 +43,14 @@ export function updateClass(governor: Governor): (source: Observable<{ [name: st
   return (source: Observable<{ [name: string]: boolean }>) => source.pipe(
     tap(classes => {
       governor.configureClasses(classes)
+    }),
+  )
+}
+
+export function updateStyle(governor: Governor): (source: Observable<{ [name: string]: string }>) => Observable<{ [name: string]: string }> {
+  return (source: Observable<{ [name: string]: string }>) => source.pipe(
+    tap(styles => {
+      governor.configureStyles(styles)
     }),
   )
 }
