@@ -1,11 +1,12 @@
-import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
 import { Directive, Host, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
-import { merge } from 'rxjs'
-import { tap } from 'rxjs/operators'
+/* tslint:disable-next-line:no-unused-variable */
+import { combineLatest, merge, Observable, Subject } from 'rxjs'
+import { map, startWith } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { Hover } from '../extension/hover'
 import { ControlItem } from '../util/control'
 import { assert } from '../util/debug'
+import { extractInputs, updateClass, updateStyle } from '../util/reactive'
 import { Menu } from './menu'
 import { MENU_PREFIX } from './token'
 
@@ -14,62 +15,69 @@ import { MENU_PREFIX } from './token'
   exportAs: 'antMenuItem',
 })
 export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnInit {
+  @Input() antMenuItem: string | ''
   @Input() key: string
-  @Input() disabled: boolean = false
+  @Input() disabled: boolean
 
   @HostBinding('attr.role') @Input() role: string = 'menuitem'
 
-  @Input()
-  set antMenuItem(value: string | '') {
-    if (value !== '') { this.key = value }
-  }
+  onChanges$ = new Subject<SimpleChanges>()
+  onInit$ = new Subject<void>()
+  onDestroy$ = new Subject<void>()
 
-  private prefix: string
-  private active: boolean = false
+  input$ = this.onChanges$.pipe(
+    extractInputs({
+      antMenuItem: null as string | null,
+      key: null as string | null,
+      disabled: false,
+    }),
+    map(inputs => ({ ...inputs, key: inputs.key != null ? inputs.key : inputs.antMenuItem })),
+  )
 
   constructor(
     @Inject(MENU_PREFIX) basePrefix: string,
-    @Optional() @Self() private governor: Governor,
-    @Optional() @Self() private hover: Hover,
-    @Optional() @Host() private menu: Menu,
+    @Optional() @Self() governor: Governor,
+    @Optional() @Self() hover: Hover,
+    @Optional() @Host() menu: Menu,
   ) {
     super()
 
-    /*@__PURE__*/assert(`antMenuItem: missing 'antMenu' in scope`, !menu)
+    /*@__PURE__*/checkDeps(menu)
 
-    this.prefix = `${basePrefix}-item`
+    const prefix = `${basePrefix}-item`
+
+    governor.configureStaticClasses([ prefix ])
+
+    const active$ = hover.changes.pipe(startWith(false))
+    const modelValue$ = menu.modelValue$.pipe(startWith(null as string | null))
+
+    const className$ = combineLatest(this.input$, active$, modelValue$).pipe(
+      map(([{ key, disabled }, active, modelValue]) => ({
+        [`${prefix}-selected`]: key === modelValue,
+        [`${prefix}-active`]: active && !disabled,
+        [`${prefix}-disabled`]: disabled,
+      })),
+      updateClass(governor),
+    )
+
+    const style$ = menu.mode$.pipe(
+      map(mode => mode === 'inline' ? { 'padding-left': `${24 * menu.level}px` } : {} as {}),
+      updateStyle(governor),
+    )
+
+    const status$ = merge(
+      className$,
+      style$,
+    )
+
+    status$.subscribe()
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.updateHostClasses()
-  }
+  ngOnChanges(changes: SimpleChanges): void { this.onChanges$.next(changes) }
+  ngOnInit(): void { this.onInit$.next() }
+  ngOnDestroy(): void { this.onDestroy$.next() }
+}
 
-  ngOnInit(): void {
-    this.governor.configureStaticClasses([ this.prefix ])
-
-    if (this.menu.mode === 'inline') {
-      this.governor.configureStyles({
-        'padding-left': `${24 * this.menu.level}px`,
-      })
-    }
-
-    this.status$$ = merge(
-      this.menu.status$,
-      this.hover.changes.pipe(tap(x => this.active = x)),
-    ).subscribe(() => this.updateHostClasses())
-  }
-
-  ngOnDestroy(): void {
-    /* istanbul ignore else */
-    if (this.status$$) this.status$$.unsubscribe()
-  }
-
-  private updateHostClasses(): void {
-    const disabled = boolify(this.disabled)
-    this.governor.configureClasses({
-      [`${this.prefix}-selected`]: this.key === this.menu.value,
-      [`${this.prefix}-active`]: this.active && !disabled,
-      [`${this.prefix}-disabled`]: disabled,
-    })
-  }
+function checkDeps(menu: Menu | null): void {
+  assert(`antMenuItem: missing 'antMenu' in scope`, !menu)
 }
