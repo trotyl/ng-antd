@@ -13,10 +13,12 @@ export abstract class Control<T> implements ControlValueAccessor {
   disabled: boolean = false
   onChangeFn: OnChangeFn<T> = noop
   onTouchedFn: OnTouchedFn = noop
+  modelValue$ = new Subject<T | null>()
 
   writeValue(value: T | null): void {
     this.value = value
     this.handleUpdate(false)
+    this.modelValue$.next(value)
   }
 
   registerOnChange(fn: (value: T | null) => void): void {
@@ -32,6 +34,7 @@ export abstract class Control<T> implements ControlValueAccessor {
     this.handleUpdate(true)
     this.onChangeFn(value)
     this.onTouchedFn()
+    this.modelValue$.next(value)
   }
 
   setDisabledState(disabled: boolean): void {
@@ -94,7 +97,7 @@ export abstract class KeyedCompositeControl<K, V, T = K> extends CompositeContro
     const observer = new ReplaySubject<V>(1)
     this.keyedObservers.set(key, observer)
     this.flushKey(key)
-    return observer as any
+    return observer
   }
 
   flushKey(key: K): void {

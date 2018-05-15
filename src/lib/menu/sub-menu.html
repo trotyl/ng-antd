@@ -1,15 +1,15 @@
-<div [ngClass]="titleCls" [ngStyle]="titleStyles" (click)="toggle()">
+<div [ngClass]="titleClasses" [ngStyle]="titleStyles$ | async" (click)="toggle$.next()">
   {{ title }}
   <ng-content></ng-content>
-  <i *ngIf="inline" [ngClass]="arrowCls"></i>
+  <i *ngIf="inline$ | async" [ngClass]="arrowClasses"></i>
 </div>
 
-<ng-template #menuSub [ngIf]="inline && opened">
+<ng-template #menuSub [ngIf]="inlineContent$ | async">
   <ng-content select="ul"></ng-content>
 </ng-template>
 
 <ng-template #popUp>
-  <div [ngClass]="popupCls">
+  <div [ngClass]="popupClasses$ | async">
     <ng-container *ngTemplateOutlet="menuSub"></ng-container>
   </div>
 </ng-template>

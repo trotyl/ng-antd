@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, Inject, Input, OnInit, Optional, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, Inject, Input, Optional, Self, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core'
 import { Governor } from '../extension/governor'
 import { assert } from '../util/debug'
 import { Menu } from './menu'
@@ -11,7 +11,7 @@ import { MENU_PREFIX, TemplateOutlet } from './token'
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class MenuItemGroupContainer implements OnInit, TemplateOutlet {
+export class MenuItemGroupContainer implements TemplateOutlet {
   @Input() itemGroup: TemplateRef<void>
 
   @Input()
@@ -22,30 +22,29 @@ export class MenuItemGroupContainer implements OnInit, TemplateOutlet {
 
   @ViewChild('titleOutlet', { read: ViewContainerRef }) titleOutlet: ViewContainerRef
 
-  titleCls: string [] = []
-
-  private prefix: string
+  readonly titleClasses: { [name: string]: boolean } = { }
 
   constructor(
     private cdRef: ChangeDetectorRef,
     @Inject(MENU_PREFIX) basePrefix: string,
-    @Optional() @Self() private governor: Governor,
-    @Optional() @Host() private menu: Menu,
+    @Optional() @Self() governor: Governor,
+    @Optional() @Host() menu: Menu,
   ) {
-    /*@__PURE__*/assert(`antMenuItemGroupContainer: missing 'antMenu' in scope`, !menu)
+    /*@__PURE__*/checkDeps(menu)
 
-    this.prefix = `${basePrefix}-item-group`
-  }
+    const prefix = `${basePrefix}-item-group`
+    this.titleClasses = { [`${prefix}-title`]: true }
+    governor.configureStaticClasses([ prefix ])
 
-  ngOnInit(): void {
-    this.menu.containers.push(this)
-
-    this.governor.configureStaticClasses([ this.prefix ])
-    this.titleCls = [ `${this.prefix}-title` ]
+    menu.containers.push(this)
   }
 
   mount(template: TemplateRef<void>): void {
     this.titleOutlet.createEmbeddedView(template)
     this.cdRef.detectChanges()
   }
+}
+
+function checkDeps(menu: Menu | null): void {
+  assert(`antMenuItemGroupContainer: missing 'antMenu' in scope`, !menu)
 }

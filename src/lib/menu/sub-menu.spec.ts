@@ -54,7 +54,7 @@ describe('SubMenu', () => {
     fixture.detectChanges()
     assertClass(subMenu, [], [`${px}-open`])
 
-    instance.toggle()
+    instance.toggle$.next()
     assertClass(subMenu, [`${px}-open`])
   })
 
@@ -89,7 +89,7 @@ describe('SubMenu', () => {
     expect(subMenuInstance.parentComposite).toBe(menuInstance)
 
     menuInstance.open('Key1')
-    expect(subMenuInstance.opened).toBe(true)
+    assertClass(subMenu, [`${px}-open`])
   })
 
   it('should report error when not inside menu', () => {

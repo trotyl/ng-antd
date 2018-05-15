@@ -1,10 +1,13 @@
-import { forwardRef, AfterViewInit, ChangeDetectionStrategy, Component, Host, HostBinding, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges, SkipSelf, TemplateRef, ViewChild } from '@angular/core'
+import { forwardRef, AfterViewInit, ChangeDetectionStrategy, Component, Host, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges, SkipSelf, TemplateRef, ViewChild } from '@angular/core'
 import { NG_VALUE_ACCESSOR } from '@angular/forms'
+import { combineLatest, Observable, Subject } from 'rxjs'
+import { map, shareReplay, takeUntil } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { Fragment } from '../fragment/fragment'
 import { FragmentContainer } from '../fragment/token'
 import { KeyedCompositeControl } from '../util/control'
 import { assert, notEmpty } from '../util/debug'
+import { extractInputs, updateClass } from '../util/reactive'
 import { MENU_PREFIX, TemplateOutlet } from './token'
 
 @Component({
@@ -18,53 +21,74 @@ import { MENU_PREFIX, TemplateOutlet } from './token'
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class Menu extends KeyedCompositeControl<string, boolean> implements AfterViewInit, FragmentContainer, OnChanges, OnInit {
-  @Input() mode: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' = 'vertical'
-  @Input() theme: 'light' | 'dark' = 'light'
+export class Menu extends KeyedCompositeControl<string, boolean> implements AfterViewInit, FragmentContainer, OnChanges, OnDestroy, OnInit {
+  @Input() antMenu: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' | ''
+  @Input() mode: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline'
+  @Input() theme: 'light' | 'dark'
 
   @HostBinding('attr.role') @Input() role: string = 'menu'
   @HostBinding('attr.tabindex') @Input() tabIndex: string = '0'
 
   @ViewChild('groupWrapper') groupWrapper: TemplateRef<{ template: TemplateRef<void> }>
 
-  @Input()
-  set antMenu(value: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' | '') {
-    if (value !== '') { this.mode = value }
-  }
+  readonly level: number
+  readonly containers: TemplateOutlet[] = []
+  readonly parentComposite: Menu
 
-  level: number
-  containers: TemplateOutlet[] = []
+  onChanges$ = new Subject<SimpleChanges>()
+  onInit$ = new Subject<void>()
+  onDestroy$ = new Subject<void>()
 
-  get parentComposite(): Menu {
-    return this.parent
-  }
+  input$ = this.onChanges$.pipe(
+    extractInputs({
+      antMenu: 'vertical',
+      mode: null! as string,
+      theme: 'light',
+    }),
+    map(inputs => ({ ...inputs, mode: inputs.mode != null ? inputs.mode : inputs.antMenu })),
+  )
+
+  mode$: Observable<string>
+  theme$ = this.input$.pipe(map(({ theme }) => theme), shareReplay(1))
 
   constructor(
-    @Inject(MENU_PREFIX) private prefix: string,
-    @Optional() @Self() private governor: Governor,
-    @Optional() @Host() @SkipSelf() private parent: Menu,
+    @Inject(MENU_PREFIX) prefix: string,
+    @Optional() @Self() governor: Governor,
+    @Optional() @Host() @SkipSelf() parent: Menu,
   ) {
     super()
 
-    this.level = parent ? parent.level + 1 : 1
-  }
+    this.level = 1
+    this.mode$ = this.input$.pipe(map(({ mode }) => mode), shareReplay(1))
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.updateHostClasses()
-  }
-
-  ngOnInit(): void {
-    if (this.parent) {
-      this.mode = resolveMode(this.parent.mode)
+    if (parent) {
+      this.level = parent.level + 1
+      this.mode$ = parent.mode$.pipe(map(resolveMode), shareReplay(1))
+      this.parentComposite = parent
     }
 
-    this.governor.configureStaticClasses([ this.prefix ])
-    this.updateHostClasses()
+    governor.configureStaticClasses([ prefix ])
+
+    const className$ = combineLatest(this.input$, this.mode$).pipe(
+      map(([{ theme }, mode]) => ({
+        [`${prefix}-${theme}`]: !parent,
+        [`${prefix}-${mode}`]: true,
+        [`${prefix}-${parent ? 'sub' : 'root'}`]: true,
+      })),
+      updateClass(governor),
+    )
+
+    const status$ = className$.pipe(
+      takeUntil(this.onDestroy$),
+    )
+
+    status$.subscribe()
   }
 
-  ngAfterViewInit(): void {
-    /*@__PURE__*/assert(`antMenu: unexpected dangling 'antContent' with no 'antMenuItemGroup' found`, notEmpty(this.containers))
-  }
+  ngOnChanges(changes: SimpleChanges): void { this.onChanges$.next(changes) }
+  ngOnInit(): void { this.onInit$.next() }
+  ngAfterViewInit(): void { /*@__PURE__*/checkContents(this) }
+  ngOnDestroy(): void { this.onDestroy$.next() }
 
   register(fragment: Fragment): void {
     /* istanbul ignore else */
@@ -88,14 +112,6 @@ export class Menu extends KeyedCompositeControl<string, boolean> implements Afte
       this.flushKey(key)
     }
   }
-
-  private updateHostClasses(): void {
-    this.governor.configureClasses({
-      [`${this.prefix}-${this.theme}`]: !this.parent,
-      [`${this.prefix}-${this.mode}`]: true,
-      [`${this.prefix}-${this.parent ? 'sub' : 'root'}`]: true,
-    })
-  }
 }
 
 /* istanbul ignore next */
@@ -106,4 +122,8 @@ function resolveMode(parentMode: string): 'vertical' | 'vertical-left' | 'vertic
     default:
       return 'vertical'
   }
+}
+
+function checkContents(ctx: Menu): void {
+  assert(`antMenu: unexpected dangling 'antContent' with no 'antMenuItemGroup' found`, notEmpty(ctx.containers))
 }

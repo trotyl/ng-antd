@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, Host, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild } from '@angular/core'
-import { Subject } from 'rxjs'
-import { takeUntil } from 'rxjs/operators'
+import { combineLatest, merge, Observable, Subject } from 'rxjs'
+import { distinctUntilChanged, filter, map, scan, shareReplay, startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators'
 import { Combo } from '../extension/combo'
 import { Governor } from '../extension/governor'
 import { KeyedCompositeControl } from '../util/control'
 import { assert } from '../util/debug'
+import { extractInputs, updateClass } from '../util/reactive'
 import { Menu } from './menu'
 import { MENU_PREFIX } from './token'
 
@@ -16,86 +17,124 @@ import { MENU_PREFIX } from './token'
   preserveWhitespaces: false,
 })
 export class SubMenu extends KeyedCompositeControl<string, boolean> implements OnChanges, OnDestroy, OnInit {
+  @Input() antSubMenu: string | ''
   @Input() key: string
   @Input() title: string
 
   @ViewChild('popUp') popUpTemplate: TemplateRef<void>
 
-  @Input()
-  set antSubMenu(value: string | '') {
-    /* istanbul ignore else */
-    if (value !== '') { this.key = value }
-  }
+  readonly parentComposite: Menu
+  readonly titleClasses: { [name: string]: boolean } = {}
+  readonly arrowClasses: { [name: string]: boolean } = {}
 
-  inline = false
-  opened = false
-  popupCls: { [name: string]: boolean } = {}
-  titleCls: string[] = []
-  titleStyles: { [name: string]: string } = {}
-  arrowCls: string[] = []
+  popupClasses$: Observable<{ [name: string]: boolean }>
+  titleStyles$: Observable<{ [name: string]: string }>
 
-  get parentComposite(): Menu {
-    return this.menu
-  }
+  onChanges$ = new Subject<SimpleChanges>()
+  onInit$ = new Subject<void>()
+  onDestroy$ = new Subject<void>()
 
-  private prefix: string
-  private onDestroy$: Subject<void> = new Subject()
+  input$ = this.onChanges$.pipe(
+    extractInputs({
+      antSubMenu: null as string | null,
+      key: null as string | null,
+      title: null as string | null,
+    }),
+    map(inputs => ({ ...inputs, key: inputs.key != null ? inputs.key : inputs.antSubMenu })),
+  )
+
+  toggle$ = new Subject<void>()
+  inline$: Observable<boolean>
+  inlineContent$: Observable<boolean>
 
   constructor(
     @Inject(MENU_PREFIX) basePrefix: string,
-    @Optional() @Self() private combo: Combo,
-    @Optional() @Self() private governor: Governor,
-    @Optional() @Host() private menu: Menu,
+    @Optional() @Self() combo: Combo,
+    @Optional() @Self() governor: Governor,
+    @Optional() @Host() menu: Menu,
   ) {
     super()
 
-    /*@__PURE__*/assert(`antSubMenu: missing 'antMenu' in scope`, !menu)
+    /*@__PURE__*/checkDeps(menu)
+    this.parentComposite = menu
 
-    this.prefix = `${basePrefix}-submenu`
-    this.titleCls = [ `${this.prefix}-title` ]
-    this.arrowCls = [ `${this.prefix}-arrow` ]
+    const prefix = `${basePrefix}-submenu`
+
+    governor.configureStaticClasses([ prefix ])
+
+    this.titleClasses = { [`${prefix}-title`]: true }
+    this.arrowClasses = { [`${prefix}-arrow`]: true }
+
+    const keyStatus$ = this.input$.pipe(
+      map(({ key }) => key),
+      filter(key => key != null),
+      distinctUntilChanged(),
+      switchMap(key => menu.observeKey(key!)),
+    )
+
+    const opened$: Observable<boolean> = merge(this.toggle$, keyStatus$).pipe(
+      startWith<boolean | void>(false),
+      // TODO: remove unnecessary type conversion caused by ng-packagr issue
+      scan<boolean | void, boolean>(((pre, cur) => cur != null ? cur as boolean : !pre), false),
+    )
+
+    this.inline$ = menu.mode$.pipe(
+      map(mode => mode === 'inline'),
+      shareReplay(1),
+    )
+
+    this.inlineContent$ = combineLatest(
+      this.inline$,
+      opened$,
+    ).pipe(
+      map(([inline, opened]) => inline && opened),
+      shareReplay(1),
+    )
+
+    const className$ = combineLatest(this.inlineContent$, menu.mode$).pipe(
+      map(([opened, mode]) => ({
+        [`${prefix}-${mode}`]: true,
+        [`${prefix}-open`]: opened,
+      })),
+      updateClass(governor),
+    )
+
+    this.titleStyles$ = this.inline$.pipe(
+      map(inline => inline ? { 'padding-left': `${24 * menu.level}px` } : {} as {}),
+    )
+
+    // TODO: support changing 'mode' dynamically
+    const combo$ = this.onInit$.pipe(
+      switchMap(() => this.inline$),
+      take(1),
+      filter(inline => !inline),
+      tap(() => combo.configTemplate(this.popUpTemplate)),
+    )
+
+    this.popupClasses$ = menu.theme$.pipe(
+      map((theme) => ({
+        [`${prefix}`]: true,
+        [`${prefix}-popup`]: true,
+        [`${prefix}-${theme}`]: true,
+        [`${prefix}-placement-bottomLeft`]: true,
+      })),
+    )
+
+    const status$ = merge(
+      className$,
+      combo$,
+    ).pipe(
+      takeUntil(this.onDestroy$),
+    )
+
+    status$.subscribe()
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.updateHostClasses()
-  }
-
-  ngOnInit(): void {
-    this.inline = this.menu.mode === 'inline'
-
-    this.governor.configureStaticClasses([ this.prefix ])
-    this.updateHostClasses()
-
-    if (this.inline) {
-      this.titleStyles = { 'padding-left': `${24 * this.menu.level}px` }
-    } else {
-      this.combo.configTemplate(this.popUpTemplate)
-    }
-
-    if (this.key) {
-      this.menu.observeKey(this.key)
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe(res => this.opened = res)
-    }
-  }
-
+  ngOnChanges(changes: SimpleChanges): void { this.onChanges$.next(changes) }
+  ngOnInit(): void { this.onInit$.next() }
   ngOnDestroy(): void { this.onDestroy$.next() }
+}
 
-  toggle(): void {
-    this.opened = !this.opened
-    this.updateHostClasses()
-  }
-
-  private updateHostClasses(): void {
-    this.governor.configureClasses({
-      [`${this.prefix}-${this.menu.mode}`]: true,
-      [`${this.prefix}-open`]: this.inline && this.opened,
-    })
-    this.popupCls = {
-      [`${this.prefix}`]: true,
-      [`${this.prefix}-popup`]: true,
-      [`${this.prefix}-${this.menu.theme}`]: true,
-      [`${this.prefix}-placement-bottomLeft`]: true,
-    }
-  }
+function checkDeps(menu: Menu | null): void {
+  assert(`antSubMenu: missing 'antMenu' in scope`, !menu)
 }

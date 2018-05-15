@@ -7,7 +7,7 @@ import { Governor } from '../extension/governor'
 function coerceProperty(value: any, defaultValue: any): any {
   switch (typeof defaultValue) {
     case 'string':
-      return `${value}`
+      return value.length > 0 ? `${value}` : defaultValue
     case 'number':
       return coerceNumberProperty(value)
     case 'boolean':
