@@ -1,7 +1,7 @@
 import { Directive, Inject, Input, OnChanges, OnDestroy, Optional, Self, SimpleChanges } from '@angular/core'
 /* tslint:disable-next-line:no-unused-variable */
 import { Observable, Subject } from 'rxjs'
-import { map, takeUntil } from 'rxjs/operators'
+import { map, takeUntil, tap } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { extractInputs, updateClass } from '../util/reactive'
 import { BUTTON_GROUP_PREFIX } from './token'
@@ -22,6 +22,7 @@ export class ButtonGroup implements OnChanges, OnDestroy {
       antBtnGroup: null as string | null,
       size: null as string | null,
     }),
+    tap(inputs => inputs.size = inputs.size != null ? inputs.size : inputs.antBtnGroup),
   )
 
   constructor(
@@ -31,8 +32,8 @@ export class ButtonGroup implements OnChanges, OnDestroy {
     governor.configureStaticClasses([ prefix ])
 
     const className$ = this.input$.pipe(
-      map(({ antBtnGroup, size }) => ({
-        [`${prefix}-${toButtonSize(size || antBtnGroup)}`]: !!(size || antBtnGroup),
+      map(({ size }) => ({
+        [`${prefix}-${toButtonSize(size)}`]: !!size,
       })),
       updateClass(governor),
     )

@@ -2,7 +2,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion'
 import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnDestroy, Optional, Self, SimpleChanges } from '@angular/core'
 /* tslint:disable-next-line:no-unused-variable */
 import { Observable, Subject } from 'rxjs'
-import { map, takeUntil } from 'rxjs/operators'
+import { map, takeUntil, tap } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { assert } from '../util/debug'
 import { extractInputs, updateClass } from '../util/reactive'
@@ -37,6 +37,7 @@ export class Button implements OnChanges, OnDestroy {
       shape: null as string | null,
       loading: false, ghost: false, iconOnly: false,
     }),
+    tap(inputs => inputs.color = inputs.color != null ? inputs.color : inputs.antBtn),
   )
 
   icon$ = this.input$.pipe(map(({ icon, loading }) => icon || (loading ? 'loading' : null)))
@@ -49,8 +50,8 @@ export class Button implements OnChanges, OnDestroy {
     governor.configureStaticClasses([ prefix ])
 
     const className$ = this.input$.pipe(
-      map(({ antBtn, color, size, shape, loading, ghost, iconOnly }) => ({
-        [`${prefix}-${color || antBtn || 'colornoop'}`]: !!(color || antBtn),
+      map(({ color, size, shape, loading, ghost, iconOnly }) => ({
+        [`${prefix}-${color || 'colornoop'}`]: !!color,
         [`${prefix}-${toButtonSize(size)}`]: !!size,
         [`${prefix}-circle`]: shape === 'circle',
         [`${prefix}-icon-only`]: iconOnly || shape === 'circle',
