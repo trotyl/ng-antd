@@ -1,40 +1,58 @@
-import { coerceBooleanProperty as boolify } from '@angular/cdk/coercion'
-import { Directive, Inject, Input, OnChanges, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+import { Directive, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
+/* tslint:disable-next-line:no-unused-variable */
+import { Observable, Subject } from 'rxjs'
+import { map, takeUntil, tap } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { assert } from '../util/debug'
+import { extractInputs, updateClass } from '../util/reactive'
 import { ICON_PREFIX } from './token'
 
 @Directive({
   selector: '[antIcon]',
 })
-export class Icon implements OnChanges, OnInit {
+export class Icon implements OnChanges, OnDestroy, OnInit {
+  @Input() antIcon: string
   @Input() type: string
-  @Input() spin: boolean = false
+  @Input() spin: boolean
 
-  @Input()
-  set antIcon(value: string) {
-    if (value !== '') { this.type = value }
-  }
+  onChanges$ = new Subject<SimpleChanges>()
+  onDestroy$ = new Subject<void>()
+
+  input$ = this.onChanges$.pipe(
+    extractInputs({
+      antIcon: null as string | null,
+      type: null as string | null,
+      spin: false,
+    }),
+    tap(inputs => inputs.type = inputs.type != null ? inputs.type : inputs.antIcon),
+  )
 
   constructor(
-    @Inject(ICON_PREFIX) private prefix: string,
-    @Optional() @Self() private governor: Governor,
-  ) { }
+    @Inject(ICON_PREFIX) prefix: string,
+    @Optional() @Self() governor: Governor,
+  ) {
+    governor.configureStaticClasses([ prefix ])
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.updateHostClasses()
+    const className$ = this.input$.pipe(
+      map(({ type, spin }) => ({
+        [`${prefix}-${type}`]: !!type,
+        [`${prefix}-spin`]: spin || type === 'loading',
+      })),
+      updateClass(governor),
+    )
+
+    const status$ = className$.pipe(
+      takeUntil(this.onDestroy$),
+    )
+
+    status$.subscribe()
   }
 
-  ngOnInit(): void {
-    /*@__PURE__*/assert(`antIcon: missing 'type' input`, !this.type)
+  ngOnChanges(changes: SimpleChanges): void { /*@__PURE__*/checkInputs(this); this.onChanges$.next(changes) }
+  ngOnInit(): void { /*@__PURE__*/checkInputs(this) }
+  ngOnDestroy(): void { this.onDestroy$.next() }
+}
 
-    this.governor.configureStaticClasses([ this.prefix ])
-  }
-
-  private updateHostClasses(): void {
-    this.governor.configureClasses({
-      [`${this.prefix}-${this.type}`]: !!this.type,
-      [`${this.prefix}-spin`]: boolify(this.spin) || this.type === 'loading',
-    })
-  }
+function checkInputs(ctx: Icon): void {
+  assert(`antIcon: missing 'type' input`, ctx.antIcon == null || ctx.antIcon === '', ctx.type == null || ctx.type === '')
 }
