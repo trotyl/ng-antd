@@ -1,1 +1,21 @@
-<p>TODO: requires menu, breadcrumb</p>
+<ant-layout class="layout">
+  <header>
+    <div class="logo"></div>
+    <ul style="line-height: 64px" antMenu="horizontal" theme="dark" [(ngModel)]="selected">
+      <li antMenuItem="1">nav 1</li>
+      <li antMenuItem="2">nav 2</li>
+      <li antMenuItem="3">nav 3</li>
+    </ul>
+  </header>
+  <main style="padding: 0 50px">
+    <ant-breadcrumb style="margin: 16px 0">
+      <span antBreadcrumbItem>Home</span>
+      <span antBreadcrumbItem>List</span>
+      <span antBreadcrumbItem>App</span>
+    </ant-breadcrumb>
+    <div style="background: '#fff'; padding: 24; min-height: 280">Content</div>
+  </main>
+  <footer style="text-align: center">
+    Ant Design ©2016 Created by Ant UED
+  </footer>
+</ant-layout>

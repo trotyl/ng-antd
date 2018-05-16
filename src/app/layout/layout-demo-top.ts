@@ -6,4 +6,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class LayoutDemoTop { }
+export class LayoutDemoTop {
+  selected = '2'
+}
