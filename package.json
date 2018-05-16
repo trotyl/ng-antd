@@ -25,7 +25,8 @@
     "gh-build": "ng build --prod --base-href /ng-antd/ --no-progress",
     "postgh-build": "cp dist/index.html dist/404.html && cp -r .circleci/ dist/.circleci/",
     "deploy": "gh-pages -d dist -t",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "publish": "cd publish && npm publish"
   },
   "private": true,
   "dependencies": {
