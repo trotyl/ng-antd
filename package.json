@@ -1,6 +1,6 @@
 {
   "name": "ng-antd-workspace",
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "license": "MIT",
   "description": "Project used to explore Angular component design best practice",
   "main": "index.js",
