@@ -18,6 +18,7 @@
     "e2e": "ng e2e",
     "theme": "lessc theme/index.less built/site.css",
     "generate": "ng-packagr -p src/lib/package.json",
+    "postgenerate": "cp node_modules/antd/dist/*.css* publish/bundles/",
     "release": "cd publish && npm publish",
     "integration:cli": "cd integration/angular-cli && npm run integration",
     "pregh-build": "yarn theme",
