@@ -3,6 +3,7 @@ import { Directive, ElementRef, Injectable, Injector, KeyValueDiffer, KeyValueDi
 @Directive({
   selector: `
     [antExtGovernor],
+    ant-alert, [antAlert],
     ant-btn-group, [antBtnGroup],
     [antBtn],
     ant-col, [antCol],
