@@ -1,3 +1,4 @@
+export * from './alert/public-api'
 export * from './button/public-api'
 export * from './dropdown/public-api'
 export * from './grid/public-api'
