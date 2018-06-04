@@ -1,41 +1,25 @@
-import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion'
-import { SimpleChanges } from '@angular/core'
 import { Observable } from 'rxjs'
-import { map, shareReplay, startWith, tap } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 
-function coerceProperty(value: any, defaultValue: any): any {
-  switch (typeof defaultValue) {
-    case 'string':
-      return value.length > 0 ? `${value}` : defaultValue
-    case 'number':
-      return coerceNumberProperty(value)
-    case 'boolean':
-      return coerceBooleanProperty(value)
-    default:
-      return value != null && value !== '' ? value : null
-  }
+export type Transforms<T> = {
+  [P in keyof T]?: Function
 }
 
-export function extractInputs<T>(config: T): (source: Observable<SimpleChanges>) => Observable<T> {
-  const cache: { [P in keyof T]?: any } = {}
-  return (source: Observable<SimpleChanges>) => source.pipe(
-    map(changes => {
-      const res: T = {} as any
-      for (const key of Object.keys(config)) {
-        const defaultValue = config[key as keyof T]
-        if (changes.hasOwnProperty(key)) {
-          res[key as keyof T] = cache[key as keyof T] = coerceProperty(changes[key as keyof T].currentValue, defaultValue)
-        } else if (!cache.hasOwnProperty(key)) {
-          res[key as keyof T] = cache[key as keyof T] = defaultValue
+export function coerce<T, R>(transforms: Transforms<T>): (source: Observable<R>) => Observable<R> {
+  return (source: Observable<R>) => source.pipe(
+    map(inputs => {
+      const res: R = {} as any
+      for (const key of Object.keys(inputs) as Array<keyof T & keyof R>) {
+        const transform = transforms[key]
+        if (transform) {
+          res[key] = transform(inputs[key])
         } else {
-          res[key as keyof T] = cache[key as keyof T]
+          res[key] = inputs[key]
         }
       }
       return res
     }),
-    startWith(config),
-    shareReplay(1),
   )
 }
 

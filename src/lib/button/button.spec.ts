@@ -85,11 +85,11 @@ describe('Button', () => {
     assertClass(buttons[0], [], [`${px}-circle`, `${px}-icon-only`])
     expect(iconTypes[0]).toBeNull()
     assertClass(buttons[1], [], [`${px}-circle`, `${px}-icon-only`])
-    expect(iconTypes[1].antIcon).toBe(`search`)
+    expect(iconTypes[1].type).toBe(`search`)
     assertClass(buttons[2], [`${px}-circle`, `${px}-icon-only`])
-    expect(iconTypes[2].antIcon).toBe(`search`)
+    expect(iconTypes[2].type).toBe(`search`)
     assertClass(buttons[3], [`${px}-icon-only`], [`${px}-circle`])
-    expect(iconTypes[3].antIcon).toBe(`search`)
+    expect(iconTypes[3].type).toBe(`search`)
   })
 
   it('should set ghost classes properly', () => {

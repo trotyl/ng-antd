@@ -5,7 +5,7 @@ import { Combo } from '../extension/combo'
 import { Governor } from '../extension/governor'
 import { KeyedCompositeControl } from '../util/control'
 import { assert } from '../util/debug'
-import { extractInputs, updateClass } from '../util/reactive'
+import { updateClass } from '../util/reactive'
 import { Menu } from './menu'
 import { MENU_PREFIX } from './token'
 
@@ -17,9 +17,10 @@ import { MENU_PREFIX } from './token'
   preserveWhitespaces: false,
 })
 export class SubMenu extends KeyedCompositeControl<string, boolean> implements OnChanges, OnDestroy, OnInit {
-  @Input() antSubMenu: string | ''
   @Input() key: string
   @Input() title: string
+
+  @Input() set antSubMenu(value: string | '') { if (value !== '') this.key = value }
 
   @ViewChild('popUp') popUpTemplate: TemplateRef<void>
 
@@ -35,12 +36,8 @@ export class SubMenu extends KeyedCompositeControl<string, boolean> implements O
   onDestroy$ = new Subject<void>()
 
   input$ = this.onChanges$.pipe(
-    extractInputs({
-      antSubMenu: null as string | null,
-      key: null as string | null,
-      title: null as string | null,
-    }),
-    map(inputs => ({ ...inputs, key: inputs.key != null ? inputs.key : inputs.antSubMenu })),
+    map(() => this),
+    startWith(this),
   )
 
   toggle$ = new Subject<void>()

@@ -2,10 +2,10 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion'
 import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnDestroy, Optional, Self, SimpleChanges } from '@angular/core'
 /* tslint:disable-next-line:no-unused-variable */
 import { Observable, Subject } from 'rxjs'
-import { map, takeUntil, tap } from 'rxjs/operators'
+import { map, startWith, takeUntil } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { assert } from '../util/debug'
-import { extractInputs, updateClass } from '../util/reactive'
+import { coerce, updateClass } from '../util/reactive'
 import { BUTTON_PREFIX } from './token'
 import { toButtonSize } from './util'
 
@@ -16,7 +16,6 @@ import { toButtonSize } from './util'
   preserveWhitespaces: false,
 })
 export class Button implements OnChanges, OnDestroy {
-  @Input() antBtn: 'primary' | 'dashed' | 'danger' | '' | null
   @Input() color: 'primary' | 'dashed' | 'danger' | null
   @Input() size: 'large' | 'small' | null
   @Input() icon: string | null
@@ -25,19 +24,19 @@ export class Button implements OnChanges, OnDestroy {
   @Input() ghost: boolean
   @Input() iconOnly: boolean
 
+  @Input() set antBtn(value: 'primary' | 'dashed' | 'danger' | '' | null) { if (value !== '') this.color = value }
+
   onChanges$ = new Subject<SimpleChanges>()
   onDestroy$ = new Subject<void>()
 
   input$ = this.onChanges$.pipe(
-    extractInputs({
-      antBtn: null as string | null,
-      color: null as string | null,
-      size: null as string | null,
-      icon: null as string | null,
-      shape: null as string | null,
-      loading: false, ghost: false, iconOnly: false,
+    map(() => this),
+    startWith(this),
+    coerce({
+      loading: coerceBooleanProperty,
+      ghost: coerceBooleanProperty,
+      iconOnly: coerceBooleanProperty,
     }),
-    tap(inputs => inputs.color = inputs.color != null ? inputs.color : inputs.antBtn),
   )
 
   icon$ = this.input$.pipe(map(({ icon, loading }) => icon || (loading ? 'loading' : null)))

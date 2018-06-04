@@ -1,13 +1,13 @@
 import { forwardRef, AfterViewInit, ChangeDetectionStrategy, Component, Host, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges, SkipSelf, TemplateRef, ViewChild } from '@angular/core'
 import { NG_VALUE_ACCESSOR } from '@angular/forms'
 import { combineLatest, Observable, Subject } from 'rxjs'
-import { map, shareReplay, takeUntil } from 'rxjs/operators'
+import { map, shareReplay, startWith, takeUntil } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { Fragment } from '../fragment/fragment'
 import { FragmentContainer } from '../fragment/token'
 import { KeyedCompositeControl } from '../util/control'
 import { assert, notEmpty } from '../util/debug'
-import { extractInputs, updateClass } from '../util/reactive'
+import { updateClass } from '../util/reactive'
 import { MENU_PREFIX, TemplateOutlet } from './token'
 
 @Component({
@@ -22,9 +22,10 @@ import { MENU_PREFIX, TemplateOutlet } from './token'
   preserveWhitespaces: false,
 })
 export class Menu extends KeyedCompositeControl<string, boolean> implements AfterViewInit, FragmentContainer, OnChanges, OnDestroy, OnInit {
-  @Input() antMenu: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' | ''
-  @Input() mode: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline'
-  @Input() theme: 'light' | 'dark'
+  @Input() mode: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' = 'vertical'
+  @Input() theme: 'light' | 'dark' = 'light'
+
+  @Input() set antMenu(value: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' | '') { if (value !== '') this.mode = value }
 
   @HostBinding('attr.role') @Input() role: string = 'menu'
   @HostBinding('attr.tabindex') @Input() tabIndex: string = '0'
@@ -40,12 +41,8 @@ export class Menu extends KeyedCompositeControl<string, boolean> implements Afte
   onDestroy$ = new Subject<void>()
 
   input$ = this.onChanges$.pipe(
-    extractInputs({
-      antMenu: 'vertical',
-      mode: null! as string,
-      theme: 'light',
-    }),
-    map(inputs => ({ ...inputs, mode: inputs.mode != null ? inputs.mode : inputs.antMenu })),
+    map(() => this),
+    startWith(this),
   )
 
   mode$: Observable<string>

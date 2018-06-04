@@ -1,3 +1,4 @@
+import { coerceBooleanProperty } from '@angular/cdk/coercion'
 import { Directive, Host, HostBinding, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 /* tslint:disable-next-line:no-unused-variable */
 import { combineLatest, merge, Observable, Subject } from 'rxjs'
@@ -6,7 +7,7 @@ import { Governor } from '../extension/governor'
 import { Hover } from '../extension/hover'
 import { ControlItem } from '../util/control'
 import { assert } from '../util/debug'
-import { extractInputs, updateClass, updateStyle } from '../util/reactive'
+import { coerce, updateClass, updateStyle } from '../util/reactive'
 import { Menu } from './menu'
 import { MENU_PREFIX } from './token'
 
@@ -15,9 +16,10 @@ import { MENU_PREFIX } from './token'
   exportAs: 'antMenuItem',
 })
 export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnInit {
-  @Input() antMenuItem: string | ''
   @Input() key: string
   @Input() disabled: boolean
+
+  @Input() set antMenuItem(value: string | '') { if (value !== '') this.key = value }
 
   @HostBinding('attr.role') @Input() role: string = 'menuitem'
 
@@ -26,12 +28,11 @@ export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnIni
   onDestroy$ = new Subject<void>()
 
   input$ = this.onChanges$.pipe(
-    extractInputs({
-      antMenuItem: null as string | null,
-      key: null as string | null,
-      disabled: false,
+    map(() => this),
+    startWith(this),
+    coerce({
+      disabled: coerceBooleanProperty,
     }),
-    map(inputs => ({ ...inputs, key: inputs.key != null ? inputs.key : inputs.antMenuItem })),
   )
 
   constructor(

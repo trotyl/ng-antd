@@ -1,20 +1,21 @@
 import { Directive, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 import { merge, Observable, Subject } from 'rxjs'
-import { map, switchMap, takeUntil, tap } from 'rxjs/operators'
+import { map, startWith, switchMap, takeUntil } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { Responsive } from '../responsive/responsive'
-import { extractInputs, updateClass, updateStyle } from '../util/reactive'
+import { updateClass, updateStyle } from '../util/reactive'
 import { ROW_PREFIX } from './token'
 
 @Directive({
   selector: 'ant-row, [antRow]',
 })
 export class Row implements OnChanges, OnDestroy, OnInit {
-  @Input() antRow: 'flex' | '' | null
   @Input() align: 'top' | 'middle' | 'bottom' | null
   @Input() gutter: number
   @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' | null
   @Input() type: 'flex' | null
+
+  @Input() set antRow(value: 'flex' | '' | null) { if (value !== '') this.type = value }
 
   @Input('gutter.xs') gutterXs: number
   @Input('gutter.sm') gutterSm: number
@@ -28,12 +29,8 @@ export class Row implements OnChanges, OnDestroy, OnInit {
   onDestroy$ = new Subject<void>()
 
   input$ = this.onChanges$.pipe(
-    extractInputs({
-      antRow: null as string | null,
-      type: null as string | null, align: null as string | null, justify: null as string | null,
-      gutter: 0, gutterXs: null as number | null, gutterSm: null as number | null, gutterMd: null as number | null, gutterLg: null as number | null, gutterXl: null as number | null, gutterXxl: null as number | null,
-    }),
-    tap(inputs => inputs.type = inputs.type != null ? inputs.type : inputs.antRow),
+    map(() => this),
+    startWith(this),
   )
 
   gutter$: Observable<number>
