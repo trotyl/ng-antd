@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnDestroy, Optional, Self, SimpleChanges } from '@angular/core'
 /* tslint:disable-next-line:no-unused-variable */
 import { Observable, Subject } from 'rxjs'
-import { map, takeUntil } from 'rxjs/operators'
+import { map, startWith, takeUntil } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
-import { extractInputs, updateClass } from '../util/reactive'
+import { updateClass } from '../util/reactive'
 import { ALERT_PREFIX } from './token'
 
 @Component({
@@ -13,20 +13,17 @@ import { ALERT_PREFIX } from './token'
   preserveWhitespaces: false,
 })
 export class Alert implements OnChanges, OnDestroy {
-  @Input() antAlert: string
-  @Input() type: string
+  @Input() type: string = 'info'
   @Input() message: string
+
+  @Input() set antAlert(value: string) { if (value !== '') { this.type = value } }
 
   onChanges$ = new Subject<SimpleChanges>()
   onDestroy$ = new Subject<void>()
 
   input$ = this.onChanges$.pipe(
-    extractInputs({
-      antAlert: 'info' as string | null,
-      type: null as string | null,
-      message: null as string | null,
-    }),
-    map(inputs => ({ ...inputs, type: inputs.type != null ? inputs.type : inputs.antAlert })),
+    map(() => this),
+    startWith(this),
   )
 
   message$ = this.input$.pipe(

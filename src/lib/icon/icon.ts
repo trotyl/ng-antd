@@ -1,30 +1,31 @@
+import { coerceBooleanProperty } from '@angular/cdk/coercion'
 import { Directive, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 /* tslint:disable-next-line:no-unused-variable */
 import { Observable, Subject } from 'rxjs'
-import { map, takeUntil, tap } from 'rxjs/operators'
+import { map, startWith, takeUntil } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { assert } from '../util/debug'
-import { extractInputs, updateClass } from '../util/reactive'
+import { coerce, updateClass } from '../util/reactive'
 import { ICON_PREFIX } from './token'
 
 @Directive({
   selector: '[antIcon]',
 })
 export class Icon implements OnChanges, OnDestroy, OnInit {
-  @Input() antIcon: string
   @Input() type: string
   @Input() spin: boolean
+
+  @Input() set antIcon(value: string) { if (value !== '') this.type = value }
 
   onChanges$ = new Subject<SimpleChanges>()
   onDestroy$ = new Subject<void>()
 
   input$ = this.onChanges$.pipe(
-    extractInputs({
-      antIcon: null as string | null,
-      type: null as string | null,
-      spin: false,
+    map(() => this),
+    startWith(this),
+    coerce({
+      spin: coerceBooleanProperty,
     }),
-    tap(inputs => inputs.type = inputs.type != null ? inputs.type : inputs.antIcon),
   )
 
   constructor(

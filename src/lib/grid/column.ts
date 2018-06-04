@@ -1,11 +1,11 @@
 import { Directive, Host, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges } from '@angular/core'
 /* tslint:disable-next-line:no-unused-variable */
 import { combineLatest, merge, Observable, Subject } from 'rxjs'
-import { map, switchMap, takeUntil, tap } from 'rxjs/operators'
+import { map, startWith, switchMap, takeUntil } from 'rxjs/operators'
 import { Governor } from '../extension/governor'
 import { Responsive } from '../responsive/responsive'
 import { assert } from '../util/debug'
-import { extractInputs, updateClass, updateStyle } from '../util/reactive'
+import { updateClass, updateStyle } from '../util/reactive'
 import { Row } from './row'
 import { COLUMN_PREFIX } from './token'
 
@@ -13,12 +13,13 @@ import { COLUMN_PREFIX } from './token'
   selector: 'ant-col, [antCol]',
 })
 export class Column implements OnChanges, OnDestroy, OnInit {
-  @Input() antCol: number | '' | null
   @Input() span: number | null
   @Input() offset: number | null
   @Input() order: number | null
   @Input() pull: number | null
   @Input() push: number | null
+
+  @Input() set antCol(value: number | '' | null) { if (value !== '') this.span = value }
 
   @Input('span.xs') spanXs: number | null
   @Input('span.sm') spanSm: number | null
@@ -60,15 +61,8 @@ export class Column implements OnChanges, OnDestroy, OnInit {
   onDestroy$ = new Subject<void>()
 
   input$ = this.onChanges$.pipe(
-    extractInputs({
-      antCol: null as number | null,
-      span: null as number | null, spanXs: null as number | null, spanSm: null as number | null, spanMd: null as number | null, spanLg: null as number | null, spanXl: null as number | null, spanXxl: null as number | null,
-      offset: null as number | null, offsetXs: null as number | null, offsetSm: null as number | null, offsetMd: null as number | null, offsetLg: null as number | null, offsetXl: null as number | null, offsetXxl: null as number | null,
-      order: null as number | null, orderXs: null as number | null, orderSm: null as number | null, orderMd: null as number | null, orderLg: null as number | null, orderXl: null as number | null, orderXxl: null as number | null,
-      pull: null as number | null, pullXs: null as number | null, pullSm: null as number | null, pullMd: null as number | null, pullLg: null as number | null, pullXl: null as number | null, pullXxl: null as number | null,
-      push: null as number | null, pushXs: null as number | null, pushSm: null as number | null, pushMd: null as number | null, pushLg: null as number | null, pushXl: null as number | null, pushXxl: null as number | null,
-    }),
-    tap(inputs => inputs.span = inputs.span != null ? inputs.span : inputs.antCol),
+    map(() => this),
+    startWith(this),
   )
 
   constructor(
