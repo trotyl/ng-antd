@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     { type: 'general', components: ['button', 'icon'] },
     { type: 'layout', components: ['grid', 'layout'] },
     { type: 'navigation', components: ['menu'] },
+    { type: 'feedback', components: ['alert'] },
   ]
 
   ngOnInit(): void {

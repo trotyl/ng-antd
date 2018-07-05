@@ -1,4 +1,5 @@
 <span [ngClass]="messageClasses">
   {{ message$ | async }}
+  <ng-content></ng-content>
 </span>
 <span [ngClass]="descriptionClasses"></span>
