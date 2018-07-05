@@ -1,4 +1,4 @@
-import { Host, Injectable, Injector, OnDestroy, OnInit, Optional } from '@angular/core'
+import { Directive, Host, Injectable, Injector, OnDestroy, OnInit, Optional } from '@angular/core'
 import { Subject } from 'rxjs'
 import { takeUntil, tap } from 'rxjs/operators'
 import { ElementContainer } from './token'
@@ -24,4 +24,39 @@ export abstract class Element implements OnDestroy, OnInit {
 
   ngOnInit(): void { this.onInit$.next() }
   ngOnDestroy(): void { this.onDestroy$.next() }
+}
+
+@Directive({
+  selector: 'aside:not([antNoEffect])',
+})
+export class AsideElement extends Element {
+  tag = 'aside'
+}
+
+@Directive({
+  selector: 'footer:not([antNoEffect])',
+})
+export class FooterElement extends Element {
+  tag = 'footer'
+}
+
+@Directive({
+  selector: 'header:not([antNoEffect])',
+})
+export class HeaderElement extends Element {
+  tag = 'header'
+}
+
+@Directive({
+  selector: 'li:not([antNoEffect])',
+})
+export class LiElement extends Element {
+  tag = 'li'
+}
+
+@Directive({
+  selector: 'main:not([antNoEffect])',
+})
+export class MainElement extends Element {
+  tag = 'main'
 }

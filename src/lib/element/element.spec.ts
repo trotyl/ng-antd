@@ -1,7 +1,8 @@
 import { forwardRef, Component, Directive } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { Element } from './element'
+import { AsideElement, Element, FooterElement, HeaderElement, LiElement, MainElement } from './element'
+import { AsideElementModule, FooterElementModule, HeaderElementModule, LiElementModule, MainElementModule } from './element.module'
 import { ElementContainer } from './token'
 
 describe('Element', () => {
@@ -53,6 +54,121 @@ class DummyContainer implements ElementContainer {
   }
 }
 
+describe('AsideElement', () => {
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ AsideElementModule ],
+      declarations: [
+        AsideElementInjectorTest,
+      ],
+    }).compileComponents()
+  })
+
+  it('should expose injector', () => {
+    const fixture = TestBed.createComponent(AsideElementInjectorTest)
+    fixture.detectChanges()
+
+    const asideElement = fixture.debugElement.query(By.directive(AsideElement))
+    const directive = asideElement.injector.get(AsideElement)
+
+    expect(directive.injector.get(AsideElement)).toBe(directive)
+  })
+
+})
+
+describe('FooterElement', () => {
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ FooterElementModule ],
+      declarations: [
+        FooterElementInjectorTest,
+      ],
+    }).compileComponents()
+  })
+
+  it('should expose injector', () => {
+    const fixture = TestBed.createComponent(FooterElementInjectorTest)
+    fixture.detectChanges()
+
+    const footerElement = fixture.debugElement.query(By.directive(FooterElement))
+    const directive = footerElement.injector.get(FooterElement)
+
+    expect(directive.injector.get(FooterElement)).toBe(directive)
+  })
+
+})
+
+describe('HeaderElement', () => {
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ HeaderElementModule ],
+      declarations: [
+        HeaderElementInjectorTest,
+      ],
+    }).compileComponents()
+  })
+
+  it('should expose injector', () => {
+    const fixture = TestBed.createComponent(HeaderElementInjectorTest)
+    fixture.detectChanges()
+
+    const headerElement = fixture.debugElement.query(By.directive(HeaderElement))
+    const directive = headerElement.injector.get(HeaderElement)
+
+    expect(directive.injector.get(HeaderElement)).toBe(directive)
+  })
+
+})
+
+describe('LiElement', () => {
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ LiElementModule ],
+      declarations: [
+        LiElementInjectorTest,
+      ],
+    }).compileComponents()
+  })
+
+  it('should expose injector', () => {
+    const fixture = TestBed.createComponent(LiElementInjectorTest)
+    fixture.detectChanges()
+
+    const liElement = fixture.debugElement.query(By.directive(LiElement))
+    const directive = liElement.injector.get(LiElement)
+
+    expect(directive.injector.get(LiElement)).toBe(directive)
+  })
+
+})
+
+describe('MainElement', () => {
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ MainElementModule ],
+      declarations: [
+        MainElementInjectorTest,
+      ],
+    }).compileComponents()
+  })
+
+  it('should expose injector', () => {
+    const fixture = TestBed.createComponent(MainElementInjectorTest)
+    fixture.detectChanges()
+
+    const mainElement = fixture.debugElement.query(By.directive(MainElement))
+    const directive = mainElement.injector.get(MainElement)
+
+    expect(directive.injector.get(MainElement)).toBe(directive)
+  })
+
+})
+
 @Component({
   template: `
     <div myContainer>
@@ -61,3 +177,38 @@ class DummyContainer implements ElementContainer {
   `,
 })
 class ElementWithContainerTest { }
+
+@Component({
+  template: `
+    <aside>Foo</aside>
+  `,
+})
+class AsideElementInjectorTest { }
+
+@Component({
+  template: `
+    <footer>Foo</footer>
+  `,
+})
+class FooterElementInjectorTest { }
+
+@Component({
+  template: `
+    <header>Foo</header>
+  `,
+})
+class HeaderElementInjectorTest { }
+
+@Component({
+  template: `
+    <li>Foo</li>
+  `,
+})
+class LiElementInjectorTest { }
+
+@Component({
+  template: `
+    <main>Foo</main>
+  `,
+})
+class MainElementInjectorTest { }
