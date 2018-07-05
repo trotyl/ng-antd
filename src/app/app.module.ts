@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule, Routes } from '@angular/router'
-import { ButtonModule, GridModule, IconModule, LayoutModule, MenuModule } from 'ng-antd'
+import { AlertModule, ButtonModule, GridModule, IconModule, LayoutModule, MenuModule } from 'ng-antd'
 
+import { AlertDemos, AlertDemoModule } from './alert'
 import { AppComponent } from './app.component'
 import { ButtonDemos, ButtonDemoModule } from './button'
 import { GridDemos, GridDemoModule } from './grid'
@@ -13,6 +14,7 @@ import { LayoutDemos, LayoutDemoModule } from './layout'
 import { MenuDemos, MenuDemoModule } from './menu'
 
 const ANT_MODULES = [
+  AlertModule,
   ButtonModule,
   GridModule,
   IconModule,
@@ -21,6 +23,7 @@ const ANT_MODULES = [
 ]
 
 const DEMO_MODULES = [
+  AlertDemoModule,
   ButtonDemoModule,
   IconDemoModule,
   GridDemoModule,
@@ -29,6 +32,7 @@ const DEMO_MODULES = [
 ]
 
 const routes: Routes = [
+  { path: 'alert', component: AlertDemos },
   { path: 'button', component: ButtonDemos },
   { path: 'icon', component: IconDemos },
   { path: 'grid', component: GridDemos },
