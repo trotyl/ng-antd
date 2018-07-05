@@ -1,5 +1,5 @@
 import { AfterContentInit, ContentChild, Directive, Optional, Self, TemplateRef } from '@angular/core'
-import { Combo } from '../extension/combo'
+import { Expansion } from '../extension/expansion'
 import { MENU_PREFIX } from '../menu/token'
 import { assert } from '../util/debug'
 import { Overlay } from './overlay'
@@ -25,12 +25,12 @@ export class Dropdown implements AfterContentInit {
   @ContentChild(Overlay, { read: TemplateRef }) contentOverlay: TemplateRef<void>
 
   constructor(
-    @Optional() @Self() private combo: Combo,
+    @Optional() @Self() private expansion: Expansion,
   ) { }
 
   ngAfterContentInit(): void {
     /*@__PURE__*/assert(`antDropdown: requires 'overlay'`, this.contentOverlay == null)
 
-    this.combo.configTemplate(this.contentOverlay)
+    this.expansion.configTemplate(this.contentOverlay)
   }
 }

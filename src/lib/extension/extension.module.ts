@@ -1,12 +1,12 @@
 import { OverlayModule } from '@angular/cdk/overlay'
 import { NgModule } from '@angular/core'
-import { Combo } from './combo'
+import { Expansion } from './expansion'
 import { Governor } from './governor'
 import { Hover } from './hover'
 
 const TYPES = [
   Hover,
-  Combo,
+  Expansion,
   Governor,
 ]
 

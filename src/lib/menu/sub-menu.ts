@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Host, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, Self, SimpleChanges, TemplateRef, ViewChild } from '@angular/core'
 import { combineLatest, merge, Observable, Subject } from 'rxjs'
 import { distinctUntilChanged, filter, map, scan, shareReplay, startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators'
-import { Combo } from '../extension/combo'
+import { Expansion } from '../extension/expansion'
 import { Governor } from '../extension/governor'
 import { KeyedCompositeControl } from '../util/control'
 import { assert } from '../util/debug'
@@ -46,7 +46,7 @@ export class SubMenu extends KeyedCompositeControl<string, boolean> implements O
 
   constructor(
     @Inject(MENU_PREFIX) basePrefix: string,
-    @Optional() @Self() combo: Combo,
+    @Optional() @Self() expansion: Expansion,
     @Optional() @Self() governor: Governor,
     @Optional() @Host() menu: Menu,
   ) {
@@ -101,11 +101,11 @@ export class SubMenu extends KeyedCompositeControl<string, boolean> implements O
     )
 
     // TODO: support changing 'mode' dynamically
-    const combo$ = this.onInit$.pipe(
+    const expansion$ = this.onInit$.pipe(
       switchMap(() => this.inline$),
       take(1),
       filter(inline => !inline),
-      tap(() => combo.configTemplate(this.popUpTemplate)),
+      tap(() => expansion.configTemplate(this.popUpTemplate)),
     )
 
     this.popupClasses$ = menu.theme$.pipe(
@@ -119,7 +119,7 @@ export class SubMenu extends KeyedCompositeControl<string, boolean> implements O
 
     const status$ = merge(
       className$,
-      combo$,
+      expansion$,
     ).pipe(
       takeUntil(this.onDestroy$),
     )
