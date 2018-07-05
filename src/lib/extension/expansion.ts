@@ -8,10 +8,10 @@ const originPos: OriginConnectionPosition = { originX: 'start', originY: 'bottom
 const overlayPos: OverlayConnectionPosition = { overlayX: 'start', overlayY: 'top' }
 
 @Directive({
-  selector: '[antExtCombo], [antDropdown], [antSubMenu]',
-  exportAs: 'antExtCombo',
+  selector: '[antExtExpansion], [antDropdown], [antSubMenu]',
+  exportAs: 'antExtExpansion',
 })
-export class Combo implements AfterViewInit, OnDestroy {
+export class Expansion implements AfterViewInit, OnDestroy {
   private afterViewInit$ = new Subject<void>()
   private onDestroy$ = new Subject<void>()
   private template$ = new BehaviorSubject<TemplateRef<void> | null>(null)
@@ -78,9 +78,9 @@ export class Combo implements AfterViewInit, OnDestroy {
 @Injectable({
   providedIn: 'root',
 })
-export class ComboFactory {
-  create(injector: Injector): Combo {
-    return new Combo(
+export class ExpansionFactory {
+  create(injector: Injector): Expansion {
+    return new Expansion(
       injector.get(ElementRef),
       injector.get(ViewContainerRef),
       injector.get(Overlay),
