@@ -30,7 +30,9 @@ export class Hover implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void { this.onDestroy$.next() }
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HoverFactory {
   create(injector: Injector): Hover {
     return new Hover(

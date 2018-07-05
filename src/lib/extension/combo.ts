@@ -75,7 +75,9 @@ export class Combo implements AfterViewInit, OnDestroy {
   configTemplate(template: TemplateRef<void> | null): void { this.template$.next(template) }
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ComboFactory {
   create(injector: Injector): Combo {
     return new Combo(

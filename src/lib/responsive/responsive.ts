@@ -22,7 +22,9 @@ const breakpoints: [keyof(ResponsiveOption<number>), string][] = [
   ['xs', '(max-width: 575px)'],
 ]
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class Responsive {
   private observe$: Observable<BreakpointState>
 
