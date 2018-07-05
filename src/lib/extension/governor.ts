@@ -95,7 +95,9 @@ export class Governor {
   }
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class GovernorFactory {
   create(injector: Injector): Governor {
     return new Governor(
