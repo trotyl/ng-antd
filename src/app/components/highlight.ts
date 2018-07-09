@@ -7,7 +7,7 @@ declare var Prism: {
 @Directive({
   selector: '[highlight]',
 })
-export class HightLight implements AfterViewInit {
+export class DocsHightLight implements AfterViewInit {
   constructor(
     private element: ElementRef,
     renderer: Renderer2,

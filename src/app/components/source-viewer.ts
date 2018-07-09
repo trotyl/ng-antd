@@ -15,7 +15,7 @@ const API_BASE = 'https://raw.githubusercontent.com/trotyl/ng-antd/master/src/ap
   host: { '[style.display]': `'block'` },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SourceViewer implements OnInit {
+export class DocsSourceViewer implements OnInit {
   @Input() component: string
   @Input() case: string
 
@@ -26,7 +26,7 @@ export class SourceViewer implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    const path = `${API_BASE}/${this.component}/${this.component}-demo-${this.case}`
+    const path = `${API_BASE}/${this.component}/${this.component}-${this.case}`
     this.html$ = this.http.get(`${path}.html`, { responseType: 'text' })
     this.ts$ = this.http.get(`${path}.ts`, { responseType: 'text' })
     this.css$ = this.http.get(`${path}.css`, { responseType: 'text' })
