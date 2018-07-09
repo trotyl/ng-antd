@@ -15,6 +15,12 @@ const NG_MODULES = [
   ExtensionModule,
 ]
 
+/**
+ * To trigger an operation.
+ *
+ * @whenToUse
+ * A button means an operation (or a series of operations). Clicking a button will trigger corresponding business logic.
+ */
 @NgModule({
   declarations: [ TYPES ],
   imports: [
