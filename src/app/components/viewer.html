@@ -22,7 +22,7 @@
   <ant-row *ngIf="components.length > 0" gutter="16">
     <ant-col class="code-boxes-col-1-1" span="24">
       <section *ngFor="let component of components"
-               class="code-box expand" [attr.id]="'components-' + name + '-' + component.path">
+               class="code-box expand" [attr.id]="'components-' + name + '-demo-' + component.path">
         <section class="code-box-demo">
           <ng-container *ngComponentOutlet="component.type"></ng-container>
         </section>
@@ -31,10 +31,11 @@
             <a href="/">{{ component.title | titlecase }}</a>
             <a class="edit-button" href="/" target="_blank"><i antIcon="edit"></i></a>
           </div>
-        </section> 
+          <div [innerHTML]="component.description"></div>
+        </section>
         <section class="highlight-wrapper highlight-wrapper-expand">
-          <div class="highlight" style="padding: 20px;">
-            <source-viewer [component]="name" [case]="component.path"></source-viewer>
+          <div class="highlight">
+            <source-viewer [template]="component.template" [clazz]="component.clazz"></source-viewer>
           </div>
         </section>
       </section>

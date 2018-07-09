@@ -1,9 +1,20 @@
 import { TitleCasePipe } from '@angular/common'
 import { Component, ComponentFactoryResolver, OnInit, Type } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { PackageInfo } from '../../../tools/api/definition'
-import { api } from '../../../tools/api/result'
+import { PackageInfo } from '../../../tools/api-extractor/definition'
+import { examples } from '../../../tools/api-extractor/demo'
+import { packages } from '../../../tools/api-extractor/lib'
 import { group } from './demo.module'
+
+export interface DemoComponent {
+  type: Type<any>
+  description: string
+  order: number
+  path: string
+  title: string
+  template: string
+  clazz: string | null
+}
 
 @Component({
   templateUrl: './viewer.html',
@@ -11,7 +22,7 @@ import { group } from './demo.module'
 })
 export class DocsViewer implements OnInit {
   name: string
-  components: Array<{ type: Type<any>, path: string, title: string }> = []
+  components: DemoComponent[] = []
   info: PackageInfo
 
   constructor(
@@ -25,14 +36,24 @@ export class DocsViewer implements OnInit {
       const name = params.get('name')!
       this.name = name
       const componentTypes = group[name]
+      const demos = examples[name].demos
+
       this.components = componentTypes.map((type) => {
         const factory = this.cfr.resolveComponentFactory(type)
-        const path = factory.selector.split(/\-(.+)/)[1]
-        const demo = factory.selector.replace(`${name}-demo-`, '').replace('-', ' ')
-        const title = this.titlecase.transform(demo)
-        return { type, path, title }
-      })
-      this.info = api[name]
+        const path = factory.selector.replace(`${name}-demo-`, '')
+
+        const demo = demos.find(item => item.name === factory.selector)!
+        const { order, title: rawTitle, description, template, clazz } = demo
+        let title = rawTitle
+        if (!title) {
+          const demoName = path.replace('-', ' ')
+          title = this.titlecase.transform(demoName)
+        }
+
+        return { type, path, order, title, description, template, clazz }
+      }).sort((prev, next) => prev.order - next.order)
+
+      this.info = packages[name]
     })
   }
 }

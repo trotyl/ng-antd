@@ -2,9 +2,9 @@ import * as fs from 'fs'
 import * as MarkdownIt from 'markdown-it'
 import * as path from 'path'
 import { ClassReflection, Decorator, ReflectionKind } from '../typedoc/models/reflections'
-import { Type } from '../typedoc/models/types'
 import * as reflection from '../typedoc/reflection'
 import { PackageInfo, PropertiesInfo, PropertyInfo } from './definition'
+import { stringifyType, stripQuote } from './util'
 
 const md = new MarkdownIt({ html: true })
 
@@ -14,7 +14,10 @@ for (const file of reflection.children) {
   if (!file.children) { continue }
 
   const packagePath = stripQuote(file.name)
-  const [pkgName] = packagePath.split('/')
+
+  if (!packagePath.startsWith('src/lib/')) { continue }
+
+  const [pkgName] = packagePath.replace('src/lib/', '').split('/')
 
   if (!result[pkgName]) {
     result[pkgName] = {
@@ -105,30 +108,6 @@ function extractProperties(declaration: ClassReflection): PropertiesInfo {
   return { properties, inputs, outputs }
 }
 
-function stringifyType(type: Type): string {
-  switch (type.type) {
-    case 'intrinsic':
-      return type.name
-    case 'stringLiteral':
-      return `"${type.value}"`
-    case 'union':
-      return type.types.map(stringifyType).join(' | ')
-    case 'array':
-      return `Array<${stringifyType(type.elementType)}>`
-    case 'reference':
-      if (type.typeArguments) {
-        return `${type.name}<${type.typeArguments.map(stringifyType).join(',')}>`
-      }
-      return type.name
-    default:
-      return `TODO(type): ${type.type}`
-  }
-}
-
-function stripQuote(source: string): string {
-  return source.replace(/["']/g, '')
-}
-
-const outputPath = path.join(__dirname, './result.js')
-const content = `export const api = ${JSON.stringify(result, undefined, 2)}`
+const outputPath = path.join(__dirname, './lib.js')
+const content = `export const packages = ${JSON.stringify(result, undefined, 2)}`
 fs.writeFileSync(outputPath, content, 'utf-8')

@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
-import { demos } from '../../../tools/demo/result'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 @Component({
   selector: 'source-viewer',
@@ -12,15 +11,10 @@ import { demos } from '../../../tools/demo/result'
   host: { '[style.display]': `'block'` },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DocsSourceViewer implements OnInit {
-  @Input() component: string
-  @Input() case: string
+export class DocsSourceViewer {
+  @Input() template: string
+  @Input() clazz: string | null
 
   html: string
   ts: string
-
-  ngOnInit(): void {
-    this.html = demos[`${this.component}-${this.case}.html`]
-    this.ts = demos[`${this.component}-${this.case}.ts`]
-  }
 }
