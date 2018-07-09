@@ -29,6 +29,8 @@ jobs:
           yarn generate
           yarn add file:./publish
           yarn theme
+          yarn typedoc
+          yarn extract-api
           yarn build:es5
           yarn build:es2015
 
