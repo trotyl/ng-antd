@@ -21,7 +21,7 @@
     "postgenerate": "cp node_modules/antd/dist/*.css* publish/bundles/",
     "release": "cd publish && npm publish",
     "integration:cli": "cd integration/angular-cli && npm run integration",
-    "pregh-build": "yarn theme",
+    "pregh-build": "yarn theme && yarn typedoc && yarn extract-api",
     "gh-build": "ng build --prod --base-href /ng-antd/ --no-progress",
     "postgh-build": "cp dist/index.html dist/404.html && cp -r .circleci/ dist/.circleci/",
     "deploy": "gh-pages -d dist -t",
