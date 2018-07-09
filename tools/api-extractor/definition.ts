@@ -21,3 +21,16 @@ export interface PackageInfo {
   whenToUse: string | null
   directives: DirectiveInfo[]
 }
+
+export interface DemoItem {
+  name: string
+  order: number
+  title: string | null
+  description: string
+  template: string
+  clazz: string | null
+}
+
+export interface PackageDemo {
+  demos: DemoItem[]
+}

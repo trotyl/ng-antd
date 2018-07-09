@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 
+/**
+ * A simple playground for column count and gutter.
+ *
+ * @order 9
+ * @title Playground
+ */
 @Component({
   selector: 'grid-demo-playground',
   templateUrl: './grid-demo-playground.html',

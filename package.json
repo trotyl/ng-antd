@@ -27,9 +27,10 @@
     "deploy": "gh-pages -d dist -t",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "publish:lib": "cd publish && yarn publish",
-    "typedoc": "typedoc --tsconfig src/tsconfig.app.json --exclude **/*.spec.ts --json tools/typedoc/reflection.json src/lib/",
-    "extract-api": "tsc --lib es2015 tools/api/extract.ts && node tools/api/extract.js",
-    "extract-demo": "tsc --lib es2015 tools/demo/extract.ts && node tools/demo/extract.js"
+    "typedoc": "typedoc --tsconfig src/tsconfig.app.json --exclude **/*.spec.ts --json tools/typedoc/reflection.json src/",
+    "extract-api": "yarn extract-api:lib && yarn extract-api:demo",
+    "extract-api:lib": "tsc --lib es2015 tools/api-extractor/extract-lib.ts && node tools/api-extractor/extract-lib.js",
+    "extract-api:demo": "tsc --lib es2015 tools/api-extractor/extract-demo.ts && node tools/api-extractor/extract-demo.js"
   },
   "private": true,
   "dependencies": {
