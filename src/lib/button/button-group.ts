@@ -11,7 +11,7 @@ import { toButtonSize } from './util'
   selector: 'ant-btn-group, [antBtnGroup]',
 })
 export class ButtonGroup implements OnChanges, OnDestroy {
-  @Input() size: 'large' | 'small' | null
+  @Input() size: 'large' | 'small' | null = null
 
   @Input() set antBtnGroup(value: 'large' | 'small' | '' | null) { if (value !== '') this.size = value }
 

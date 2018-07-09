@@ -16,8 +16,15 @@ import { MENU_PREFIX, TemplateOutlet } from './token'
 export class MenuItemGroup implements OnDestroy, OnInit {
   @Input() antMenuItemGroup: string | ''
   @Input() key: string
+
+  /**
+   * title of the group
+   */
   @Input() title: string
 
+  /**
+   * @internal
+   */
   @ViewChild('titleTemplate') titleTemplate: TemplateRef<void>
 
   onInit$ = new Subject<void>()

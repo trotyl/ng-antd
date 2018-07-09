@@ -1,6 +1,8 @@
 import { TitleCasePipe } from '@angular/common'
 import { Component, ComponentFactoryResolver, OnInit, Type } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
+import { PackageInfo } from '../../../tools/api/definition'
+import { api } from '../../../tools/api/result'
 import { group } from './demo.module'
 
 @Component({
@@ -10,6 +12,7 @@ import { group } from './demo.module'
 export class DocsViewer implements OnInit {
   name: string
   components: Array<{ type: Type<any>, path: string, title: string }> = []
+  info: PackageInfo
 
   constructor(
     private cfr: ComponentFactoryResolver,
@@ -30,6 +33,7 @@ export class DocsViewer implements OnInit {
           title: this.titlecase.transform(factory.selector.replace(`${name}-demo-`, '').replace('-', ' ')),
         }
       })
+      this.info = api[name]
     })
   }
 }

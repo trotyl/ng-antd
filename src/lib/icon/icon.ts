@@ -12,8 +12,15 @@ import { ICON_PREFIX } from './token'
   selector: '[antIcon]',
 })
 export class Icon implements OnChanges, OnDestroy, OnInit {
+  /**
+   * Type of ant design icon
+   */
   @Input() type: string
-  @Input() spin: boolean
+
+  /**
+   * Rotate icon with animation
+   */
+  @Input() spin: boolean = false
 
   @Input() set antIcon(value: string) { if (value !== '') this.type = value }
 

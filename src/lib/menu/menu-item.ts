@@ -16,8 +16,15 @@ import { MENU_PREFIX } from './token'
   exportAs: 'antMenuItem',
 })
 export class MenuItem extends ControlItem implements OnChanges, OnDestroy, OnInit {
+  /**
+   * unique id of the menu item
+   */
   @Input() key: string
-  @Input() disabled: boolean
+
+  /**
+   * whether menu item is disabled or not
+   */
+  @Input() disabled: boolean = false
 
   @Input() set antMenuItem(value: string | '') { if (value !== '') this.key = value }
 

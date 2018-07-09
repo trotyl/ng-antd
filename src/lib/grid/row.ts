@@ -10,19 +10,34 @@ import { ROW_PREFIX } from './token'
   selector: 'ant-row, [antRow]',
 })
 export class Row implements OnChanges, OnDestroy, OnInit {
-  @Input() align: 'top' | 'middle' | 'bottom' | null
-  @Input() gutter: number
-  @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' | null
-  @Input() type: 'flex' | null
+  /**
+   * the vertical alignment of the flex layout
+   */
+  @Input() align: 'top' | 'middle' | 'bottom' | null = null
+
+  /**
+   * spacing between grids
+   */
+  @Input() gutter: number = 0
+
+  /**
+   * horizontal arrangement of the flex layout
+   */
+  @Input() justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between' | null = null
+
+  /**
+   * layout mode
+   */
+  @Input() type: 'flex' | null = null
 
   @Input() set antRow(value: 'flex' | '' | null) { if (value !== '') this.type = value }
 
-  @Input('gutter.xs') gutterXs: number
-  @Input('gutter.sm') gutterSm: number
-  @Input('gutter.md') gutterMd: number
-  @Input('gutter.lg') gutterLg: number
-  @Input('gutter.xl') gutterXl: number
-  @Input('gutter.xxl') gutterXxl: number
+  @Input('gutter.xs') gutterXs: number | null = null
+  @Input('gutter.sm') gutterSm: number | null = null
+  @Input('gutter.md') gutterMd: number | null = null
+  @Input('gutter.lg') gutterLg: number | null = null
+  @Input('gutter.xl') gutterXl: number | null = null
+  @Input('gutter.xxl') gutterXxl: number | null = null
 
   onChanges$ = new Subject<SimpleChanges>()
   onInit$ = new Subject<void>()

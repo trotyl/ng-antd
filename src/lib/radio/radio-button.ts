@@ -12,6 +12,9 @@ import { RADIO_BUTTON_PREFIX } from './token'
   preserveWhitespaces: false,
 })
 export class RadioButton<T> extends ControlItem implements OnDestroy, OnInit {
+  /**
+   * According to value for comparison, to determine whether the selected
+   */
   @Input() value: T | null = null
 
   get checked(): boolean {

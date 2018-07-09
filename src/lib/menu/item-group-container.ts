@@ -20,8 +20,14 @@ export class MenuItemGroupContainer implements TemplateOutlet {
     if (value !== '') this.itemGroup = value
   }
 
+  /**
+   * @internal
+   */
   @ViewChild('titleOutlet', { read: ViewContainerRef }) titleOutlet: ViewContainerRef
 
+  /**
+   * @internal
+   */
   readonly titleClasses: { [name: string]: boolean } = { }
 
   constructor(

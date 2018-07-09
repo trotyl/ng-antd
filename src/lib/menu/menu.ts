@@ -22,7 +22,14 @@ import { MENU_PREFIX, TemplateOutlet } from './token'
   preserveWhitespaces: false,
 })
 export class Menu extends KeyedCompositeControl<string, boolean> implements AfterViewInit, FragmentContainer, OnChanges, OnDestroy, OnInit {
+  /**
+   * type of the menu
+   */
   @Input() mode: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' = 'vertical'
+
+  /**
+   * color theme of the menu
+   */
   @Input() theme: 'light' | 'dark' = 'light'
 
   @Input() set antMenu(value: 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline' | '') { if (value !== '') this.mode = value }
@@ -30,10 +37,24 @@ export class Menu extends KeyedCompositeControl<string, boolean> implements Afte
   @HostBinding('attr.role') @Input() role: string = 'menu'
   @HostBinding('attr.tabindex') @Input() tabIndex: string = '0'
 
+  /**
+   * @internal
+   */
   @ViewChild('groupWrapper') groupWrapper: TemplateRef<{ template: TemplateRef<void> }>
 
+  /**
+   * @internal
+   */
   readonly level: number
+
+  /**
+   * @internal
+   */
   readonly containers: TemplateOutlet[] = []
+
+  /**
+   * @internal
+   */
   readonly parentComposite: Menu
 
   onChanges$ = new Subject<SimpleChanges>()

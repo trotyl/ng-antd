@@ -16,13 +16,26 @@ import { toButtonSize } from './util'
   preserveWhitespaces: false,
 })
 export class Button implements OnChanges, OnDestroy {
-  @Input() color: 'primary' | 'dashed' | 'danger' | null
-  @Input() size: 'large' | 'small' | null
-  @Input() icon: string | null
-  @Input() shape: 'circle' | null
-  @Input() loading: boolean
-  @Input() ghost: boolean
-  @Input() iconOnly: boolean
+  @Input() color: 'primary' | 'dashed' | 'danger' | null = null
+  @Input() size: 'large' | 'small' | null = null
+
+  /**
+   * set the icon of button
+   */
+  @Input() icon: string | null = null
+
+  @Input() shape: 'circle' | null = null
+
+  /**
+   * set the loading status of button
+   */
+  @Input() loading: boolean = false
+
+  /**
+   * make background transparent and invert text and border colors
+   */
+  @Input() ghost: boolean = false
+  @Input() iconOnly: boolean = false
 
   @Input() set antBtn(value: 'primary' | 'dashed' | 'danger' | '' | null) { if (value !== '') this.color = value }
 

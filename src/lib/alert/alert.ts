@@ -13,8 +13,15 @@ import { ALERT_PREFIX } from './token'
   preserveWhitespaces: false,
 })
 export class Alert implements OnChanges, OnDestroy {
+  /**
+   * Type of Alert styles
+   */
   @Input() type: string = 'info'
-  @Input() message: string
+
+  /**
+   * Content of Alert
+   */
+  @Input('message') message: string
 
   @Input() set antAlert(value: string) { if (value !== '') { this.type = value } }
 
@@ -30,8 +37,15 @@ export class Alert implements OnChanges, OnDestroy {
     map(({ message }) => message),
   )
 
-  messageClasses: { [name: string]: boolean }
-  descriptionClasses: { [name: string]: boolean }
+  /**
+   * @internal
+   */
+  readonly messageClasses: { [name: string]: boolean }
+
+  /**
+   * @internal
+   */
+  readonly descriptionClasses: { [name: string]: boolean }
 
   constructor(
     @Inject(ALERT_PREFIX) prefix: string,
