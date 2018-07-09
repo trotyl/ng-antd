@@ -17,15 +17,36 @@ import { MENU_PREFIX } from './token'
   preserveWhitespaces: false,
 })
 export class SubMenu extends KeyedCompositeControl<string, boolean> implements OnChanges, OnDestroy, OnInit {
+  /**
+   * unique id of the sub menu
+   */
   @Input() key: string
+
+  /**
+   * title of the sub menu
+   */
   @Input() title: string
 
   @Input() set antSubMenu(value: string | '') { if (value !== '') this.key = value }
 
+  /**
+   * @internal
+   */
   @ViewChild('popUp') popUpTemplate: TemplateRef<void>
 
+  /**
+   * @internal
+   */
   readonly parentComposite: Menu
+
+  /**
+   * @internal
+   */
   readonly titleClasses: { [name: string]: boolean } = {}
+
+  /**
+   * @internal
+   */
   readonly arrowClasses: { [name: string]: boolean } = {}
 
   popupClasses$: Observable<{ [name: string]: boolean }>

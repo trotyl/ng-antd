@@ -1,6 +1,6 @@
 {
   "name": "ng-antd-workspace",
-  "version": "0.0.1-alpha.3",
+  "version": "0.0.0-NOT-USED",
   "license": "MIT",
   "description": "Project used to explore Angular component design best practice",
   "main": "index.js",
@@ -26,7 +26,9 @@
     "postgh-build": "cp dist/index.html dist/404.html && cp -r .circleci/ dist/.circleci/",
     "deploy": "gh-pages -d dist -t",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "publish:lib": "cd publish && yarn publish"
+    "publish:lib": "cd publish && yarn publish",
+    "typedoc": "typedoc --tsconfig src/tsconfig.app.json --exclude **/*.spec.ts --json tools/typedoc/reflection.json src/lib/",
+    "extract-api": "tsc --lib es2015 tools/api/extract.ts && node tools/api/extract.js"
   },
   "private": true,
   "dependencies": {
@@ -72,6 +74,7 @@
     "tsickle": "^0.27.5",
     "tslib": "^1.9.0",
     "tslint": "^5.9.1",
+    "typedoc": "^0.11.1",
     "typescript": "~2.7.2"
   }
 }

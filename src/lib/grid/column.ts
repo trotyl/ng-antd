@@ -13,48 +13,67 @@ import { COLUMN_PREFIX } from './token'
   selector: 'ant-col, [antCol]',
 })
 export class Column implements OnChanges, OnDestroy, OnInit {
-  @Input() span: number | null
-  @Input() offset: number | null
-  @Input() order: number | null
-  @Input() pull: number | null
-  @Input() push: number | null
+  /**
+   * raster number of cells to occupy, 0 corresponds to `display: none`
+   */
+  @Input() span: number | null = null
+
+  /**
+   * the number of cells to offset Col from the left
+   */
+  @Input() offset: number | null = null
+
+  /**
+   * raster order, used in `flex` layout mode
+   */
+  @Input() order: number | null = null
+
+  /**
+   * the number of cells that raster is moved to the left
+   */
+  @Input() pull: number | null = null
+
+  /**
+   * the number of cells that raster is moved to the right
+   */
+  @Input() push: number | null = null
 
   @Input() set antCol(value: number | '' | null) { if (value !== '') this.span = value }
 
-  @Input('span.xs') spanXs: number | null
-  @Input('span.sm') spanSm: number | null
-  @Input('span.md') spanMd: number | null
-  @Input('span.lg') spanLg: number | null
-  @Input('span.xl') spanXl: number | null
-  @Input('span.xxl') spanXxl: number | null
+  @Input('span.xs') spanXs: number | null = null
+  @Input('span.sm') spanSm: number | null = null
+  @Input('span.md') spanMd: number | null = null
+  @Input('span.lg') spanLg: number | null = null
+  @Input('span.xl') spanXl: number | null = null
+  @Input('span.xxl') spanXxl: number | null = null
 
-  @Input('offset.xs') offsetXs: number | null
-  @Input('offset.sm') offsetSm: number | null
-  @Input('offset.md') offsetMd: number | null
-  @Input('offset.lg') offsetLg: number | null
-  @Input('offset.xl') offsetXl: number | null
-  @Input('offset.xxl') offsetXxl: number | null
+  @Input('offset.xs') offsetXs: number | null = null
+  @Input('offset.sm') offsetSm: number | null = null
+  @Input('offset.md') offsetMd: number | null = null
+  @Input('offset.lg') offsetLg: number | null = null
+  @Input('offset.xl') offsetXl: number | null = null
+  @Input('offset.xxl') offsetXxl: number | null = null
 
-  @Input('order.xs') orderXs: number | null
-  @Input('order.sm') orderSm: number | null
-  @Input('order.md') orderMd: number | null
-  @Input('order.lg') orderLg: number | null
-  @Input('order.xl') orderXl: number | null
-  @Input('order.xxl') orderXxl: number | null
+  @Input('order.xs') orderXs: number | null = null
+  @Input('order.sm') orderSm: number | null = null
+  @Input('order.md') orderMd: number | null = null
+  @Input('order.lg') orderLg: number | null = null
+  @Input('order.xl') orderXl: number | null = null
+  @Input('order.xxl') orderXxl: number | null = null
 
-  @Input('pull.xs') pullXs: number | null
-  @Input('pull.sm') pullSm: number | null
-  @Input('pull.md') pullMd: number | null
-  @Input('pull.lg') pullLg: number | null
-  @Input('pull.xl') pullXl: number | null
-  @Input('pull.xxl') pullXxl: number | null
+  @Input('pull.xs') pullXs: number | null = null
+  @Input('pull.sm') pullSm: number | null = null
+  @Input('pull.md') pullMd: number | null = null
+  @Input('pull.lg') pullLg: number | null = null
+  @Input('pull.xl') pullXl: number | null = null
+  @Input('pull.xxl') pullXxl: number | null = null
 
-  @Input('push.xs') pushXs: number | null
-  @Input('push.sm') pushSm: number | null
-  @Input('push.md') pushMd: number | null
-  @Input('push.lg') pushLg: number | null
-  @Input('push.xl') pushXl: number | null
-  @Input('push.xxl') pushXxl: number | null
+  @Input('push.xs') pushXs: number | null = null
+  @Input('push.sm') pushSm: number | null = null
+  @Input('push.md') pushMd: number | null = null
+  @Input('push.lg') pushLg: number | null = null
+  @Input('push.xl') pushXl: number | null = null
+  @Input('push.xxl') pushXxl: number | null = null
 
   onChanges$ = new Subject<SimpleChanges>()
   onInit$ = new Subject<void>()

@@ -18,8 +18,19 @@ import { range } from '../util/lang'
   preserveWhitespaces: false,
 })
 export class Slider extends Control<number> implements OnChanges, OnInit {
+  /**
+   * The minimum value the slider can slide to
+   */
   @Input() min: number = 0
+
+  /**
+   * The maximum value the slider can slide to
+   */
   @Input() max: number = 100
+
+  /**
+   * Tick mark of Slider, key must be in closed interval [min, max]
+   */
   @Input() marks: { [key: number]: string } | null = null
 
   percentage: number

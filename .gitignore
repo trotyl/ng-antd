@@ -9,6 +9,8 @@
 /built
 publish.tgz
 tsconfig.json-e
+/tools/**/*.js
+/tools/typedoc/reflection.json
 
 # dependencies
 /node_modules

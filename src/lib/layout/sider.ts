@@ -10,6 +10,9 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular
   preserveWhitespaces: false,
 })
 export class LayoutSider {
+  /**
+   * width of the sidebar
+   */
   @Input() @HostBinding('style.width.px') width: number = 200
 
   @Input()

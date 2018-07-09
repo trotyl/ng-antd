@@ -16,6 +16,9 @@ import { LAYOUT_PREFIX } from './token'
   ],
 })
 export class Layout implements ElementContainer {
+  /**
+   * @internal
+   */
   @ContentChildren(LayoutSider) siders: QueryList<LayoutSider>
 
   constructor(

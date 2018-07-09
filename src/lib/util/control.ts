@@ -9,10 +9,26 @@ export type OnTouchedFn = () => void
 export function noop(): void { }
 
 export abstract class Control<T> implements ControlValueAccessor {
+  /**
+   * @internal
+   */
   value: T | null = null
+
+  /**
+   * @internal
+   */
   disabled: boolean = false
+
+  /**
+   * @internal
+   */
   onChangeFn: OnChangeFn<T> = noop
+
+  /**
+   * @internal
+   */
   onTouchedFn: OnTouchedFn = noop
+
   modelValue$ = new Subject<T | null>()
 
   writeValue(value: T | null): void {
@@ -47,8 +63,16 @@ export abstract class Control<T> implements ControlValueAccessor {
 }
 
 export abstract class CompositeControl<T> extends Control<T> {
+  /**
+   * @internal
+   */
   parentComposite?: CompositeControl<T>
+
+  /**
+   * @internal
+   */
   compositeValue: T
+
   compositeStatus$: Subject<void> = new Subject()
 
   set value(value: T) {
@@ -86,8 +110,19 @@ export abstract class ControlItem implements OnDestroy {
 }
 
 export abstract class KeyedCompositeControl<K, V, T = K> extends CompositeControl<T> {
+  /**
+   * @internal
+   */
   abstract parentComposite?: KeyedCompositeControl<K, V, T>
+
+  /**
+   * @internal
+   */
   pendingKeyedChanges = new Map<K, V>()
+
+  /**
+   * @internal
+   */
   keyedObservers = new Map<K, Observer<V>>()
 
   observeKey(key: K): Observable<V> {

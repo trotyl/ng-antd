@@ -24,4 +24,32 @@
       </section>
     </ant-col>
   </ant-row>
+
+  <section class="markdown api-container">
+    <h2 id="api">
+      <span>API</span>
+      <a class="anchor" href="#api">#</a>
+    </h2>
+    <ng-container *ngFor="let directive of info.directives">
+      <h3>{{ directive.name }}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let property of directive.properties">
+            <td>{{ property.name }}</td>
+            <td>{{ property.description }}</td>
+            <td><code>{{ property.type }}</code></td>
+            <td><code>{{ property.defaultValue || '-' }}</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </section>
 </article>
