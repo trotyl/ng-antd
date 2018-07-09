@@ -31,6 +31,7 @@ jobs:
           yarn theme
           yarn typedoc
           yarn extract-api
+          yarn extract-demo
           yarn build:es5
           yarn build:es2015
 
