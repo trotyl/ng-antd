@@ -33,7 +33,7 @@
                 <ul *antContent antMenuItemGroup [title]="item.type | titlecase">
                   <!-- TODO: implement Menu dynamic inlineIndent -->
                   <li class="padding-left-80" *ngFor="let component of item.components" [antMenuItem]="component">
-                    <a [routerLink]="[component]">{{ component | titlecase }}</a>
+                    <a [routerLink]="['components', component]">{{ component | titlecase }}</a>
                   </li>
                 </ul>
               </ng-container>

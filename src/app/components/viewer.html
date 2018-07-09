@@ -1,0 +1,27 @@
+<article>
+  <section class="markdown">
+    <h1>{{ name | titlecase }}</h1>
+  </section>
+
+  <ant-row gutter="16">
+    <ant-col class="code-boxes-col-1-1" span="24">
+      <section *ngFor="let component of components"
+               class="code-box expand" [attr.id]="'components-' + name + '-' + component.path">
+        <section class="code-box-demo">
+          <ng-container *ngComponentOutlet="component.type"></ng-container>
+        </section>
+        <section class="code-box-meta markdown">
+          <div class="code-box-title">
+            <a href="/">{{ component.title | titlecase }}</a>
+            <a class="edit-button" href="/" target="_blank"><i antIcon="edit"></i></a>
+          </div>
+        </section> 
+        <section class="highlight-wrapper highlight-wrapper-expand">
+          <div class="highlight" style="padding: 20px;">
+            <source-viewer [component]="name" [case]="component.path"></source-viewer>
+          </div>
+        </section>
+      </section>
+    </ant-col>
+  </ant-row>
+</article>

@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common'
-import { NgModule, Type } from '@angular/core'
-import { Demo } from './demo'
-import { HightLight } from './highlight'
-import { SourceViewer } from './source-viewer'
+import { NgModule } from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { AlertModule, ButtonModule, GridModule, IconModule, LayoutModule, MenuModule, SliderModule } from 'ng-antd'
 
-const TYPES: Type<any>[] = [
-  SourceViewer,
-  HightLight,
-  Demo,
+const ANT_MODULES = [
+  AlertModule,
+  ButtonModule,
+  GridModule,
+  IconModule,
+  LayoutModule,
+  MenuModule,
+  SliderModule,
 ]
 
 @NgModule({
-  declarations: [ TYPES ],
-  imports: [ CommonModule ],
-  exports: [ TYPES ],
+  exports: [ CommonModule, FormsModule, ANT_MODULES ],
 })
 export class SharedModule { }
