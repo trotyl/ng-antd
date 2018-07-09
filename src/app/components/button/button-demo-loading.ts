@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   selector: 'button-demo-loading',
   templateUrl: './button-demo-loading.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class ButtonDemoLoading {
   loading = false

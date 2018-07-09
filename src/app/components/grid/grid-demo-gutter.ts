@@ -5,6 +5,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   templateUrl: './grid-demo-gutter.html',
   styleUrls: ['./grid-demo-gutter.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class GridDemoGutter { }

@@ -5,7 +5,6 @@ import { Menu } from 'ng-antd'
   selector: 'menu-demo-inline',
   templateUrl: './menu-demo-inline.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class MenuDemoInline implements OnInit {
   @ViewChild(Menu) menu: Menu

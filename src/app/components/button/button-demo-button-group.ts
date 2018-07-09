@@ -4,6 +4,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   selector: 'button-demo-button-group',
   templateUrl: './button-demo-button-group.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class ButtonDemoButtonGroup { }
