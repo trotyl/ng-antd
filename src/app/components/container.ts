@@ -17,10 +17,10 @@ export interface DemoComponent {
 }
 
 @Component({
-  templateUrl: './viewer.html',
+  templateUrl: './container.html',
   providers: [ TitleCasePipe ],
 })
-export class DocsViewer implements OnInit {
+export class DocsContainer implements OnInit {
   name: string
   components: DemoComponent[] = []
   info: PackageInfo
