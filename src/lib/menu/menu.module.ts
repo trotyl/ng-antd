@@ -22,6 +22,14 @@ const NG_MODULES = [
   FragmentModule,
 ]
 
+/**
+ * Menu list of Navigation.
+ *
+ * @whenToUse
+ * Navigation menu is important for a website, it helps users jump from one site section to another quickly. Mostly, it includes top navigation and side navigation. Top navigation provides all the category and functions of the website. Side navigation provides the Multi-level structure of the website.
+ *
+ * More layouts with navigation: [layout](/components/layout).
+ */
 @NgModule({
   declarations: [ TYPES ],
   imports: [

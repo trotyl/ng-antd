@@ -12,6 +12,13 @@ const NG_MODULES = [
   ExtensionModule,
 ]
 
+/**
+ * Alert component for feedback.
+ *
+ * @whenToUse
+ * - When you need to show alert messages to users.
+ * - When you need a persistent static container which is closable by user actions.
+ */
 @NgModule({
   declarations: [ TYPES ],
   imports: [

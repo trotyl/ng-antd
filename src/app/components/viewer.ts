@@ -27,11 +27,10 @@ export class DocsViewer implements OnInit {
       const componentTypes = group[name]
       this.components = componentTypes.map((type) => {
         const factory = this.cfr.resolveComponentFactory(type)
-        return {
-          type,
-          path: factory.selector.split(/\-(.+)/)[1],
-          title: this.titlecase.transform(factory.selector.replace(`${name}-demo-`, '').replace('-', ' ')),
-        }
+        const path = factory.selector.split(/\-(.+)/)[1]
+        const demo = factory.selector.replace(`${name}-demo-`, '').replace('-', ' ')
+        const title = this.titlecase.transform(demo)
+        return { type, path, title }
       })
       this.info = api[name]
     })

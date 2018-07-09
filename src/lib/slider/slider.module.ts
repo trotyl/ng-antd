@@ -6,6 +6,12 @@ const TYPES = [
   Slider,
 ]
 
+/**
+ * A Slider component for displaying current value and intervals in range.
+ *
+ * @whenToUse
+ * To input a value in a range.
+ */
 @NgModule({
   declarations: [ TYPES ],
   imports: [ CommonModule ],

@@ -1,20 +1,25 @@
 import * as fs from 'fs'
+import * as MarkdownIt from 'markdown-it'
 import * as path from 'path'
 import { ClassReflection, Decorator, ReflectionKind } from '../typedoc/models/reflections'
 import { Type } from '../typedoc/models/types'
 import * as reflection from '../typedoc/reflection'
 import { PackageInfo, PropertiesInfo, PropertyInfo } from './definition'
 
+const md = new MarkdownIt({ html: true })
+
 const result: { [pkg: string]: PackageInfo } = {}
 
 for (const file of reflection.children) {
   if (!file.children) { continue }
 
-  const packagePath = file.name.replace(/"/g, '')
+  const packagePath = stripQuote(file.name)
   const [pkgName] = packagePath.split('/')
 
   if (!result[pkgName]) {
     result[pkgName] = {
+      intro: null,
+      whenToUse: null,
       directives: [],
     }
   }
@@ -24,6 +29,7 @@ for (const file of reflection.children) {
   for (const exportable of file.children) {
     if (exportable.kind === ReflectionKind.Class && exportable.decorators) {
       const decorators = exportable.decorators
+
       if (decorators.some(deco => deco.name === 'Directive' || deco.name === 'Component')) {
         const name = exportable.name
         const decorator = exportable.decorators.find(deco => deco.name === 'Directive' || deco.name === 'Component')
@@ -37,6 +43,25 @@ for (const file of reflection.children) {
           inputs,
           outputs,
         })
+      }
+
+      if (decorators.some(deco => deco.name === 'NgModule')) {
+        if (exportable.comment) {
+          const comment = exportable.comment
+          if (comment.shortText) {
+            let intro = md.render(comment.shortText)
+            if (comment.text) {
+              intro += md.render(comment.text)
+            }
+            pkg.intro = intro
+          }
+          if (comment.tags) {
+            const whenToUse = comment.tags.find(tag => tag.tag.toLowerCase() === 'whenToUse'.toLowerCase())
+            if (whenToUse) {
+              pkg.whenToUse = md.render(whenToUse.text)
+            }
+          }
+        }
       }
     }
   }
@@ -57,21 +82,22 @@ function extractProperties(declaration: ClassReflection): PropertiesInfo {
       if (property.name.endsWith('$')) { continue }
       if (property.flags.isPrivate) { continue }
       if (property.comment && property.comment.tags && property.comment.tags.some(tag => tag.tag === 'internal')) { continue }
+      const description = property.comment && property.comment.shortText
       properties.push({
         name: property.name,
-        description: property.comment && property.comment.shortText,
+        description: description ? md.renderInline(description) : undefined,
         type: stringifyType(property.type),
         defaultValue: property.defaultValue ? property.defaultValue.trim() : undefined,
       })
       if (!property.decorators) { continue }
       if (property.decorators.some(deco => deco.name === 'Input')) {
         const input = property.decorators.find(deco => deco.name === 'Input')!
-        const attrName = input.arguments.bindingPropertyName ? input.arguments.bindingPropertyName.replace(/'/g, '') : null
+        const attrName = input.arguments.bindingPropertyName ? stripQuote(input.arguments.bindingPropertyName) : null
         inputs[property.name] = attrName
       }
       if (property.decorators.some(deco => deco.name === 'Output')) {
         const output = property.decorators.find(deco => deco.name === 'Output')!
-        const attrName = output.arguments.bindingPropertyName ? output.arguments.bindingPropertyName.replace(/'/g, '') : null
+        const attrName = output.arguments.bindingPropertyName ? stripQuote(output.arguments.bindingPropertyName) : null
         outputs[property.name] = attrName
       }
     }
@@ -97,6 +123,10 @@ function stringifyType(type: Type): string {
     default:
       return `TODO(type): ${type.type}`
   }
+}
+
+function stripQuote(source: string): string {
+  return source.replace(/["']/g, '')
 }
 
 const outputPath = path.join(__dirname, './result.js')

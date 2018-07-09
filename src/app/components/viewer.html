@@ -1,9 +1,25 @@
 <article>
   <section class="markdown">
     <h1>{{ name | titlecase }}</h1>
+
+    <section class="markdown">
+      <div *ngIf="info.intro" [innerHTML]="info.intro"></div>
+      <ng-container *ngIf="info.whenToUse">
+        <h2 id="when-to-use">
+          <span>When To Use</span>
+          <a class="anchor" href="#when-to-use">#</a>
+        </h2>
+        <div [innerHTML]="info.whenToUse"></div>
+      </ng-container>
+    </section>
+  
+    <h2 *ngIf="components.length > 0">
+      <span>Examples</span>
+      <i class="code-box-expand-trigger" antIcon="appstore-o"></i>
+    </h2>
   </section>
 
-  <ant-row gutter="16">
+  <ant-row *ngIf="components.length > 0" gutter="16">
     <ant-col class="code-boxes-col-1-1" span="24">
       <section *ngFor="let component of components"
                class="code-box expand" [attr.id]="'components-' + name + '-' + component.path">
@@ -44,7 +60,7 @@
         <tbody>
           <tr *ngFor="let property of directive.properties">
             <td>{{ property.name }}</td>
-            <td>{{ property.description }}</td>
+            <td [innerHTML]="property.description || '-'"></td>
             <td><code>{{ property.type }}</code></td>
             <td><code>{{ property.defaultValue || '-' }}</code></td>
           </tr>
