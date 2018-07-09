@@ -4,6 +4,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   selector: 'grid-demo-basic',
   templateUrl: './grid-demo-basic.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class GridDemoBasic { }

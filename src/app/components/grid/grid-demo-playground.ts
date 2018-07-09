@@ -5,7 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   templateUrl: './grid-demo-playground.html',
   styleUrls: ['./grid-demo-playground.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class GridDemoPlayground {
   gutters = [8, 16, 24, 32, 40, 48]

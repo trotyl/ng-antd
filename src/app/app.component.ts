@@ -6,7 +6,6 @@ import { Menu } from 'ng-antd'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class AppComponent implements OnInit {
   @ViewChild(Menu) menu: Menu

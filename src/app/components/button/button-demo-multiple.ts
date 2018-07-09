@@ -4,6 +4,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   selector: 'button-demo-multiple',
   templateUrl: './button-demo-multiple.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class ButtonDemoMultiple { }
