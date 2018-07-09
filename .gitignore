@@ -10,7 +10,7 @@
 publish.tgz
 tsconfig.json-e
 /tools/**/*.js
-/tools/typedoc/reflection.json
+/tools/**/*.json
 
 # dependencies
 /node_modules

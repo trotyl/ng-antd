@@ -1,8 +1,5 @@
-import { HttpClient } from '@angular/common/http'
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
-import { Observable } from 'rxjs'
-
-const API_BASE = 'https://raw.githubusercontent.com/trotyl/ng-antd/master/src/app'
+import { demos } from '../../../tools/demo/result'
 
 @Component({
   selector: 'source-viewer',
@@ -19,16 +16,11 @@ export class DocsSourceViewer implements OnInit {
   @Input() component: string
   @Input() case: string
 
-  html$: Observable<string>
-  ts$: Observable<string>
-  css$: Observable<string>
-
-  constructor(private http: HttpClient) { }
+  html: string
+  ts: string
 
   ngOnInit(): void {
-    const path = `${API_BASE}/${this.component}/${this.component}-${this.case}`
-    this.html$ = this.http.get(`${path}.html`, { responseType: 'text' })
-    this.ts$ = this.http.get(`${path}.ts`, { responseType: 'text' })
-    this.css$ = this.http.get(`${path}.css`, { responseType: 'text' })
+    this.html = demos[`${this.component}-${this.case}.html`]
+    this.ts = demos[`${this.component}-${this.case}.ts`]
   }
 }

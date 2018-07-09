@@ -1,3 +1,3 @@
 import { PackageInfo } from './definition'
 
-declare const api: { [pkg: string]: PackageInfo }
+export const api: { [pkg: string]: PackageInfo }
