@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core'
 import { SharedModule } from '../shared'
+import { DocsContainer } from './container'
 import { DocsDemoModule } from './demo.module'
 import { DocsHightLight } from './highlight'
 import { DocsSourceViewer } from './source-viewer'
-import { DocsViewer } from './viewer'
 
 @NgModule({
-  declarations: [ DocsViewer, DocsHightLight, DocsSourceViewer ],
+  declarations: [ DocsContainer, DocsHightLight, DocsSourceViewer ],
   imports: [ SharedModule, DocsDemoModule ],
 })
-export class DocsViewerModule { }
+export class DocsComponentsModule { }

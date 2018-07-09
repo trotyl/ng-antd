@@ -5,11 +5,11 @@ import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule, Routes } from '@angular/router'
 
 import { AppComponent } from './app.component'
-import { DocsViewer, DocsViewerModule } from './components'
+import { DocsComponentsModule, DocsContainer } from './components'
 import { SharedModule } from './shared'
 
 const routes: Routes = [
-  { path: 'components/:name', component: DocsViewer },
+  { path: 'components/:name', component: DocsContainer },
   { path: '', redirectTo: '/components/alert', pathMatch: 'full' },
 ]
 
@@ -23,7 +23,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     SharedModule,
-    DocsViewerModule,
+    DocsComponentsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
