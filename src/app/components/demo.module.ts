@@ -1,5 +1,5 @@
 import { NgModule, Type } from '@angular/core'
-import { SharedModule } from '../shared'
+import { DocsSharedModule } from '../shared'
 import { AlertDemoBasic } from './alert'
 import { ButtonDemoBasic, ButtonDemoButtonGroup, ButtonDemoDisabled, ButtonDemoGhost, ButtonDemoIcon, ButtonDemoLoading, ButtonDemoMultiple, ButtonDemoSize } from './button'
 import { GridDemoBasic, GridDemoFlex, GridDemoFlexAlign, GridDemoFlexOrder, GridDemoGutter, GridDemoOffset, GridDemoPlayground, GridDemoResponsive, GridDemoResponsiveMore, GridDemoSort } from './grid'
@@ -76,7 +76,7 @@ export const group: { [name: string]: Type<any>[] } = {
 
 @NgModule({
   declarations: [ DIRECTIVES ],
-  imports: [ SharedModule ],
+  imports: [ DocsSharedModule ],
   exports: [ DIRECTIVES ],
   entryComponents: [ DIRECTIVES ],
 })

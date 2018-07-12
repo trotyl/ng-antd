@@ -1,0 +1,28 @@
+<div class="main-wrapper">
+  <ant-row>
+    <!-- TODO: implement drawer component -->
+    <!-- <ant-drawer *ngIf="isMobile" [content]="menu"></ant-drawer> -->
+    <ant-col class="main-menu" span.xxl="4" span.xl="5" span.lg="6" span="24">
+      <ul class="aside-container menu-site" antMenu="inline" [(ngModel)]="activeMenuItem">
+          <li antSubMenu="components">
+            <h4>Components</h4>
+            <ul antMenu>
+              <ng-container *ngFor="let item of items">
+                <ul *antContent antMenuItemGroup [title]="item.type | titlecase">
+                  <!-- TODO: implement Menu dynamic inlineIndent -->
+                  <li class="padding-left-80" *ngFor="let component of item.components" [antMenuItem]="component">
+                    <a [routerLink]="['components', component]">{{ component | titlecase }}</a>
+                  </li>
+                </ul>
+              </ng-container>
+            </ul>
+          </li>
+        </ul>
+    </ant-col>
+    <ant-col class="main-container main-container-component" span.xxl="20" span.xl="19" span.lg="18" span="24">
+      <article>
+        <router-outlet></router-outlet>
+      </article>
+    </ant-col>
+  </ant-row>
+</div>

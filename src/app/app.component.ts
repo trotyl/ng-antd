@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core'
-import { Menu } from 'ng-antd'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 @Component({
   selector: 'app-root',
@@ -7,20 +6,4 @@ import { Menu } from 'ng-antd'
   styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
-  @ViewChild(Menu) menu: Menu
-
-  title = 'app'
-  activeMenuItem = 'button'
-
-  items = [
-    { type: 'general', components: ['button', 'icon'] },
-    { type: 'layout', components: ['grid', 'layout'] },
-    { type: 'navigation', components: ['menu'] },
-    { type: 'feedback', components: ['alert'] },
-  ]
-
-  ngOnInit(): void {
-    this.menu.open('components')
-  }
-}
+export class AppComponent { }
