@@ -6,11 +6,12 @@ import { RouterModule, Routes } from '@angular/router'
 
 import { AppComponent } from './app.component'
 import { DocsComponentsModule, DocsContainer } from './components'
-import { SharedModule } from './shared'
+import { DocsInfraModule } from './infra'
+import { DocsSharedModule } from './shared'
 
 const routes: Routes = [
   { path: 'components/:name', component: DocsContainer },
-  { path: '', redirectTo: '/components/alert', pathMatch: 'full' },
+  { path: '', redirectTo: '/components/button', pathMatch: 'full' },
 ]
 
 @NgModule({
@@ -22,8 +23,9 @@ const routes: Routes = [
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    SharedModule,
+    DocsSharedModule,
     DocsComponentsModule,
+    DocsInfraModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

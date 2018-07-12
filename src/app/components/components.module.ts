@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core'
-import { SharedModule } from '../shared'
+import { DocsSharedModule } from '../shared'
 import { DocsContainer } from './container'
 import { DocsDemoModule } from './demo.module'
 import { DocsHightLight } from './highlight'
@@ -7,6 +7,6 @@ import { DocsSourceViewer } from './source-viewer'
 
 @NgModule({
   declarations: [ DocsContainer, DocsHightLight, DocsSourceViewer ],
-  imports: [ SharedModule, DocsDemoModule ],
+  imports: [ DocsSharedModule, DocsDemoModule ],
 })
 export class DocsComponentsModule { }
