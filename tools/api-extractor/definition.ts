@@ -1,3 +1,17 @@
+export const enum TokenType {
+  keyword = 'keyword',
+  className = 'class-name',
+  punctuation = 'punctuation',
+  string = 'string',
+  operator = 'operator',
+  builtin = 'builtin',
+}
+
+export interface CodeBlock {
+  language: string
+  tokens: Array<[TokenType, string] | string>
+}
+
 export interface PropertyInfo {
   name: string
   type: string
