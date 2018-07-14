@@ -29,8 +29,8 @@
     "publish:lib": "cd publish && yarn publish",
     "typedoc": "typedoc --tsconfig src/tsconfig.app.json --exclude **/*.spec.ts --json tools/typedoc/reflection.json src/",
     "extract-api": "yarn extract-api:lib && yarn extract-api:demo",
-    "extract-api:lib": "tsc --lib es2015 tools/api-extractor/extract-lib.ts && node tools/api-extractor/extract-lib.js",
-    "extract-api:demo": "tsc --lib es2015 tools/api-extractor/extract-demo.ts && node tools/api-extractor/extract-demo.js"
+    "extract-api:lib": "tsc --lib es2015,dom tools/api-extractor/extract-lib.ts && node tools/api-extractor/extract-lib.js",
+    "extract-api:demo": "tsc --lib es2015,dom tools/api-extractor/extract-demo.ts && node tools/api-extractor/extract-demo.js"
   },
   "private": true,
   "dependencies": {
@@ -44,8 +44,6 @@
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/router": "^6.0.0",
     "core-js": "^2.5.5",
-    "less": "^2.7.3",
-    "prismjs": "^1.14.0",
     "rxjs": "^6.1.0",
     "zone.js": "^0.8.26"
   },
@@ -59,6 +57,7 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/markdown-it": "^0.0.4",
     "@types/node": "~6.0.60",
+    "@types/prismjs": "^1.9.0",
     "antd": "^3.0.1",
     "codecov": "^3.0.0",
     "codelyzer": "^4.3.0",
@@ -72,8 +71,10 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "less": "^2.7.3",
     "markdown-it": "^8.4.1",
     "ng-packagr": "^2.4.2",
+    "prismjs": "^1.15.0",
     "protractor": "~5.1.2",
     "tsickle": "^0.27.5",
     "tslib": "^1.9.0",

@@ -1,2 +1,2 @@
-<pre *ngIf="template" class="code-block"><code highlight="html">{{ template }}</code></pre>
-<pre *ngIf="clazz" class="code-block"><code highlight="ts">{{ clazz }}</code></pre>
+<pre *ngIf="template" class="language-html"><code [innerHTML]="template"></code></pre>
+<pre *ngIf="clazz" class="language-ts"><code [innerHTML]="clazz"></code></pre>
