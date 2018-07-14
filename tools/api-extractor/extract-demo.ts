@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import * as glob from 'glob'
 import * as MarkdownIt from 'markdown-it'
 import * as path from 'path'
+import * as Prism from 'prismjs'
 import { ClassReflection, ReflectionKind } from '../typedoc/models/reflections'
 import * as reflection from '../typedoc/reflection'
 import { PackageDemo } from './definition'
@@ -58,11 +59,12 @@ for (const file of reflection.children) {
       if (exportable.children) {
         const clazzPath = fs.readFileSync(file.originalName, 'utf-8')
         const body = clazzPath.split(/export\sclass\s.*?\s(?=\{)/)[1]
-        clazz = `class DemoComponent ${body}`
+        clazz = Prism.highlight(`class DemoComponent ${body}`, Prism.languages.javascript, 'javascript' as any)
       }
 
       const templateUrl = file.originalName.replace('.ts', '.html')
-      const template = fs.readFileSync(templateUrl, 'utf-8').trim()
+      let template = fs.readFileSync(templateUrl, 'utf-8').trim()
+      template = Prism.highlight(template, Prism.languages.html, 'html' as any)
 
       pkg.demos.push({
         name,
