@@ -71,6 +71,8 @@ export function mapTokenType(type: string): TokenType {
       return TokenType.boolean
     case 'class-name':
       return TokenType.className
+    case 'comment':
+      return TokenType.comment
     case 'function':
       return TokenType.function
     case 'interpolation':

@@ -14,6 +14,8 @@ export class DocsTokenTypePipe implements PipeTransform {
         return 'boolean'
       case TokenType.className:
         return 'class-name'
+      case TokenType.comment:
+        return 'comment'
       case TokenType.function:
         return 'function'
       case TokenType.interpolation:

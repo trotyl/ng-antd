@@ -10,6 +10,7 @@ declare const enum TokenType {
   attrValue,
   boolean,
   className,
+  comment,
   function,
   interpolation,
   interpolationPunctuation,
