@@ -30,9 +30,9 @@
   min-height: 120px;
   line-height: 120px;
 }
-#components-layout-demo-basic > .code-box-demo > div > .ant-layout {
+#components-layout-demo-basic > .code-box-demo > * > .ant-layout {
   margin-bottom: 48px;
 }
-#components-layout-demo-basic > .code-box-demo > div > .ant-layout:last-child {
+#components-layout-demo-basic > .code-box-demo > * > .ant-layout:last-child {
   margin: 0;
 }

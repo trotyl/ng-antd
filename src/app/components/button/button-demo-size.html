@@ -1,33 +1,27 @@
-<section>
-  <ant-radio-group [(ngModel)]="size">
-    <ant-radio-btn value="large">Large</ant-radio-btn>
-    <ant-radio-btn>Default</ant-radio-btn>
-    <ant-radio-btn value="small">Small</ant-radio-btn>
-  </ant-radio-group>
-</section>
+<ant-radio-group [(ngModel)]="size">
+  <ant-radio-btn value="large">Large</ant-radio-btn>
+  <ant-radio-btn>Default</ant-radio-btn>
+  <ant-radio-btn value="small">Small</ant-radio-btn>
+</ant-radio-group>
+<br><br>
+
+<button antBtn="primary" [size]="size">Primary</button>
+<button antBtn [size]="size">Normal</button>
+<button antBtn="dashed" [size]="size">Dashed</button>
+<button antBtn="danger" [size]="size">Danger</button>
 <br>
 
-<section>
-  <button antBtn="primary" [size]="size">Primary</button>
-  <button antBtn [size]="size">Normal</button>
-  <button antBtn="dashed" [size]="size">Dashed</button>
-  <button antBtn="danger" [size]="size">Danger</button>
-</section>
+<button antBtn="primary" shape="circle" icon="download" [size]="size"></button>
+<button antBtn="primary" icon="download" [size]="size">Download</button>
+<br>
 
-<section>
-  <button antBtn="primary" shape="circle" icon="download" [size]="size"></button>
-  <button antBtn="primary" icon="download" [size]="size">Download</button>
-</section>
-
-<section>
-  <ant-btn-group [size]="size">
-    <button antBtn="primary">
-      <i antIcon type="left"></i>
-      Backward
-    </button>
-    <button antBtn="primary">
-      Forward
-      <i antIcon="right"></i>
-    </button>
-  </ant-btn-group>
-</section>
+<ant-btn-group [size]="size">
+  <button antBtn="primary">
+    <i antIcon type="left"></i>
+    Backward
+  </button>
+  <button antBtn="primary">
+    Forward
+    <i antIcon="right"></i>
+  </button>
+</ant-btn-group>
