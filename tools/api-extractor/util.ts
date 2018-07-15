@@ -1,12 +1,11 @@
 import { Type } from '../typedoc/models/types/index'
-import { CodeBlock, TokenType } from './definition'
 
-export function tokenizeType(type: Type): CodeBlock['tokens'] {
+export function tokenizeType(type: Type): Array<TokenNode> {
   const tokens: CodeBlock['tokens'] = []
 
   switch (type.type) {
     case 'intrinsic':
-      tokens.push(type.name)
+      tokens.push([TokenType.none, type.name])
       break
     case 'stringLiteral':
       tokens.push([TokenType.string, `"${type.value}"`])
@@ -16,21 +15,21 @@ export function tokenizeType(type: Type): CodeBlock['tokens'] {
         const elementType = type.types[i]
         tokens.push(...tokenizeType(elementType))
         if (i !== type.types.length - 1) {
-          tokens.push(' ')
+          tokens.push([TokenType.none, ' '])
           tokens.push([TokenType.punctuation, '|'])
-          tokens.push(' ')
+          tokens.push([TokenType.none, ' '])
         }
       }
       break
     case 'array':
       // TODO: use `type[]` format for simple types
-      tokens.push('Array')
+      tokens.push([TokenType.none, 'Array'])
       tokens.push([TokenType.punctuation, '<'])
       tokens.push(...tokenizeType(type.elementType))
       tokens.push([TokenType.punctuation, '>'])
       break
     case 'reference':
-      tokens.push(type.name)
+      tokens.push([TokenType.none, type.name])
       if (type.typeArguments) {
         tokens.push([TokenType.punctuation, '<'])
         for (let i = 0; i < type.typeArguments.length; i++) {
@@ -38,25 +37,23 @@ export function tokenizeType(type: Type): CodeBlock['tokens'] {
           tokens.push(...tokenizeType(argumentType))
           if (i !== type.typeArguments.length - 1) {
             tokens.push([TokenType.punctuation, ','])
-            tokens.push(' ')
+            tokens.push([TokenType.none, ' '])
           }
         }
         tokens.push([TokenType.punctuation, '>'])
       }
       break
     default:
-      tokens.push(`TODO(type): ${type.type}`)
+      tokens.push([TokenType.none, `TODO(type): ${type.type}`])
   }
 
   return tokens
 }
 
-export function stringifyType(type: Type): string {
-  const tokens = tokenizeType(type)
-  return `\
-<code>
-${tokens.map(token => Array.isArray(token) ? `<span class="token ${token[0]}">${token[1]}</span>` : token).join('')}
-</code>`
+export function serializeType(type: Type): CodeBlock {
+  return {
+    tokens: tokenizeType(type),
+  }
 }
 
 export function stripQuote(source: string): string {

@@ -62,7 +62,7 @@
           <tr *ngFor="let property of directive.properties">
             <td>{{ property.name }}</td>
             <td [innerHTML]="property.description || '-'"></td>
-            <td [innerHTML]="property.type"></td>
+            <td><code [def]="property.type"></code></td>
             <td><code>{{ property.defaultValue || '-' }}</code></td>
           </tr>
         </tbody>
