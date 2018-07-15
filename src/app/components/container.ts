@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common'
-import { Component, ComponentFactoryResolver, OnInit, Type } from '@angular/core'
+import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, OnInit, Type } from '@angular/core'
 import { Title } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 import { PackageInfo } from '../../../tools/api-extractor/definition'
@@ -20,6 +20,7 @@ export interface DemoComponent {
 @Component({
   templateUrl: './container.html',
   providers: [ TitleCasePipe ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocsContainer implements OnInit {
   name: string

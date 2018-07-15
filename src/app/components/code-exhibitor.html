@@ -1,0 +1,4 @@
+<ng-container *ngFor="let token of def.tokens">
+  <span *ngIf="token[0] !== 0" class="token {{ token[0] | tokenType }}">{{ token[1] }}</span>
+  <ng-container *ngIf="token[0] === 0">{{ token[1] }}</ng-container>
+</ng-container>

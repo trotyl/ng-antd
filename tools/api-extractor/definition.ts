@@ -1,20 +1,8 @@
-export const enum TokenType {
-  keyword = 'keyword',
-  className = 'class-name',
-  punctuation = 'punctuation',
-  string = 'string',
-  operator = 'operator',
-  builtin = 'builtin',
-}
-
-export interface CodeBlock {
-  language: string
-  tokens: Array<[TokenType, string] | string>
-}
+/// <reference path="../../src/typings.d.ts" />
 
 export interface PropertyInfo {
   name: string
-  type: string
+  type: CodeBlock
   defaultValue?: string
   description?: string
 }

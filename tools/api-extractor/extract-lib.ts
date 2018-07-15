@@ -4,7 +4,7 @@ import * as path from 'path'
 import { ClassReflection, Decorator, ReflectionKind } from '../typedoc/models/reflections'
 import * as reflection from '../typedoc/reflection'
 import { PackageInfo, PropertiesInfo, PropertyInfo } from './definition'
-import { stringifyType, stripQuote } from './util'
+import { serializeType, stripQuote } from './util'
 
 const md = new MarkdownIt({ html: true })
 
@@ -89,7 +89,7 @@ function extractProperties(declaration: ClassReflection): PropertiesInfo {
       properties.push({
         name: property.name,
         description: description ? md.renderInline(description) : undefined,
-        type: stringifyType(property.type),
+        type: serializeType(property.type),
         defaultValue: property.defaultValue ? property.defaultValue.trim() : undefined,
       })
       if (!property.decorators) { continue }
