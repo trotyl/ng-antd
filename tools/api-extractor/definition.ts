@@ -21,6 +21,7 @@ export interface DirectiveInfo extends PropertiesInfo {
 export interface PackageInfo {
   intro: string | null
   whenToUse: string | null
+  cols: number
   directives: DirectiveInfo[]
 }
 

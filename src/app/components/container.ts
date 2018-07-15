@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common'
-import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, OnInit, Type } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, Type } from '@angular/core'
 import { Title } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 import { PackageInfo } from '../../../tools/api-extractor/definition'
@@ -31,6 +31,7 @@ export class DocsContainer implements OnInit {
 
   constructor(
     private cfr: ComponentFactoryResolver,
+    private cdr: ChangeDetectorRef,
     private titlecase: TitleCasePipe,
     private route: ActivatedRoute,
     private title: Title,
@@ -40,6 +41,7 @@ export class DocsContainer implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const name = params.get('name')!
       this.switchComponent(name)
+      this.cdr.markForCheck()
     })
   }
 
