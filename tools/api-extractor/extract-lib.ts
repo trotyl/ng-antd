@@ -23,6 +23,7 @@ for (const file of reflection.children) {
     result[pkgName] = {
       intro: null,
       whenToUse: null,
+      cols: 2,
       directives: [],
     }
   }
@@ -62,6 +63,10 @@ for (const file of reflection.children) {
             const whenToUse = comment.tags.find(tag => tag.tag.toLowerCase() === 'whenToUse'.toLowerCase())
             if (whenToUse) {
               pkg.whenToUse = md.render(whenToUse.text)
+            }
+            const cols = comment.tags.find(tag => tag.tag.toLowerCase() === 'cols'.toLowerCase())
+            if (cols) {
+              pkg.cols = Number.parseInt(cols.text.trim(), 10)
             }
           }
         }

@@ -24,9 +24,23 @@
   </section>
 
   <ant-row *ngIf="components.length > 0" gutter="16">
-    <ant-col class="code-boxes-col-1-1" span="24">
-      <section *ngFor="let component of components"
-               class="code-box" [class.expand]="codeExpandAll || codeExpand[component.path]"
+    <ant-col ngClass="code-boxes-col-{{info.cols}}-1" [span]="24 / info.cols">
+      <ng-container *ngFor="let component of components; index as i">
+        <ng-container *ngIf="i % info.cols === 0">
+          <ng-container *ngTemplateOutlet="demosTpl; context: { $implicit: component }"></ng-container>
+        </ng-container>
+      </ng-container>
+    </ant-col>
+    <ant-col *ngIf="info.cols > 1" ngClass="code-boxes-col-{{info.cols}}-1" [span]="24 / info.cols">
+      <ng-container *ngFor="let component of components; index as i">
+        <ng-container *ngIf="i % info.cols !== 0">
+          <ng-container *ngTemplateOutlet="demosTpl; context: { $implicit: component }"></ng-container>
+        </ng-container>
+      </ng-container>
+    </ant-col>
+
+    <ng-template #demosTpl let-component>
+      <section class="code-box" [class.expand]="codeExpandAll || codeExpand[component.path]"
                [attr.id]="'components-' + name + '-demo-' + component.path">
         <section class="code-box-demo">
           <ng-container *ngComponentOutlet="component.type"></ng-container>
@@ -53,7 +67,7 @@
           </div>
         </section>
       </section>
-    </ant-col>
+    </ng-template>
   </ant-row>
 
   <section class="markdown api-container">

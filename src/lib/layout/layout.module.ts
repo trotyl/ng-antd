@@ -74,6 +74,8 @@ const NG_MODULES = [
  * - `Footer`: The bottom layout with default style, in which any element can be nested, and must be placed in `Layout`.
  *
  * > Based on `flex layout`, please pay attention to the [compatibility](http://caniuse.com/#search=flex).
+ *
+ * @cols 1
  */
 @NgModule({
   declarations: [ TYPES ],
