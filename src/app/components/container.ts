@@ -13,8 +13,8 @@ export interface DemoComponent {
   order: number
   path: string
   title: string
-  template: string
-  clazz: string | null
+  template: CodeBlock
+  clazz: CodeBlock | null
 }
 
 @Component({

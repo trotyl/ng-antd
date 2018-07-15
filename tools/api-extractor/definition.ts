@@ -29,8 +29,8 @@ export interface DemoItem {
   order: number
   title: string | null
   description: string
-  template: string
-  clazz: string | null
+  template: CodeBlock
+  clazz: CodeBlock | null
 }
 
 export interface PackageDemo {

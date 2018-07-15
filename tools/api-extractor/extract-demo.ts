@@ -6,7 +6,7 @@ import * as Prism from 'prismjs'
 import { ClassReflection, ReflectionKind } from '../typedoc/models/reflections'
 import * as reflection from '../typedoc/reflection'
 import { PackageDemo } from './definition'
-import { stripQuote } from './util'
+import { normalizeToken, stripQuote } from './util'
 
 const md = new MarkdownIt({ html: true })
 const root = path.join(__dirname, '../../src/app/components')
@@ -55,16 +55,20 @@ for (const file of reflection.children) {
         }
       }
 
-      let clazz = null
+      let clazz: CodeBlock | null = null
       if (exportable.children) {
         const clazzPath = fs.readFileSync(file.originalName, 'utf-8')
         const body = clazzPath.split(/export\sclass\s.*?\s(?=\{)/)[1]
-        clazz = Prism.highlight(`class DemoComponent ${body}`, Prism.languages.javascript, 'javascript' as any)
+        const clazzString = `class DemoComponent ${body}`
+        clazz = { tokens: Prism.tokenize(clazzString, Prism.languages.javascript).map(normalizeToken) }
       }
 
       const templateUrl = file.originalName.replace('.ts', '.html')
-      let template = fs.readFileSync(templateUrl, 'utf-8').trim()
-      template = Prism.highlight(template, Prism.languages.html, 'html' as any)
+      const templateString = fs.readFileSync(templateUrl, 'utf-8').trim()
+
+      const template: CodeBlock = {
+        tokens: Prism.tokenize(templateString, Prism.languages.html).map(normalizeToken),
+      }
 
       pkg.demos.push({
         name,

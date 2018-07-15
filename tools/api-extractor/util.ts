@@ -1,3 +1,4 @@
+import * as Prism from 'prismjs'
 import { Type } from '../typedoc/models/types/index'
 
 export function tokenizeType(type: Type): Array<TokenNode> {
@@ -58,4 +59,56 @@ export function serializeType(type: Type): CodeBlock {
 
 export function stripQuote(source: string): string {
   return source.replace(/["']/g, '')
+}
+
+export function mapTokenType(type: string): TokenType {
+  switch (type) {
+    case 'attr-name':
+      return TokenType.attrName
+    case 'attr-value':
+      return TokenType.attrValue
+    case 'boolean':
+      return TokenType.boolean
+    case 'class-name':
+      return TokenType.className
+    case 'function':
+      return TokenType.function
+    case 'interpolation':
+      return TokenType.interpolation
+    case 'interpolation-punctuation':
+      return TokenType.interpolationPunctuation
+    case 'keyword':
+      return TokenType.keyword
+    case 'number':
+      return TokenType.number
+    case 'operator':
+      return TokenType.operator
+    case 'property':
+      return TokenType.property
+    case 'punctuation':
+      return TokenType.punctuation
+    case 'string':
+      return TokenType.string
+    case 'style-attr':
+      return TokenType.styleAttr
+    case 'tag':
+      return TokenType.tag
+    case 'template-string':
+      return TokenType.templateString
+    default:
+      throw new Error(`Unexpected type ${type}`)
+  }
+}
+
+export function normalizeToken(token: string | Prism.Token): TokenNode {
+  if (typeof token === 'string') {
+    return [TokenType.none, token]
+  }
+  if (typeof token.content === 'string') {
+    return [mapTokenType(token.type), token.content]
+  }
+  if (!Array.isArray(token.content)) {
+    return [mapTokenType(token.type), undefined, [normalizeToken(token.content)]]
+  }
+  return [mapTokenType(token.type), undefined, token.content.map(normalizeToken)]
 }

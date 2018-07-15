@@ -7,9 +7,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocsSourceViewer {
-  @Input() template: string
+  @Input() template: CodeBlock
   @Input() clazz: string | null
-
-  html: string
-  ts: string
 }
