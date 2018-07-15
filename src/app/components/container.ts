@@ -27,6 +27,7 @@ export class DocsContainer implements OnInit {
   components: DemoComponent[] = []
   info: PackageInfo
   codeExpand: { [path: string]: boolean } = {}
+  codeExpandAll = false
 
   constructor(
     private cfr: ComponentFactoryResolver,
