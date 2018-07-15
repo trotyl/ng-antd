@@ -6,18 +6,30 @@ interface NodeModule {
 
 declare const enum TokenType {
   none = 0,
+  attrName,
+  attrValue,
   boolean,
   className,
   function,
+  interpolation,
+  interpolationPunctuation,
   keyword,
   number,
   operator,
+  property,
   punctuation,
   string,
+  styleAttr,
+  tag,
+  templateString,
 }
 
-type TokenNode = [TokenType, string]
+interface TokenNode {
+  0: TokenType
+  1: string | undefined
+  2?: TokenNode[]
+}
 
 interface CodeBlock {
-  tokens: Array<TokenNode>
+  tokens: TokenNode[]
 }
