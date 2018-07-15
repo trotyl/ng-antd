@@ -26,6 +26,7 @@ export class DocsContainer implements OnInit {
   name: string
   components: DemoComponent[] = []
   info: PackageInfo
+  codeExpand: { [path: string]: boolean } = {}
 
   constructor(
     private cfr: ComponentFactoryResolver,
@@ -43,6 +44,7 @@ export class DocsContainer implements OnInit {
 
   switchComponent(name: string): void {
     this.name = name
+    this.codeExpand = {}
 
     this.title.setTitle(`${this.titlecase.transform(name)} - Ant Design`)
 
@@ -52,6 +54,7 @@ export class DocsContainer implements OnInit {
     this.components = componentTypes.map((type) => {
       const factory = this.cfr.resolveComponentFactory(type)
       const path = factory.selector.replace(`${name}-demo-`, '')
+      this.codeExpand[path] = false
 
       const demo = demos.find(item => item.name === factory.selector)!
       const { order, title: rawTitle, description, template, clazz } = demo
