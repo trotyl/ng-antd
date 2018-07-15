@@ -15,14 +15,19 @@
   
     <h2 *ngIf="components.length > 0">
       <span>Examples</span>
-      <i class="code-box-expand-trigger" antIcon="appstore-o"></i>
+      <i class="code-box-expand-trigger"
+         [class.code-box-expand-trigger-active]="codeExpandAll"
+         [antIcon]="codeExpandAll ? 'appstore' : 'appstore-o'"
+         (click)="codeExpandAll = !codeExpandAll">
+      </i>
     </h2>
   </section>
 
   <ant-row *ngIf="components.length > 0" gutter="16">
     <ant-col class="code-boxes-col-1-1" span="24">
       <section *ngFor="let component of components"
-               class="code-box" [class.expand]="codeExpand[component.path]" [attr.id]="'components-' + name + '-demo-' + component.path">
+               class="code-box" [class.expand]="codeExpandAll || codeExpand[component.path]"
+               [attr.id]="'components-' + name + '-demo-' + component.path">
         <section class="code-box-demo">
           <ng-container *ngComponentOutlet="component.type"></ng-container>
         </section>
@@ -35,14 +40,14 @@
           <!-- TODO(tooltip): Add tooltip of 'Hide Code'/'Show Code' -->
           <span class="code-expand-icon">
             <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg"
-              [class]="codeExpand[component.path] ? 'code-expand-icon-hide' : 'code-expand-icon-show'"
+              [class]="codeExpandAll || codeExpand[component.path] ? 'code-expand-icon-hide' : 'code-expand-icon-show'"
               (click)="codeExpand[component.path] = true">
             <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg"
-              [class]="codeExpand[component.path] ? 'code-expand-icon-show' : 'code-expand-icon-hide'"
+              [class]="codeExpandAll || codeExpand[component.path] ? 'code-expand-icon-show' : 'code-expand-icon-hide'"
               (click)="codeExpand[component.path] = false">
           </span>
         </section>
-        <section class="highlight-wrapper" [class.highlight-wrapper-expand]="codeExpand[component.path]">
+        <section class="highlight-wrapper" [class.highlight-wrapper-expand]="codeExpandAll || codeExpand[component.path]">
           <div class="highlight">
             <source-viewer [template]="component.template" [clazz]="component.clazz"></source-viewer>
           </div>
