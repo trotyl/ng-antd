@@ -130,7 +130,7 @@
       true,
       "property-declaration"
     ],
-    "use-lifecycle-interface": true,
+    "use-lifecycle-interface": false,
     "use-pipe-transform-interface": true,
     "use-default-type-parameter": true
   },

@@ -5,8 +5,8 @@ import { BrowserModule } from '@angular/platform-browser'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { DocsComponentsModule } from './components'
-import { DocsInfraModule } from './infra'
-import { DocsSharedModule } from './shared'
+import { SiteLayoutModule } from './layout'
+import { SiteSharedModule } from './shared'
 
 @NgModule({
   declarations: [
@@ -17,9 +17,9 @@ import { DocsSharedModule } from './shared'
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    DocsSharedModule,
+    SiteLayoutModule,
+    SiteSharedModule,
     DocsComponentsModule,
-    DocsInfraModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
