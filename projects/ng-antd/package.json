@@ -1,0 +1,15 @@
+{
+  "name": "ng-antd",
+  "version": "0.0.1-alpha.3",
+  "license": "MIT",
+  "private": false,
+  "description": "Project used to explore Angular component design best practice",
+  "repository": "https://github.com/trotyl/ng-antd.git",
+  "author": "Trotyl <trotyl@qq.com>",
+  "peerDependencies": {
+    "@angular/cdk": "^8.0.0",
+    "@angular/core": "^8.0.0",
+    "@angular/common": "^8.0.0",
+    "rxjs": "^6.4.0"
+  }
+}

@@ -14,5 +14,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonDemoSize {
-  size = 'large'
+  size = 'large' as const
 }

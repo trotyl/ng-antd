@@ -8,7 +8,7 @@ export class DocsHeader {
   // TODO: support responsive
   isMobile = false
 
-  get menuMode(): string {
+  get menuMode() {
     return this.isMobile ? 'inline' : 'horizontal'
   }
 }

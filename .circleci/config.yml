@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9-browsers
+      - image: circleci/node:lts-browsers
 
     working_directory: ~/repo
 
@@ -26,34 +26,32 @@ jobs:
           key: v1-dependencies-{{ checksum "yarn.lock" }}
         
       - run: |
-          yarn generate
-          yarn add file:./publish
+          yarn build ng-antd
           yarn theme
           yarn typedoc
           yarn extract-api
-          yarn build:es5
-          yarn build:es2015
+          yarn build --prod --outputHashing=none
 
       - run: |
-          gzip -k publish/bundles/ng-antd.umd.min.js
-          gzip -k dist/main.js
-          gzip -k dist2015/main.js
+          gzip -k ./dist/ng-antd/bundles/ng-antd.umd.min.js
+          gzip -k ./dist/ng-antd-site/main-es5.js
+          gzip -k ./dist/ng-antd-site/main-es2015.js
 
       - store_artifacts:
-          path: ./publish/bundles/ng-antd.umd.min.js.gz
+          path: ./dist/ng-antd/bundles/ng-antd.umd.min.js.gz
           destination: ng-antd.umd.min.js.gz
 
       - store_artifacts:
-          path: ./dist/main.js.gz
-          destination: docs-main-es5.bundle.js.gz
+          path: ./dist/ng-antd-site/main-es5.js
+          destination: site-main-es5.js.gz
 
       - store_artifacts:
-          path: ./dist2015/main.js.gz
-          destination: docs-main-es2015.bundle.js.gz
+          path: ./dist/ng-antd-site/main-es2015.js
+          destination: site-main-es2015.js.gz
 
   test:
     docker:
-      - image: circleci/node:8.9-browsers
+      - image: circleci/node:lts-browsers
 
     working_directory: ~/repo
 
@@ -72,13 +70,13 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
       
-      - run: yarn test
+      - run: yarn test ng-antd --progress=false --watch=false
 
       - run: yarn codecov
 
   lint:
     docker:
-      - image: circleci/node:8.9-browsers
+      - image: circleci/node:lts-browsers
 
     working_directory: ~/repo
 
@@ -101,7 +99,7 @@ jobs:
 
   integration:
     docker:
-      - image: circleci/node:8.9-browsers
+      - image: circleci/node:lts-browsers
 
     working_directory: ~/repo
 
@@ -124,7 +122,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/node:8.9-browsers
+      - image: circleci/node:lts-browsers
 
     working_directory: ~/repo
 
@@ -157,7 +155,7 @@ jobs:
 
   noop:
     docker:
-      - image: circleci/node:8.9-browsers
+      - image: circleci/node:lts-browsers
 
     working_directory: ~/repo
 
@@ -180,10 +178,10 @@ workflows:
           filters:
             branches:
               ignore: /gh-pages/
-      - integration:
-          filters:
-            branches:
-              ignore: /gh-pages/
+      # - integration:
+      #     filters:
+      #       branches:
+      #         ignore: /gh-pages/
       - deploy:
           filters:
             branches:

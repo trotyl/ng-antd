@@ -85,6 +85,8 @@ export function mapTokenType(type: string): TokenType {
       return TokenType.number
     case 'operator':
       return TokenType.operator
+    case 'parameter':
+      return TokenType.parameter
     case 'property':
       return TokenType.property
     case 'punctuation':
@@ -97,6 +99,8 @@ export function mapTokenType(type: string): TokenType {
       return TokenType.tag
     case 'template-string':
       return TokenType.templateString
+    case 'template-punctuation':
+      return TokenType.templatePunctuation
     default:
       throw new Error(`Unexpected type ${type}`)
   }

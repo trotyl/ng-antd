@@ -1,3 +1,4 @@
+// tslint:disable-next-line:no-reference
 /// <reference path="../../src/typings.d.ts" />
 
 export interface PropertyInfo {

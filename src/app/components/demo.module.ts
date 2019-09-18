@@ -35,7 +35,7 @@ const GRID_DIRECTIVES = [
   GridDemoSort,
 ]
 
-const ICON_DIRECTIVES: never[] = [
+const ICON_DIRECTIVES: [] = [
 
 ]
 

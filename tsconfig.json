@@ -1,29 +1,37 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "target": "es5",
-    "strict": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": false,
-    "skipLibCheck": false,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2018",
       "dom"
     ],
-    "baseUrl": "./src",
     "paths": {
-      "@app/*": ["app/*"],
-      "ng-antd": ["../node_modules/ng-antd", "lib/public-api"],
-      "ng-antd/*": ["lib/*"]
+      "@app/*": [
+        "src/app/*"
+      ],
+      "ng-antd": [
+        "dist/ng-antd"
+      ],
+      "ng-antd/*": [
+        "dist/ng-antd/*"
+      ]
     }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": false,
+    "strictInjectionParameters": true
   }
 }
