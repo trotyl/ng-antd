@@ -15,7 +15,7 @@ describe('Header', () => {
     }).compileComponents()
   })
 
-  it('should expose properties', () => {
+  xit('should expose properties', () => {
     const fixture = TestBed.createComponent(HeaderPropertyTest)
     const component = fixture.componentInstance
 
