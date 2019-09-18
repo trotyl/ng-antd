@@ -149,7 +149,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
-      - run: yarn gh-build
+      - run: |
+          yarn build ng-antd
+          yarn gh-build
 
       - run: yarn deploy
 
