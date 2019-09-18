@@ -9,5 +9,6 @@ import { DocsTokenTypePipe } from './token-type-pipe'
 @NgModule({
   declarations: [ DocsCodeExhibitor, DocsContainer, DocsSourceViewer, DocsTokenTypePipe ],
   imports: [ SiteSharedModule, DocsDemoModule ],
+  exports: [ DocsContainer ],
 })
 export class DocsComponentsModule { }

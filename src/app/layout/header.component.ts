@@ -2,7 +2,7 @@ import { Component, HostBinding } from '@angular/core'
 
 @Component({
   selector: 'header[siteLayout]',
-  templateUrl: './header.html',
+  templateUrl: './header.component.html',
 })
 export class SiteHeader {
   @HostBinding('id') id = 'header'

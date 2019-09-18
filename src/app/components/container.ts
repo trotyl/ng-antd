@@ -18,6 +18,7 @@ export interface DemoComponent {
 }
 
 @Component({
+  selector: 'site-doc-container',
   templateUrl: './container.html',
   providers: [ TitleCasePipe ],
   changeDetection: ChangeDetectionStrategy.OnPush,
