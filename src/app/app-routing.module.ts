@@ -1,10 +1,18 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { DocsContainer } from './components'
+import { SiteHomeWrapper } from './home'
+import { SiteMainWrapper } from './main/main.component'
 
 const routes: Routes = [
-  { path: 'components/:name', component: DocsContainer },
-  { path: '', redirectTo: '/components/button', pathMatch: 'full' },
+  {
+    path: '',
+    pathMatch: 'full',
+    component: SiteHomeWrapper,
+  },
+  {
+    path: 'components/:name',
+    component: SiteMainWrapper,
+  },
 ]
 
 @NgModule({

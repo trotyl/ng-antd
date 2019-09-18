@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core'
+import { DocsComponentsModule } from '@app/components'
 import { SiteSharedModule } from '@app/shared'
-import { SiteFooter } from './footer.component'
-import { SiteHeader } from './header.component'
+import { SiteMainWrapper } from './main.component'
 
 const DECLARATIONS = [
-  SiteFooter,
-  SiteHeader,
+  SiteMainWrapper,
 ]
 
 @NgModule({
@@ -14,9 +13,7 @@ const DECLARATIONS = [
   ],
   imports: [
     SiteSharedModule,
-  ],
-  exports: [
-    DECLARATIONS,
+    DocsComponentsModule,
   ],
 })
-export class SiteLayoutModule {}
+export class SiteMainModule {}
