@@ -69,7 +69,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
       
-      - run: yarn test ng-antd --progress=false --watch=false
+      - run: yarn test ng-antd --progress=false --watch=false --codeCoverage=true
 
       - run: yarn codecov
 
