@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { Menu } from 'ng-antd'
 
 @Component({
-  selector: 'docs-main',
+  selector: 'main[siteLayout]',
   templateUrl: './main.html',
   styleUrls: ['./main.scss'],
 })
-export class DocsMain implements OnInit {
+export class SiteMain implements OnInit {
   @ViewChild(Menu, { static: true }) menu: Menu
 
   // TODO: support mobile layout

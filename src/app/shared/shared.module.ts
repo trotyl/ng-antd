@@ -18,4 +18,4 @@ const ANT_MODULES = [
 @NgModule({
   exports: [ CommonModule, FormsModule, RouterModule, ANT_MODULES ],
 })
-export class DocsSharedModule { }
+export class SiteSharedModule { }

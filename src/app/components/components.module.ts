@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core'
-import { DocsSharedModule } from '../shared'
+import { SiteSharedModule } from '../shared'
 import { DocsCodeExhibitor } from './code-exhibitor'
 import { DocsContainer } from './container'
 import { DocsDemoModule } from './demo.module'
@@ -8,6 +8,6 @@ import { DocsTokenTypePipe } from './token-type-pipe'
 
 @NgModule({
   declarations: [ DocsCodeExhibitor, DocsContainer, DocsSourceViewer, DocsTokenTypePipe ],
-  imports: [ DocsSharedModule, DocsDemoModule ],
+  imports: [ SiteSharedModule, DocsDemoModule ],
 })
 export class DocsComponentsModule { }
