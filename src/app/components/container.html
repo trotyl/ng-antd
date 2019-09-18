@@ -50,16 +50,18 @@
             <a href="/">{{ component.title | titlecase }}</a>
             <a class="edit-button" href="/" target="_blank"><i antIcon="edit"></i></a>
           </div>
-          <div [innerHTML]="component.description"></div>
-          <!-- TODO(tooltip): Add tooltip of 'Hide Code'/'Show Code' -->
-          <span class="code-expand-icon">
-            <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg"
-              [class]="codeExpandAll || codeExpand[component.path] ? 'code-expand-icon-hide' : 'code-expand-icon-show'"
-              (click)="codeExpand[component.path] = true">
-            <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg"
-              [class]="codeExpandAll || codeExpand[component.path] ? 'code-expand-icon-show' : 'code-expand-icon-hide'"
-              (click)="codeExpand[component.path] = false">
-          </span>
+          <div class="code-box-description" [innerHTML]="component.description"></div>
+          <div class="code-box-actions">
+            <!-- TODO(tooltip): Add tooltip of 'Hide Code'/'Show Code' -->
+            <span class="code-expand-icon">
+              <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg"
+                [class]="codeExpandAll || codeExpand[component.path] ? 'code-expand-icon-hide' : 'code-expand-icon-show'"
+                (click)="codeExpand[component.path] = true">
+              <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg"
+                [class]="codeExpandAll || codeExpand[component.path] ? 'code-expand-icon-show' : 'code-expand-icon-hide'"
+                (click)="codeExpand[component.path] = false">
+            </span>
+          </div>
         </section>
         <section class="highlight-wrapper" [class.highlight-wrapper-expand]="codeExpandAll || codeExpand[component.path]">
           <div class="highlight">
