@@ -846,7 +846,8 @@ ansi-styles@^3.2.1:
 
 "antd@https://github.com/ant-design/ant-design.git":
   version "3.23.3"
-  resolved "https://github.com/ant-design/ant-design.git#69d079e0edae7edea6a02f25c608f5f3aa5abdc5"
+  uid "88cf4d5b7fbb2e1036d4d2c95f080f0fb3081491"
+  resolved "https://github.com/ant-design/ant-design.git#88cf4d5b7fbb2e1036d4d2c95f080f0fb3081491"
   dependencies:
     "@ant-design/create-react-context" "^0.2.4"
     "@ant-design/icons" "~2.1.1"
