@@ -28,10 +28,8 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/@angular/cdk/overlay-prebuilt.css",
-              "node_modules/antd/dist/antd.css",
-              "theme/index.less",
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles.less"
             ],
             "scripts": []
           },
