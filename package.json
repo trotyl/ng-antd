@@ -13,6 +13,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "prebuild-site": "ng build ng-antd",
+    "build-site": "ng build --prod",
     "release": "cd dist/ng-antd && npm publish",
     "integration:cli": "cd integration/angular-cli && npm run integration",
     "pregh-build": "yarn typedoc && yarn extract-api",
