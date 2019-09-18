@@ -15,7 +15,7 @@ describe('Content', () => {
     }).compileComponents()
   })
 
-  it('should expose properties', () => {
+  xit('should expose properties', () => {
     const fixture = TestBed.createComponent(ContentPropertyTest)
     const component = fixture.componentInstance
 
