@@ -27,7 +27,6 @@ jobs:
         
       - run: |
           yarn build ng-antd
-          yarn theme
           yarn typedoc
           yarn extract-api
           yarn build --prod --outputHashing=none
