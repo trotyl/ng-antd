@@ -2,18 +2,17 @@
 
 # compiled output
 /dist
-/dist2015
 /tmp
 /out-tsc
-/publish
-/built
-publish.tgz
-tsconfig.json-e
-/tools/**/*.js
-/tools/**/*.json
+# Only exists if Bazel was run
+/bazel-out
 
 # dependencies
 /node_modules
+
+# profiling files
+chrome-profiler-events.json
+speed-measure-plugin.json
 
 # IDEs and editors
 /.idea
@@ -22,7 +21,6 @@ tsconfig.json-e
 .c9/
 *.launch
 .settings/
-.vscode/
 *.sublime-workspace
 
 # IDE - VSCode
@@ -31,6 +29,7 @@ tsconfig.json-e
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.history/*
 
 # misc
 /.sass-cache
@@ -38,12 +37,9 @@ tsconfig.json-e
 /coverage
 /libpeerconnection.log
 npm-debug.log
+yarn-error.log
 testem.log
 /typings
-
-# e2e
-/e2e/*.js
-/e2e/*.map
 
 # System Files
 .DS_Store

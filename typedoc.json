@@ -1,0 +1,11 @@
+{
+  "includes": [
+    "src/**/*.ts",
+    "project/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "json": "tools/typedoc/reflection.json",
+  "tsconfig": "src/tsconfig.app.json"
+}

@@ -7,7 +7,7 @@ import { Menu } from 'ng-antd'
   styleUrls: ['./main.scss'],
 })
 export class DocsMain implements OnInit {
-  @ViewChild(Menu) menu: Menu
+  @ViewChild(Menu, { static: true }) menu: Menu
 
   // TODO: support mobile layout
   isMobile = false

@@ -15,9 +15,9 @@ for (const file of reflection.children) {
 
   const packagePath = stripQuote(file.name)
 
-  if (!packagePath.startsWith('src/lib/')) { continue }
+  if (!packagePath.startsWith('projects/ng-antd/src/lib/')) { continue }
 
-  const [pkgName] = packagePath.replace('src/lib/', '').split('/')
+  const [pkgName] = packagePath.replace('projects/ng-antd/src/lib/', '').split('/')
 
   if (!result[pkgName]) {
     result[pkgName] = {

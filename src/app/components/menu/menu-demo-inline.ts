@@ -13,7 +13,7 @@ import { Menu } from 'ng-antd'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuDemoInline implements OnInit {
-  @ViewChild(Menu) menu: Menu
+  @ViewChild(Menu, { static: true }) menu: Menu
 
   selected = '1'
 

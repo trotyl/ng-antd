@@ -17,12 +17,14 @@ declare const enum TokenType {
   keyword,
   number,
   operator,
+  parameter,
   property,
   punctuation,
   string,
   styleAttr,
   tag,
   templateString,
+  templatePunctuation,
 }
 
 interface TokenNode {
