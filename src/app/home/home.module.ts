@@ -3,11 +3,13 @@ import { SiteLayoutModule } from '@app/layout'
 import { SiteSharedModule } from '@app/shared'
 import { SiteHomeBannerImage } from './banner-image.component'
 import { SiteHomeBanner } from './banner.component'
+import { SiteHomePage1 } from './page-1.component'
 import { SiteHomeWrapper } from './wrapper.component'
 
 const DECLARATIONS = [
   SiteHomeBanner,
   SiteHomeBannerImage,
+  SiteHomePage1,
   SiteHomeWrapper,
 ]
 
@@ -20,4 +22,4 @@ const DECLARATIONS = [
     SiteLayoutModule,
   ],
 })
-export class HomeModule {}
+export class SiteHomeModule {}

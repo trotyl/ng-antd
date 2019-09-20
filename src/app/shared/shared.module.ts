@@ -1,3 +1,4 @@
+import { ContribNgLetModule } from '@angular-contrib/common'
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
@@ -16,6 +17,12 @@ const ANT_MODULES = [
 ]
 
 @NgModule({
-  exports: [ CommonModule, FormsModule, RouterModule, ANT_MODULES ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    ContribNgLetModule,
+    ANT_MODULES,
+  ],
 })
 export class SiteSharedModule { }
