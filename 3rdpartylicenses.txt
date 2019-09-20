@@ -1,3 +1,5 @@
+@angular-contrib/common
+
 @angular-devkit/build-angular
 MIT
 The MIT License
