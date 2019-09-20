@@ -1,9 +1,10 @@
 {
   "includes": [
-    "src/**/*.ts",
-    "project/**/*.ts"
+    "src/**",
+    "project/**"
   ],
   "exclude": [
+    "ant-design/**",
     "**/*.spec.ts"
   ],
   "json": "tools/typedoc/reflection.json",

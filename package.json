@@ -7,6 +7,7 @@
   "repository": "https://github.com/trotyl/ng-antd.git",
   "author": "Trotyl <trotyl@qq.com>",
   "scripts": {
+    "postinstall": "yarn update-antd",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -24,7 +25,9 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "extract-api": "yarn extract-api:lib && yarn extract-api:demo",
     "extract-api:lib": "tsc --lib es2015,dom tools/api-extractor/extract-lib.ts && node tools/api-extractor/extract-lib.js",
-    "extract-api:demo": "tsc --lib es2015,dom tools/api-extractor/extract-demo.ts && node tools/api-extractor/extract-demo.js"
+    "extract-api:demo": "tsc --lib es2015,dom tools/api-extractor/extract-demo.ts && node tools/api-extractor/extract-demo.js",
+    "update-antd": "git submodule update --init ant-design",
+    "postupdate-antd": "cd ant-design && yarn"
   },
   "private": true,
   "dependencies": {
@@ -51,7 +54,6 @@
     "@types/jasminewd2": "^2.0.3",
     "@types/node": "^12.7.5",
     "@types/prismjs": "^1.9.0",
-    "antd": "https://github.com/ant-design/ant-design.git",
     "codecov": "^3.6.0",
     "codelyzer": "^5.1.1",
     "conventional-changelog-cli": "^2.0.23",
@@ -67,8 +69,6 @@
     "ng-packagr": "^5.1.0",
     "prismjs": "^1.17.1",
     "protractor": "^5.4.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
     "ts-node": "^8.4.1",
     "tsickle": "^0.36.0",
     "tslint": "^5.15.0",
