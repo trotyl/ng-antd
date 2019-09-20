@@ -5,7 +5,9 @@ import { BrowserModule } from '@angular/platform-browser'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { DocsComponentsModule } from './components'
+import { SiteHomeModule } from './home'
 import { SiteLayoutModule } from './layout'
+import { SiteMainModule } from './main'
 import { SiteSharedModule } from './shared'
 
 @NgModule({
@@ -19,6 +21,8 @@ import { SiteSharedModule } from './shared'
     HttpClientModule,
     SiteLayoutModule,
     SiteSharedModule,
+    SiteHomeModule,
+    SiteMainModule,
     DocsComponentsModule,
   ],
   providers: [],
