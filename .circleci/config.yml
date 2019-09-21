@@ -41,11 +41,11 @@ jobs:
           destination: ng-antd.umd.min.js.gz
 
       - store_artifacts:
-          path: ./dist/ng-antd-site/main-es5.js
+          path: ./dist/ng-antd-site/main-es5.js.gz
           destination: site-main-es5.js.gz
 
       - store_artifacts:
-          path: ./dist/ng-antd-site/main-es2015.js
+          path: ./dist/ng-antd-site/main-es2015.js.gz
           destination: site-main-es2015.js.gz
 
   test:
