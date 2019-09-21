@@ -2,17 +2,17 @@
 # yarn lockfile v1
 
 
-"@angular-contrib/common@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@angular-contrib/common/-/common-0.0.4.tgz#a4584dd7334565b7d7d527c5f518e51cb822e820"
-  integrity sha512-mN/QZ7UvbO6j2K6PoU/jbSXBM60aqkL3zKyWgSJWOi+UMXekZPlOFgJccKjOu2NszJoPBehX69F413VltKPs/A==
+"@angular-contrib/common@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@angular-contrib/common/-/common-0.0.5.tgz#64e50819e33d644791b3dbe18cba4e06e8ee9335"
+  integrity sha512-wknJh8tZ1B6QCEdP4fkUCuWzRZoBEQEBQ7if6j+xe3UCBSJnQJD9spIoL4FRheHIGpBsRZs6rYgdUw4T5Mpspw==
   dependencies:
     tslib "^1.9.0"
 
-"@angular-contrib/core@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@angular-contrib/core/-/core-0.0.4.tgz#ca998b5139948b149e289fa32682107858ddc986"
-  integrity sha512-9SNPuO/GI9hJmZXdah2XDeHPur//8YHJ5PgU8Yx9GYQRJuylf+PjEZX8m48YaDRVqd8qn+uOAV5tIF2A/Bxsgw==
+"@angular-contrib/core@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@angular-contrib/core/-/core-0.0.5.tgz#de5f53d71358f5dc8d3648788a091cda0a718f57"
+  integrity sha512-pb287oc5H4ykJewu4PBiarIGrLCwsoerglYS0xFzU3Vzxnh8tPQ5Ed1etLxaEip9t3kS1lbJtr3JQKpxVIetVA==
   dependencies:
     tslib "^1.9.0"
 
