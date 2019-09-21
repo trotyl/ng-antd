@@ -2,8 +2,8 @@ import { Component, HostBinding } from '@angular/core'
 
 @Component({
   selector: 'site-home-page2',
-  templateUrl: './page-2.component.html',
-  styleUrls: ['./page-2.component.scss'],
+  templateUrl: './page2.component.html',
+  styleUrls: ['./page2.component.scss'],
 })
 export class SiteHomePage2 {
   @HostBinding('class.home-page-wrapper') homePageWrapper = true
