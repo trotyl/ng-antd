@@ -31,8 +31,8 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-contrib/common": "^0.0.4",
-    "@angular-contrib/core": "^0.0.4",
+    "@angular-contrib/common": "^0.0.5",
+    "@angular-contrib/core": "^0.0.5",
     "@angular/animations": "^8.1.1",
     "@angular/cdk": "^8.2.0",
     "@angular/common": "^8.1.1",
