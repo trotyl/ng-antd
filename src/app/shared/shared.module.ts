@@ -1,4 +1,4 @@
-import { ContribNgLetModule } from '@angular-contrib/common'
+import { ContribNgDynamicModule, ContribNgLetModule } from '@angular-contrib/common'
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
@@ -21,6 +21,7 @@ const ANT_MODULES = [
     CommonModule,
     FormsModule,
     RouterModule,
+    ContribNgDynamicModule,
     ContribNgLetModule,
     ANT_MODULES,
   ],

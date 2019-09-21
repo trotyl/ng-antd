@@ -4,12 +4,14 @@ import { SiteSharedModule } from '@app/shared'
 import { SiteHomeBannerImage } from './banner-image.component'
 import { SiteHomeBanner } from './banner.component'
 import { SiteHomePage1 } from './page-1.component'
+import { SiteHomePage2 } from './page-2.component'
 import { SiteHomeWrapper } from './wrapper.component'
 
 const DECLARATIONS = [
   SiteHomeBanner,
   SiteHomeBannerImage,
   SiteHomePage1,
+  SiteHomePage2,
   SiteHomeWrapper,
 ]
 
