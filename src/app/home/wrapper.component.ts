@@ -1,5 +1,6 @@
 import { Styling } from '@angular-contrib/core'
 import { Component, OnDestroy } from '@angular/core'
+import { Title } from '@angular/platform-browser'
 
 const styles = `
   .main-wrapper {
@@ -54,9 +55,17 @@ export class SiteHomeWrapper implements OnDestroy {
   private disposeGlobalStyle!: () => void
 
   constructor(
+    private title: Title,
     styling: Styling,
   ) {
+    // TODO: switch to declarative template usage
     this.disposeGlobalStyle = styling.addGlobalStyle(styles)
+  }
+
+  ngOnInit(): void {
+    // TODO: extract to JSON file
+    // TODO: add support for localization
+    this.title.setTitle(`The world's Nth most popular Angular UI framework`)
   }
 
   ngOnDestroy(): void {
