@@ -1,3 +1,4 @@
+import { ContribChangeDetectionSchedulerModule } from '@angular-contrib/core'
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
@@ -19,6 +20,7 @@ import { SiteSharedModule } from './shared'
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    ContribChangeDetectionSchedulerModule,
     SiteLayoutModule,
     SiteSharedModule,
     SiteHomeModule,
