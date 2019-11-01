@@ -55,7 +55,7 @@
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^12.12.3",
     "@types/prismjs": "^1.9.0",
-    "@types/shelljs": "^0.8.5",
+    "@types/shelljs": "^0.8.6",
     "antd": "https://github.com/ant-design/ant-design.git",
     "codecov": "^3.6.1",
     "codelyzer": "^5.2.0",
