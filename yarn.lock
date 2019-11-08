@@ -7647,10 +7647,10 @@ rc-editor-mention@^1.1.13:
     rc-animate "^2.3.0"
     rc-editor-core "~0.8.3"
 
-rc-footer@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/rc-footer/-/rc-footer-0.5.0.tgz#79d0d7ad893fe4f8dfe52ca2965a5ef66e01a8bb"
-  integrity sha512-o8pl8tBqWwAQOvOM9AH3r8EptIXh/CjQJg34tlFBrYmnOcHEqcAFq1L4CPWoWqjDwZbkFIPKkB0hJyEI61cC2Q==
+rc-footer@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/rc-footer/-/rc-footer-0.6.0.tgz#f7e153f66908c92ec443a881f4ed4b7cbeda18c1"
+  integrity sha512-Of9fDUc32JoRSAtArBsssptnBTG2TUu1aSUSKYbLsInQUN5sqkYWi2waWOgPYqcofNHA8rFxzolYyWeue1u0Tw==
   dependencies:
     classnames "^2.2.1"
 
