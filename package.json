@@ -70,7 +70,7 @@
     "karma-jasmine-html-reporter": "^1.4.0",
     "markdown-it": "^10.0.0",
     "ng-packagr": "^5.7.1",
-    "prismjs": "^1.17.1",
+    "prismjs": "^1.23.0",
     "protractor": "^5.4.0",
     "rc-footer": "^0.5.0",
     "react": "^16.11.0",
